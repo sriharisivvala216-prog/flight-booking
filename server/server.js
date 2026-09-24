@@ -1,73 +1,12 @@
-import express from 'express';
-import cors from 'cors';
+// Local development entry point — imports the shared Express app and starts the HTTP server.
+// For Vercel serverless deployment, see /api/index.js instead.
 import dotenv from 'dotenv';
-import path from 'path';
-import fs from 'fs';
-import { fileURLToPath } from 'url';
-import authRoutes from './routes/auth.js';
-import flightRoutes from './routes/flights.js';
-import bookingRoutes from './routes/bookings.js';
-import adminRoutes from './routes/admin.js';
-import { connectDB, getDBStatus } from './config/db.js';
-
 dotenv.config();
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+import app from './app.js';
 
-const app = express();
 const PORT = process.env.PORT || 5000;
-
-// Initialize Database Connection
-connectDB();
-
-// CORS configuration supporting both local development and cloud production deployments
-app.use(cors({
-  origin: '*',
-  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept']
-}));
-app.use(express.json());
-
-// Request logger for debugging
-app.use((req, _res, next) => {
-  console.log(`[API] ${req.method} ${req.originalUrl}`);
-  next();
-});
-
-// API Routes
-app.use('/api/auth', authRoutes);
-app.use('/api/flights', flightRoutes);
-app.use('/api/bookings', bookingRoutes);
-app.use('/api/admin', adminRoutes);
-
-// Health check with DB status
-app.get('/api/health', (_req, res) => {
-  res.json({
-    status: 'online',
-    timestamp: new Date().toISOString(),
-    service: 'SkyWings Flight Booking Backend API',
-    database: getDBStatus(),
-    version: '1.0.0'
-  });
-});
-
-
-// Production: Serve frontend static build files when dist directory exists
-const distPath = path.resolve(__dirname, '../dist');
-if (fs.existsSync(distPath)) {
-  app.use(express.static(distPath));
-  // Client-side SPA routing fallback for non-API GET requests (Express 5 safe)
-  app.use((req, res, next) => {
-    if (req.method === 'GET' && !req.path.startsWith('/api')) {
-      return res.sendFile(path.join(distPath, 'index.html'));
-    }
-    next();
-  });
-}
-
 
 app.listen(PORT, () => {
   console.log(`🚀 SkyWings Flight Backend running on http://localhost:${PORT}`);
 });
-
