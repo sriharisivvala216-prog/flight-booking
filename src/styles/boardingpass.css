@@ -1,0 +1,205 @@
+.boarding-modal-card {
+  max-width: 760px;
+  background: transparent;
+  box-shadow: none;
+  border: none;
+}
+
+.ticket-wrapper {
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+  position: relative;
+  border: 1px solid var(--slate-200);
+}
+
+.ticket-header {
+  background: linear-gradient(135deg, #070d1e 0%, #1e3a8a 100%);
+  color: white;
+  padding: 24px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ticket-airline-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ticket-airline-brand h3 {
+  color: white;
+  font-size: 1.35rem;
+  letter-spacing: -0.01em;
+}
+
+.ticket-class-badge {
+  background: rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #00e5ff;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.ticket-body {
+  padding: 30px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.ticket-main-section {
+  flex: 2;
+  padding-right: 30px;
+  border-right: 2px dashed #cbd5e1;
+  position: relative;
+}
+
+/* Perforation Notch */
+.ticket-main-section::before,
+.ticket-main-section::after {
+  content: '';
+  position: absolute;
+  right: -13px;
+  width: 24px;
+  height: 24px;
+  background: rgba(7, 13, 30, 0.72);
+  border-radius: 50%;
+}
+
+.ticket-main-section::before {
+  top: -42px;
+}
+
+.ticket-main-section::after {
+  bottom: -42px;
+}
+
+.ticket-stub-section {
+  flex: 1;
+  padding-left: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.ticket-route-display {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.ticket-route-code {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--navy-950);
+  line-height: 1;
+}
+
+.ticket-route-city {
+  font-size: 0.85rem;
+  color: var(--slate-500);
+}
+
+.ticket-grid-meta {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.ticket-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--slate-400);
+  letter-spacing: 0.05em;
+  margin-bottom: 3px;
+}
+
+.ticket-val {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--navy-950);
+}
+
+.barcode-strip {
+  margin-top: 10px;
+  padding-top: 16px;
+  border-top: 1px solid var(--slate-100);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.simulated-barcode {
+  height: 44px;
+  background: repeating-linear-gradient(
+    90deg,
+    #0f172a,
+    #0f172a 2px,
+    transparent 2px,
+    transparent 4px,
+    #0f172a 4px,
+    #0f172a 7px,
+    transparent 7px,
+    transparent 9px
+  );
+  width: 220px;
+}
+
+.qr-code-box {
+  width: 90px;
+  height: 90px;
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.ticket-action-bar {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  .ticket-wrapper, .ticket-wrapper * {
+    visibility: visible;
+  }
+  .ticket-wrapper {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .ticket-body {
+    flex-direction: column;
+  }
+  .ticket-main-section {
+    border-right: none;
+    border-bottom: 2px dashed #cbd5e1;
+    padding-right: 0;
+    padding-bottom: 24px;
+    margin-bottom: 24px;
+  }
+  .ticket-stub-section {
+    padding-left: 0;
+  }
+}

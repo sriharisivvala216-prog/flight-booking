@@ -1,0 +1,217 @@
+.booking-modal-card {
+  max-width: 780px;
+  max-height: 92vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.booking-modal-header {
+  padding: 24px 28px;
+  border-bottom: 1px solid var(--slate-100);
+  background: white;
+}
+
+/* Stepper */
+.checkout-stepper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 18px;
+  position: relative;
+}
+
+.checkout-step-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--slate-400);
+}
+
+.step-num-badge {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--slate-200);
+  color: var(--slate-600);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.checkout-step-item.active {
+  color: var(--primary-600);
+}
+
+.checkout-step-item.active .step-num-badge {
+  background: var(--primary-600);
+  color: white;
+}
+
+.checkout-step-item.completed {
+  color: #10b981;
+}
+
+.checkout-step-item.completed .step-num-badge {
+  background: #10b981;
+  color: white;
+}
+
+.booking-modal-body {
+  padding: 28px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+/* Passenger Card */
+.passenger-input-card {
+  background: var(--slate-50);
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.passenger-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  font-weight: 700;
+  color: var(--navy-950);
+}
+
+.passenger-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+/* Add-ons List */
+.addon-card {
+  border: 1.5px solid var(--slate-200);
+  border-radius: var(--radius-lg);
+  padding: 16px 20px;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: all var(--transition-fast);
+  cursor: pointer;
+}
+
+.addon-card:hover {
+  border-color: var(--primary-300);
+  background: var(--slate-50);
+}
+
+.addon-card.selected {
+  border-color: var(--primary-600);
+  background: var(--primary-50);
+}
+
+.addon-info {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.addon-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  background: white;
+  border: 1px solid var(--slate-200);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary-600);
+}
+
+.addon-title {
+  font-weight: 700;
+  color: var(--navy-950);
+  margin-bottom: 2px;
+}
+
+.addon-desc {
+  font-size: 0.82rem;
+  color: var(--slate-500);
+}
+
+/* Payment & Summary */
+.checkout-summary-box {
+  background: var(--slate-50);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  border: 1px solid var(--slate-200);
+  margin-bottom: 24px;
+}
+
+.summary-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 0.92rem;
+  color: var(--slate-600);
+}
+
+.summary-row.total {
+  border-top: 1px dashed var(--slate-300);
+  padding-top: 12px;
+  margin-top: 12px;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--navy-950);
+}
+
+.promo-input-group {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+/* Success Card */
+.booking-success-view {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.success-icon-bubble {
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  background: #dcfce7;
+  color: #16a34a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px auto;
+  box-shadow: 0 10px 25px rgba(22, 163, 74, 0.2);
+}
+
+.pnr-box {
+  background: var(--slate-100);
+  border: 2px dashed var(--slate-300);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  display: inline-block;
+  margin: 20px 0;
+}
+
+.pnr-code {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--primary-700);
+  letter-spacing: 0.1em;
+}
+
+@media (max-width: 600px) {
+  .passenger-form-grid {
+    grid-template-columns: 1fr;
+  }
+}

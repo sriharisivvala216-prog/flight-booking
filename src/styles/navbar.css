@@ -1,0 +1,534 @@
+/* ==========================================================================
+   NAVBAR - LUXURY AERO STYLING & ATTRACTIVE BUTTONS
+   ========================================================================== */
+
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 900;
+  background: rgba(7, 13, 30, 0.88);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(0, 229, 255, 0.18);
+  color: #ffffff;
+  transition: all 0.3s ease;
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 229, 255, 0.05);
+}
+
+.navbar-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 74px;
+}
+
+/* ==========================================================================
+   BRAND LOGO BUTTON
+   ========================================================================== */
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  text-decoration: none;
+  user-select: none;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-brand:hover {
+  transform: translateY(-1px);
+}
+
+.brand-icon-wrapper {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #00e5ff 0%, #0284c7 50%, #1e40af 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  box-shadow: 0 0 22px rgba(0, 229, 255, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+  transition: all 0.3s ease;
+}
+
+.nav-brand:hover .brand-icon-wrapper {
+  box-shadow: 0 0 30px rgba(0, 229, 255, 0.75);
+}
+
+.brand-plane-icon {
+  transition: transform 0.3s ease;
+}
+
+.nav-brand:hover .brand-plane-icon {
+  transform: rotate(-14deg) translateY(-2px) scale(1.08);
+}
+
+.brand-beacon-dot {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 7px;
+  height: 7px;
+  background-color: #ff3366;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #ff3366;
+  animation: beaconBlink 1.4s infinite;
+}
+
+.brand-text-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-name {
+  font-size: 1.55rem;
+  font-weight: 850;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, #ffffff 40%, #38bdf8 75%, #00e5ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1.1;
+}
+
+.brand-tag {
+  font-size: 0.65rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #00e5ff;
+  font-weight: 800;
+  margin-top: 1px;
+}
+
+/* ==========================================================================
+   NAVIGATION LINKS CAPSULE (ATTRACTIVE NAV BUTTONS)
+   ========================================================================== */
+
+.nav-links-capsule {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(15, 23, 42, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 5px 6px;
+  border-radius: 9999px;
+  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.08), 0 4px 16px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(12px);
+}
+
+.nav-item-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  color: #cbd5e1;
+  padding: 8px 18px;
+  border-radius: 9999px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  white-space: nowrap;
+}
+
+.nav-item-btn:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.15);
+  transform: translateY(-1px);
+}
+
+.nav-item-btn.active {
+  color: #00e5ff;
+  background: rgba(0, 229, 255, 0.14);
+  border-color: rgba(0, 229, 255, 0.4);
+  box-shadow: 0 0 18px rgba(0, 229, 255, 0.25), inset 0 1px 1px rgba(0, 229, 255, 0.3);
+}
+
+.nav-icon {
+  transition: transform 0.2s ease, color 0.2s ease;
+  color: inherit;
+}
+
+.nav-item-btn:hover .nav-icon {
+  transform: scale(1.12);
+}
+
+.active-glow-indicator {
+  position: absolute;
+  bottom: 2px;
+  left: 30%;
+  right: 30%;
+  height: 2px;
+  background: #00e5ff;
+  border-radius: 2px;
+  box-shadow: 0 0 8px #00e5ff;
+}
+
+/* Radar Live Pulse Badge in Navbar */
+.live-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(16, 185, 129, 0.2);
+  border: 1px solid rgba(16, 185, 129, 0.5);
+  color: #34d399;
+  font-size: 0.65rem;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  padding: 2px 6px;
+  border-radius: 9999px;
+  margin-left: 2px;
+}
+
+.live-ping-dot {
+  width: 6px;
+  height: 6px;
+  background: #10b981;
+  border-radius: 50%;
+  box-shadow: 0 0 6px #10b981;
+  animation: radarDotPulse 1.6s infinite;
+}
+
+.admin-shield-icon {
+  color: #f59e0b;
+  margin-left: 2px;
+}
+
+/* ==========================================================================
+   RIGHT NAV ACTIONS: CURRENCY & ATTRACTIVE BUTTONS
+   ========================================================================== */
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Currency Pill Switcher */
+.currency-pill-container {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(15, 23, 42, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 9999px;
+  padding: 6px 12px;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.currency-pill-container:hover {
+  background: rgba(15, 23, 42, 0.9);
+  border-color: rgba(0, 229, 255, 0.5);
+  box-shadow: 0 0 14px rgba(0, 229, 255, 0.2);
+}
+
+.currency-globe-icon {
+  color: #00e5ff;
+}
+
+.currency-select {
+  appearance: none;
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  outline: none;
+  padding-right: 14px;
+}
+
+.currency-select option {
+  background: #0d1b2a;
+  color: #ffffff;
+}
+
+.currency-chevron-icon {
+  position: absolute;
+  right: 10px;
+  pointer-events: none;
+  color: #94a3b8;
+}
+
+/* Auth Buttons Group */
+.auth-buttons-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* 1. Attractive Sign In Glass Button */
+.signin-nav-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  color: #f8fafc;
+  padding: 8px 18px;
+  border-radius: 9999px;
+  font-weight: 700;
+  font-size: 0.88rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  backdrop-filter: blur(10px);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  white-space: nowrap;
+}
+
+.signin-nav-btn:hover {
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(0, 229, 255, 0.6);
+  color: #00e5ff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(0, 229, 255, 0.25);
+}
+
+/* 2. Attractive Join SkyWings Glowing Gradient Button */
+.join-nav-btn {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #00e5ff 0%, #0284c7 50%, #2563eb 100%);
+  color: #070d1e;
+  border: none;
+  padding: 8px 22px;
+  border-radius: 9999px;
+  font-weight: 850;
+  font-size: 0.88rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 20px rgba(0, 229, 255, 0.45);
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+
+.join-nav-btn:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 28px rgba(0, 229, 255, 0.7);
+  color: #000000;
+}
+
+.join-icon {
+  color: #070d1e;
+  transition: transform 0.3s ease;
+}
+
+.join-nav-btn:hover .join-icon {
+  transform: rotate(20deg) scale(1.15);
+}
+
+.join-btn-shine {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+  transform: skewX(-20deg);
+  animation: shineSweep 4s infinite;
+  pointer-events: none;
+}
+
+.signin-nav-btn *,
+.join-nav-btn *,
+.logout-nav-btn * {
+  pointer-events: none;
+}
+
+/* User Logged-in Profile Pill */
+.user-profile-pill {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(15, 23, 42, 0.75);
+  border: 1px solid rgba(0, 229, 255, 0.35);
+  padding: 5px 12px 5px 6px;
+  border-radius: 9999px;
+  box-shadow: 0 0 18px rgba(0, 229, 255, 0.15);
+}
+
+.user-avatar-ring {
+  padding: 2px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #00e5ff, #2563eb);
+}
+
+.user-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #070d1e;
+  color: #00e5ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.88rem;
+  font-weight: 850;
+}
+
+.user-info-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-display-name {
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.1;
+}
+
+.user-role-badge {
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+}
+
+.user-role-badge.admin-role {
+  color: #f59e0b;
+}
+
+.user-role-badge.passenger-role {
+  color: #00e5ff;
+}
+
+.logout-nav-btn {
+  background: rgba(244, 63, 94, 0.15);
+  border: 1px solid rgba(244, 63, 94, 0.4);
+  color: #fda4af;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  transition: all 0.2s ease;
+  user-select: none;
+  margin-left: 4px;
+}
+
+.logout-nav-btn:hover {
+  background: #f43f5e;
+  border-color: #f43f5e;
+  color: #ffffff;
+  box-shadow: 0 0 16px rgba(244, 63, 94, 0.5);
+  transform: translateY(-1px);
+}
+
+/* Mobile Menu Toggle Button */
+.mobile-menu-toggle-btn {
+  display: none;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #ffffff;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.mobile-menu-toggle-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: #00e5ff;
+  color: #00e5ff;
+}
+
+/* Mobile Drawer */
+.mobile-nav-drawer {
+  display: none;
+  padding: 16px 20px 24px;
+  background: rgba(7, 13, 30, 0.98);
+  border-top: 1px solid rgba(0, 229, 255, 0.15);
+  backdrop-filter: blur(20px);
+}
+
+.mobile-nav-items {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.mobile-nav-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #cbd5e1;
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-size: 0.94rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.mobile-nav-btn.active,
+.mobile-nav-btn:hover {
+  background: rgba(0, 229, 255, 0.12);
+  border-color: rgba(0, 229, 255, 0.4);
+  color: #00e5ff;
+}
+
+.mobile-auth-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.w-full {
+  width: 100%;
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN
+   ========================================================================== */
+
+@media (max-width: 1024px) {
+  .nav-links-capsule {
+    display: none;
+  }
+  .mobile-menu-toggle-btn {
+    display: flex;
+  }
+  .mobile-nav-drawer {
+    display: block;
+  }
+}
+
+@media (max-width: 640px) {
+  .brand-tag {
+    display: none;
+  }
+  .brand-name {
+    font-size: 1.25rem;
+  }
+  .signin-nav-btn {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+  }
+  .join-nav-btn {
+    padding: 6px 14px;
+    font-size: 0.8rem;
+  }
+  .currency-pill-container {
+    padding: 4px 8px;
+  }
+}

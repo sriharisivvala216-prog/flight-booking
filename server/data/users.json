@@ -1,0 +1,68 @@
+[
+  {
+    "id": "USR-101",
+    "name": "Alex Morgan",
+    "email": "alex@example.com",
+    "passwordHash": "$2a$10$v7g0lOa58o3p0E6mZ60H.ew3uE6mG2qT32.6sZ3qD8X0L4Y0Y8n6W",
+    "role": "passenger",
+    "passportNumber": "N84729104",
+    "nationality": "United States",
+    "phone": "+1 (555) 234-5678",
+    "createdAt": "2026-01-15T10:00:00.000Z"
+  },
+  {
+    "id": "USR-ADMIN",
+    "name": "Captain Skywards (Admin)",
+    "email": "admin@skywings.com",
+    "passwordHash": "$2a$10$v7g0lOa58o3p0E6mZ60H.ew3uE6mG2qT32.6sZ3qD8X0L4Y0Y8n6W",
+    "role": "admin",
+    "passportNumber": "ADMIN001",
+    "nationality": "Global",
+    "phone": "+1 (800) 555-0199",
+    "createdAt": "2026-01-01T00:00:00.000Z"
+  },
+  {
+    "id": "USR-MUFNOMFN",
+    "name": "Srihari Sivvala",
+    "email": "sriharisivvala216@gmail.com",
+    "passwordHash": "$2b$10$Ac9c4Xw8EOlFpyfoo5Rmkuta..6UHgPlFgtdvzakHL3tORCeuvVdG",
+    "role": "passenger",
+    "phone": "6305589731",
+    "passportNumber": "",
+    "nationality": "International",
+    "createdAt": "2026-09-24T14:57:32.819Z"
+  },
+  {
+    "id": "USR-MUFOS0RI",
+    "name": "Elena Rostova",
+    "email": "traveler_1790263690903@testskywings.com",
+    "passwordHash": "$2b$10$IMD9ji9VeqTRQAGY7uZlJ.cO39EbbfISXa7OAp9Hgsvw4xDZG8r4S",
+    "role": "passenger",
+    "phone": "+1 555-987-6543",
+    "passportNumber": "",
+    "nationality": "International",
+    "createdAt": "2026-09-24T15:28:10.974Z"
+  },
+  {
+    "id": "USR-MUFOSN7R",
+    "name": "Elena Rostova",
+    "email": "traveler_1790263719999@testskywings.com",
+    "passwordHash": "$2b$10$h9xY9q30DLWdGx/ACIRJ3u14a0uq3m4wGVy3pE0CsTe7rlZYlcYHm",
+    "role": "passenger",
+    "phone": "+1 555-987-6543",
+    "passportNumber": "",
+    "nationality": "International",
+    "createdAt": "2026-09-24T15:28:40.071Z"
+  },
+  {
+    "id": "USR-MUFRN29W",
+    "name": "narasimha948",
+    "email": "sriharisivvala2@gmail.com",
+    "passwordHash": "$2b$10$RnbxMvlnLjQR8oLUb197f.iHkS8vQFtxlbJJe20K7VxQLJ34sisa.",
+    "role": "passenger",
+    "phone": "9381849757",
+    "passportNumber": "",
+    "nationality": "International",
+    "createdAt": "2026-09-24T16:48:18.500Z"
+  }
+]

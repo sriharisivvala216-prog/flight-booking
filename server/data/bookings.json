@@ -1,0 +1,192 @@
+[
+  {
+    "id": "BKG-MUFRTH89",
+    "pnr": "SKWC93",
+    "userId": "USR-ADMIN",
+    "flightId": "FL-107",
+    "flightNumber": "AA-118",
+    "airline": "American Airlines",
+    "airlineLogo": "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=100&auto=format&fit=crop&q=80",
+    "from": "JFK",
+    "fromCity": "New York",
+    "to": "LAX",
+    "toCity": "Los Angeles",
+    "departureDate": "2026-10-20",
+    "departureTime": "14:45",
+    "arrivalTime": "18:05",
+    "duration": "6h 20m",
+    "aircraft": "Airbus A321T",
+    "cabinClass": "economy",
+    "passengers": [
+      {
+        "firstName": "Sivvala",
+        "lastName": "Srihari",
+        "gender": "Male",
+        "age": 28,
+        "passport": "AUTO-630134",
+        "seat": "12A",
+        "meal": "Standard Meal"
+      }
+    ],
+    "contact": {
+      "email": "sriharisivvala5@gmail.com",
+      "phone": "+916305589731"
+    },
+    "addons": {
+      "travelInsurance": true,
+      "priorityBoarding": false,
+      "extraBaggage": 0
+    },
+    "totalAmount": 320,
+    "currency": "INR",
+    "paymentMethod": "Credit Card (ending 4242)",
+    "status": "CONFIRMED",
+    "terminal": "8",
+    "gate": "G09",
+    "boardingTime": "45 mins before departure",
+    "createdAt": "2026-09-24T16:53:17.817Z"
+  },
+  {
+    "id": "BKG-MUFPZJV1",
+    "pnr": "SKWM7G",
+    "userId": "GUEST",
+    "flightId": "FL-114",
+    "flightNumber": "AI-142",
+    "airline": "Air India",
+    "airlineLogo": "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=100&auto=format&fit=crop&q=80",
+    "from": "DEL",
+    "fromCity": "New Delhi",
+    "to": "BOM",
+    "toCity": "Mumbai",
+    "departureDate": "2026-10-01",
+    "departureTime": "06:00",
+    "arrivalTime": "08:15",
+    "duration": "2h 15m",
+    "aircraft": "Airbus A320neo",
+    "cabinClass": "economy",
+    "passengers": [
+      {
+        "firstName": "Sivvala",
+        "lastName": "Srihari",
+        "gender": "Male",
+        "age": 28,
+        "passport": "S12345678",
+        "seat": "12A",
+        "meal": "Standard Meal"
+      }
+    ],
+    "contact": {
+      "email": "sriharisivvala5@gmail.com",
+      "phone": "+916305589731"
+    },
+    "addons": {
+      "travelInsurance": true,
+      "priorityBoarding": false,
+      "extraBaggage": 0
+    },
+    "totalAmount": 124,
+    "currency": "INR",
+    "paymentMethod": "Credit Card (ending 4242)",
+    "status": "CONFIRMED",
+    "terminal": "3",
+    "gate": "18B",
+    "boardingTime": "45 mins before departure",
+    "createdAt": "2026-09-24T16:02:01.933Z"
+  },
+  {
+    "id": "BKG-MUFOWVZ0",
+    "pnr": "SKWRNE",
+    "userId": "GUEST",
+    "flightId": "FL-102",
+    "flightNumber": "QR-704",
+    "airline": "Qatar Airways",
+    "airlineLogo": "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=100&auto=format&fit=crop&q=80",
+    "from": "JFK",
+    "fromCity": "New York",
+    "to": "DXB",
+    "toCity": "Dubai",
+    "departureDate": "2026-10-01",
+    "departureTime": "09:30",
+    "arrivalTime": "09:15",
+    "duration": "15h 45m",
+    "aircraft": "Boeing 777-300ER",
+    "cabinClass": "economy",
+    "passengers": [
+      {
+        "firstName": "Passenger 1",
+        "lastName": "",
+        "gender": "Male",
+        "age": 28,
+        "passport": "AUTO-526618",
+        "seat": "12A",
+        "meal": "Standard Meal"
+      }
+    ],
+    "contact": {
+      "email": "",
+      "phone": ""
+    },
+    "addons": {
+      "travelInsurance": true,
+      "priorityBoarding": false,
+      "extraBaggage": 0
+    },
+    "totalAmount": 835,
+    "currency": "USD",
+    "paymentMethod": "Credit Card (ending 4242)",
+    "status": "CANCELLED",
+    "terminal": "8",
+    "gate": "A14",
+    "boardingTime": "45 mins before departure",
+    "createdAt": "2026-09-24T15:31:58.045Z",
+    "cancelledAt": "2026-09-24T15:59:22.717Z",
+    "refundAmount": 752
+  },
+  {
+    "id": "BKG-78945",
+    "pnr": "SKW789",
+    "userId": "USR-101",
+    "flightId": "FL-101",
+    "flightNumber": "EK-202",
+    "airline": "Emirates",
+    "from": "JFK",
+    "fromCity": "New York",
+    "to": "DXB",
+    "toCity": "Dubai",
+    "departureDate": "2026-10-15",
+    "departureTime": "11:20",
+    "arrivalTime": "07:50",
+    "duration": "12h 30m",
+    "cabinClass": "business",
+    "passengers": [
+      {
+        "firstName": "Alex",
+        "lastName": "Morgan",
+        "gender": "male",
+        "age": 32,
+        "passport": "N84729104",
+        "seat": "4A",
+        "meal": "Chef Special"
+      }
+    ],
+    "contact": {
+      "email": "alex@example.com",
+      "phone": "+1 (555) 234-5678"
+    },
+    "addons": {
+      "travelInsurance": true,
+      "priorityBoarding": true,
+      "extraBaggage": 0
+    },
+    "totalAmount": 2980,
+    "currency": "USD",
+    "paymentMethod": "Credit Card (ending 4242)",
+    "status": "CANCELLED",
+    "terminal": "4",
+    "gate": "B22",
+    "boardingTime": "10:35",
+    "createdAt": "2026-09-20T14:30:00.000Z",
+    "cancelledAt": "2026-09-24T14:41:55.124Z",
+    "refundAmount": 2682
+  }
+]
