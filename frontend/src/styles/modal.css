@@ -131,3 +131,55 @@
   font-size: 0.88rem;
   margin-bottom: 14px;
 }
+
+/* ==========================================================================
+   RESPONSIVE DESIGN - MODAL & AUTH
+   ========================================================================== */
+
+/* Base modal overlay responsive */
+@media (max-width: 768px) {
+  .modal-overlay {
+    padding: 16px;
+    align-items: flex-end;
+  }
+  .modal-card {
+    max-width: 100%;
+    border-radius: 20px 20px 0 0;
+    max-height: 92vh;
+  }
+  .auth-modal {
+    padding: 24px 20px;
+  }
+  .auth-header h2 {
+    font-size: 1.4rem;
+  }
+  .demo-buttons-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .modal-overlay {
+    padding: 0;
+    align-items: flex-end;
+  }
+  .modal-card {
+    border-radius: 16px 16px 0 0;
+    max-height: 95vh;
+  }
+  .auth-modal {
+    padding: 20px 16px;
+  }
+  .auth-header h2 {
+    font-size: 1.25rem;
+  }
+  .form-input {
+    padding: 10px 12px;
+    font-size: 0.9rem;
+  }
+  .demo-btn {
+    padding: 10px 12px;
+    font-size: 0.82rem;
+  }
+}
+

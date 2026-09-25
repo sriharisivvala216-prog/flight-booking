@@ -1174,16 +1174,24 @@
 }
 
 /* ==========================================================================
-   RESPONSIVE DESIGN
+   RESPONSIVE DESIGN - HERO SECTION
    ========================================================================== */
 
+/* ── Large Screens: 1440px+ ── */
+@media (min-width: 1440px) {
+  .hero-title {
+    font-size: 3.8rem;
+  }
+}
+
+/* ── Laptop: 769px–1200px ── */
 @media (max-width: 1200px) {
   .hero-header-grid {
     grid-template-columns: 1fr;
     gap: 32px;
   }
   .hero-live-radar-card {
-    max-width: 550px;
+    max-width: 560px;
   }
   .featured-flights-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -1193,9 +1201,15 @@
   }
 }
 
+/* ── Tablet: 769px–992px ── */
 @media (max-width: 992px) {
+  .hero-wrapper {
+    padding: 30px 0 60px 0;
+    min-height: auto;
+  }
   .search-inputs-grid {
     grid-template-columns: 1fr 1fr;
+    gap: 10px;
   }
   .swap-btn {
     display: none;
@@ -1207,14 +1221,35 @@
   .hero-title {
     font-size: 2.7rem;
   }
+  .hero-subtitle {
+    font-size: 1rem;
+  }
+  .search-top-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .search-options-group {
+    flex-wrap: wrap;
+  }
 }
 
+/* ── Tablet: 768px ── */
 @media (max-width: 768px) {
+  .hero-wrapper {
+    padding: 20px 0 50px 0;
+    min-height: auto;
+  }
   .hero-title {
     font-size: 2.2rem;
   }
   .hero-live-ticker .hidden-mobile {
     display: none;
+  }
+  .hero-live-ticker {
+    font-size: 0.78rem;
+    padding: 5px 12px;
+    gap: 8px;
   }
   .featured-flights-grid {
     grid-template-columns: 1fr;
@@ -1223,21 +1258,122 @@
     grid-template-columns: 1fr;
   }
   .search-card {
-    padding: 20px;
+    padding: 20px 16px;
+    border-radius: 16px;
+  }
+  .hero-perks-pills {
+    gap: 8px;
+  }
+  .perk-pill {
+    font-size: 0.8rem;
+    padding: 5px 10px;
+  }
+  .radar-card-glass {
+    transform: none;
+  }
+  .radar-card-glass:hover {
+    transform: none;
+  }
+  /* Flight animation path: hide on small screens to avoid overflow */
+  .hero-flight-animation-track {
+    opacity: 0.4;
+    height: 180px;
   }
 }
 
+/* ── Mobile: 600px ── */
 @media (max-width: 600px) {
+  .hero-wrapper {
+    padding: 16px 0 40px 0;
+  }
   .search-inputs-grid {
     grid-template-columns: 1fr;
+    gap: 8px;
   }
   .search-submit-btn {
     grid-column: span 1;
+    width: 100%;
+    height: 52px;
+    font-size: 1rem;
   }
   .hero-title {
-    font-size: 1.85rem;
+    font-size: 1.9rem;
+    line-height: 1.15;
   }
   .hero-subtitle {
-    font-size: 0.98rem;
+    font-size: 0.92rem;
+    line-height: 1.55;
+  }
+  .hero-badge-tag {
+    font-size: 0.72rem;
+    padding: 5px 12px;
+  }
+  .quick-routes {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .quick-route-chip {
+    font-size: 0.78rem;
+    padding: 5px 10px;
+  }
+  .hero-live-radar-card {
+    display: none;
+  }
+  .search-card {
+    padding: 16px 12px;
+    border-radius: 14px;
+  }
+  .trip-type-btn {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+  }
+  .select-pill {
+    font-size: 0.82rem;
+    padding: 7px 28px 7px 10px;
+  }
+  .airport-city-text {
+    font-size: 1rem;
   }
 }
+
+/* ── Mobile: 480px ── */
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 1.7rem;
+  }
+  .hero-content-relative {
+    padding-top: 10px;
+  }
+  .featured-card {
+    padding: 16px;
+  }
+  .hero-flight-animation-track {
+    display: none;
+  }
+  .search-top-bar {
+    gap: 8px;
+    padding-bottom: 12px;
+    margin-bottom: 14px;
+  }
+}
+
+/* ── Small Mobile: 375px ── */
+@media (max-width: 375px) {
+  .hero-title {
+    font-size: 1.55rem;
+  }
+  .search-card {
+    padding: 14px 10px;
+  }
+  .input-airport-display {
+    gap: 6px;
+  }
+  .airport-iata-badge {
+    font-size: 0.88rem;
+    padding: 2px 6px;
+  }
+  .airport-city-text {
+    font-size: 0.92rem;
+  }
+}
+

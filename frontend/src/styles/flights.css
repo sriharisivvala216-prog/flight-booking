@@ -371,28 +371,132 @@
   margin-bottom: 8px;
 }
 
+/* ==========================================================================
+   RESPONSIVE DESIGN - FLIGHTS SECTION
+   ========================================================================== */
+
+/* ── Tablet: 1024px ── */
+@media (max-width: 1024px) {
+  .flights-layout {
+    grid-template-columns: 240px 1fr;
+    gap: 20px;
+  }
+}
+
+/* ── Small Tablet: 900px ── */
 @media (max-width: 900px) {
   .flights-layout {
     grid-template-columns: 1fr;
   }
   .filters-sidebar {
     position: static;
+    width: 100%;
   }
   .flight-card-body {
-    grid-template-columns: 1fr;
-    gap: 20px;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
   }
   .flight-price-action {
-    border-left: none;
-    border-top: 1px solid var(--slate-100);
-    padding-left: 0;
-    padding-top: 16px;
-    text-align: left;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    border-left: 1px solid var(--slate-100);
+    text-align: right;
   }
   .details-grid {
     grid-template-columns: 1fr 1fr;
   }
 }
+
+/* ── Mobile: 640px ── */
+@media (max-width: 640px) {
+  .flights-section {
+    padding: 24px 0 60px 0;
+  }
+  .flight-card-body {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 18px 16px;
+  }
+  .flight-price-action {
+    border-left: none;
+    border-top: 1px solid var(--slate-100);
+    padding-left: 0;
+    padding-top: 14px;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .flight-price-amount {
+    font-size: 1.5rem;
+  }
+  .select-flight-btn {
+    width: auto;
+    flex: 1;
+    min-width: 140px;
+  }
+  .results-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .sort-tabs-container {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .sort-tab-btn {
+    flex: 1;
+    text-align: center;
+    padding: 8px 10px;
+    font-size: 0.82rem;
+  }
+  .route-timeline {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .route-path-visual {
+    margin: 0 12px;
+  }
+  .flight-card-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 16px;
+  }
+  .amenities-list {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .details-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+}
+
+/* ── Small Mobile: 480px ── */
+@media (max-width: 480px) {
+  .flight-card {
+    margin-bottom: 14px;
+  }
+  .airline-info {
+    gap: 10px;
+  }
+  .airline-logo-img {
+    width: 40px;
+    height: 40px;
+  }
+  .route-time {
+    font-size: 1.2rem;
+  }
+  .details-grid {
+    grid-template-columns: 1fr;
+  }
+  .select-flight-btn {
+    width: 100%;
+  }
+  .flight-price-action {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+

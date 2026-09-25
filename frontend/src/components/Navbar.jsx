@@ -204,8 +204,7 @@ const Navbar = ({ currentTab, setCurrentTab, onOpenAuth }) => {
       </div>
 
       {/* Mobile Drawer Menu */}
-      {mobileMenuOpen && (
-        <div className="mobile-nav-drawer">
+      <div className={`mobile-nav-drawer ${mobileMenuOpen ? 'drawer-open' : 'drawer-closed'}`}>
           <div className="mobile-nav-items">
             <button
               type="button"
@@ -289,7 +288,6 @@ const Navbar = ({ currentTab, setCurrentTab, onOpenAuth }) => {
             </div>
           )}
         </div>
-      )}
     </header>
   );
 };

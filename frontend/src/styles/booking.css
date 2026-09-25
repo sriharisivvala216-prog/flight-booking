@@ -210,8 +210,78 @@
   letter-spacing: 0.1em;
 }
 
+/* ==========================================================================
+   RESPONSIVE DESIGN - BOOKING MODAL
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  .booking-modal-card {
+    max-width: 100%;
+    max-height: 95vh;
+  }
+  .booking-modal-header {
+    padding: 18px 20px;
+  }
+  .booking-modal-body {
+    padding: 20px 16px;
+  }
+  .checkout-stepper {
+    gap: 4px;
+  }
+  .checkout-step-item {
+    font-size: 0.76rem;
+    gap: 4px;
+  }
+  .step-num-badge {
+    width: 22px;
+    height: 22px;
+    font-size: 0.72rem;
+    flex-shrink: 0;
+  }
+  .checkout-stepper > *:not(:first-child):not(:last-child) > span:last-child {
+    display: none;
+  }
+}
+
 @media (max-width: 600px) {
   .passenger-form-grid {
     grid-template-columns: 1fr;
   }
+  .promo-input-group {
+    flex-direction: column;
+  }
+  .addon-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .addon-info {
+    gap: 12px;
+  }
+  .pnr-code {
+    font-size: 1.6rem;
+  }
 }
+
+@media (max-width: 480px) {
+  .booking-modal-header {
+    padding: 14px 14px;
+  }
+  .booking-modal-body {
+    padding: 16px 12px;
+  }
+  .passenger-input-card {
+    padding: 14px 12px;
+  }
+  .checkout-summary-box {
+    padding: 14px 12px;
+  }
+  .pnr-code {
+    font-size: 1.4rem;
+    letter-spacing: 0.06em;
+  }
+  .booking-success-view {
+    padding: 30px 14px;
+  }
+}
+

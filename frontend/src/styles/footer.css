@@ -135,14 +135,60 @@
   color: #94a3b8;
 }
 
-@media (max-width: 900px) {
+/* ==========================================================================
+   RESPONSIVE DESIGN - FOOTER
+   ========================================================================== */
+
+@media (max-width: 1024px) {
+  .footer-top {
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+}
+
+@media (max-width: 768px) {
+  .footer {
+    padding: 48px 0 20px 0;
+    margin-top: 60px;
+  }
   .footer-top {
     grid-template-columns: 1fr;
-    gap: 30px;
+    gap: 28px;
   }
   .footer-bottom {
     flex-direction: column;
     gap: 12px;
     text-align: center;
   }
+  .footer-bottom-links {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+  }
+  .newsletter-input-group {
+    flex-direction: column;
+  }
+  .newsletter-btn {
+    width: 100%;
+    padding: 10px;
+  }
 }
+
+@media (max-width: 480px) {
+  .footer {
+    padding: 36px 0 16px 0;
+    margin-top: 40px;
+  }
+  .footer-trust-badges {
+    gap: 8px;
+  }
+  .trust-badge-item {
+    font-size: 0.72rem;
+    padding: 5px 10px;
+  }
+  .footer-bottom-links {
+    gap: 10px;
+    font-size: 0.8rem;
+  }
+}
+

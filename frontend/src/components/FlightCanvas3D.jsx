@@ -351,17 +351,20 @@ export default function FlightCanvas3D({ onExplore, onSearchRoute }) {
     camera.lookAt(0, 2, 0);
 
     const renderer = new THREE.WebGLRenderer({
-      antialias: true,
+      antialias: window.innerWidth > 768,
       alpha: true,
       powerPreference: 'high-performance',
     });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    // Limit pixel ratio for performance on mobile
+    const isMobile = window.innerWidth <= 768;
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1.5 : 2));
     renderer.setSize(container.clientWidth, container.clientHeight);
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.3;
-    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.enabled = !isMobile; // Disable shadows on mobile for performance
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     container.appendChild(renderer.domElement);
+
 
     // --- Cinematic Sky & Sun Lighting ---
     const ambientLight = new THREE.AmbientLight(0xdbeafe, 1.8);

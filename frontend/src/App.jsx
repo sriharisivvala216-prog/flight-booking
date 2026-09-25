@@ -19,6 +19,8 @@ import { CurrencyProvider } from './context/CurrencyContext';
 import { api } from './services/api';
 import { Plane, AlertCircle } from 'lucide-react';
 import './styles/flights.css';
+import './App.css';
+
 
 function MainApp() {
   const [showLanding, setShowLanding] = useState(true);

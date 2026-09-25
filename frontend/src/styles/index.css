@@ -129,6 +129,32 @@ button, input, select, textarea {
   padding: 0 24px;
 }
 
+/* ── RESPONSIVE CONTAINER ── */
+@media (max-width: 768px) {
+  .container {
+    padding: 0 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0 12px;
+  }
+}
+
+/* ── RESPONSIVE IMAGES ── */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ── RESPONSIVE TYPOGRAPHY ── */
+@media (max-width: 480px) {
+  html {
+    font-size: 15px;
+  }
+}
+
 .badge {
   display: inline-flex;
   align-items: center;
