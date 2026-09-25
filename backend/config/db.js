@@ -26,7 +26,12 @@ export const connectDB = async () => {
     // Seed database if collections are empty
     await seedInitialData();
   } catch (error) {
-    console.warn(`⚠️  MongoDB connection notice: ${error.message}`);
+    if (error.message.includes('bad auth') || error.message.includes('authentication failed') || error.message.includes('Authentication failed')) {
+      console.warn(`⚠️  MongoDB Atlas Authentication Failed: Username or password in MONGODB_URI is incorrect.`);
+      console.log('👉 Tip: Check your database user password in MongoDB Atlas > Security > Database Access.');
+    } else {
+      console.warn(`⚠️  MongoDB connection notice: ${error.message}`);
+    }
     console.log('ℹ️  Running in resilient dual-mode: JSON file store active for seamless operation.');
     console.log('👉 To connect to cloud MongoDB Atlas, set MONGODB_URI in your .env file.');
   }

@@ -10,10 +10,12 @@ import bookingRoutes from './routes/bookings.js';
 import adminRoutes from './routes/admin.js';
 import { connectDB, getDBStatus } from './config/db.js';
 
-dotenv.config();
-
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+// Load environment variables from backend/.env or workspace root .env
+dotenv.config({ path: path.resolve(__dirname, '.env') });
+dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
 const app = express();
 
