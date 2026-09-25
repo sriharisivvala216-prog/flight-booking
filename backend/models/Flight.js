@@ -29,7 +29,6 @@ const flightSchema = new mongoose.Schema(
     wifiAvailable: { type: Boolean, default: true },
     status: {
       type: String,
-      enum: ['On Time', 'Boarding', 'Delayed', 'Departed', 'Landed', 'Cancelled'],
       default: 'On Time'
     },
     gate: { type: String, default: 'A12' },
