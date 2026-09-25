@@ -52,8 +52,11 @@ app.get('/api/health', (_req, res) => {
 });
 
 // Production: Serve frontend static build files when dist directory exists (local production mode)
-const distPath = path.resolve(__dirname, '../dist');
-if (fs.existsSync(distPath)) {
+const frontendDistPath = path.resolve(__dirname, '../frontend/dist');
+const rootDistPath = path.resolve(__dirname, '../dist');
+const distPath = fs.existsSync(frontendDistPath) ? frontendDistPath : (fs.existsSync(rootDistPath) ? rootDistPath : null);
+
+if (distPath) {
   app.use(express.static(distPath));
   app.use((req, res, next) => {
     if (req.method === 'GET' && !req.path.startsWith('/api')) {

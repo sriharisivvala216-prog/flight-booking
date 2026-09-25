@@ -8,7 +8,7 @@ export default defineConfig([
   globalIgnores(['dist', 'node_modules']),
   // Backend Node.js files
   {
-    files: ['server/**/*.{js,mjs,cjs}'],
+    files: ['backend/**/*.{js,mjs,cjs}'],
     extends: [js.configs.recommended],
     languageOptions: {
       ecmaVersion: 'latest',
@@ -31,7 +31,7 @@ export default defineConfig([
   },
   // Frontend React / Vite files
   {
-    files: ['src/**/*.{js,jsx}'],
+    files: ['frontend/src/**/*.{js,jsx}'],
     extends: [
       js.configs.recommended,
       reactHooks.configs.flat.recommended,

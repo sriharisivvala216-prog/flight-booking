@@ -9,6 +9,7 @@ lerna-debug.log*
 
 node_modules
 dist
+frontend/dist
 dist-ssr
 *.local
 
@@ -16,8 +17,11 @@ dist-ssr
 .env
 .env.*
 !.env.example
+frontend/.env
+backend/.env
 
 # Runtime-generated data (written by the server)
+backend/data/alerts.json
 server/data/alerts.json
 
 # Editor directories and files

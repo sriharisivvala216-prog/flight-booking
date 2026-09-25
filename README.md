@@ -55,15 +55,16 @@ cp .env.example .env
 npm run dev
 ```
 
-The app will be available at `http://localhost:5173`.
+The app will be available at `http://localhost:5173` and the API at `http://localhost:5000/api`.
 
-### Other Scripts
+### Individual Services & Commands
 
 ```bash
-npm run client     # Start only the Vite frontend
-npm run server     # Start only the Express backend
-npm run build      # Build the frontend for production
-npm run seed       # Seed MongoDB with sample data from JSON files
+npm run frontend   # Start only the Vite frontend (port 5173)
+npm run backend    # Start only the Express backend (port 5000)
+npm run build      # Build frontend for production
+npm run seed       # Seed MongoDB with sample records
+npm run preview    # Preview production frontend build
 ```
 
 ## ⚙️ Environment Variables
@@ -73,31 +74,47 @@ Create a `.env` file based on `.env.example`:
 ```env
 PORT=5000
 NODE_ENV=development
-MONGODB_URI=mongodb+srv://<user>:<password>@cluster0.xxx.mongodb.net/
+MONGODB_URI=mongodb+srv://<user>:<password>@cluster0.xxx.mongodb.net/skywings_flightbooking
 JWT_SECRET=your_jwt_secret_key_here
 ```
 
-> **Note:** The server runs in **dual-mode** — if MongoDB is unavailable, it automatically falls back to JSON file storage in `server/data/`.
+> **Note:** The server runs in **dual-mode** — if MongoDB is unavailable, it automatically falls back to JSON file storage in `backend/data/`.
 
 ## 📁 Project Structure
 
-```
+```text
 flightbooking/
-├── src/                    # React frontend
-│   ├── components/         # UI components (Navbar, HeroSearch, BookingModal, …)
-│   ├── context/            # AuthContext, CurrencyContext
-│   ├── services/           # API client (api.js)
-│   └── styles/             # CSS stylesheets
-├── server/                 # Express backend
-│   ├── config/             # MongoDB connection
+├── frontend/               # React 19 + Vite 7 Single Page Application
+│   ├── public/             # Static files (images, 3D glb models)
+│   ├── src/
+│   │   ├── assets/         # App assets
+│   │   ├── components/     # UI components (Navbar, HeroSearch, BookingModal, ...)
+│   │   ├── context/        # AuthContext, CurrencyContext
+│   │   ├── services/       # Client API abstraction (api.js)
+│   │   ├── styles/         # CSS stylesheets per component
+│   │   ├── App.jsx         # App view manager & modal controller
+│   │   ├── index.css       # Design tokens, typography & CSS variables
+│   │   └── main.jsx        # App entry point
+│   ├── index.html          # HTML template
+│   ├── vite.config.js      # Vite config with API proxy
+│   └── package.json        # Frontend dependencies
+├── backend/                # Express 5 + Node.js REST API
+│   ├── config/             # MongoDB connection configuration
 │   ├── data/               # JSON file fallback data store
-│   ├── middleware/         # JWT auth middleware
-│   ├── models/             # Mongoose models (User, Flight, Booking, Airport)
-│   ├── routes/             # API route handlers
-│   ├── services/           # DB abstraction service
-│   └── utils/              # File DB helpers, seed script
+│   ├── middleware/         # JWT auth & admin guards
+│   ├── models/             # Mongoose schemas (User, Flight, Booking, Airport)
+│   ├── routes/             # Express route modules (auth, flights, bookings, admin)
+│   ├── services/           # Database service abstraction (MongoDB + JSON fallback)
+│   ├── utils/              # Seed utility & filesystem DB helpers
+│   ├── app.js              # Express app setup & route mounting
+│   ├── server.js           # Server listen entrypoint
+│   └── package.json        # Backend dependencies
+├── api/                    # Vercel serverless function entrypoint
+│   └── index.js            # Serverless bridge to backend/app.js
 ├── .env.example            # Environment variable template
-└── vite.config.js          # Vite + API proxy config
+├── package.json            # Root workspace orchestrator
+├── STRUCTURE.md            # Detailed structural documentation
+└── vercel.json             # Vercel deployment configuration
 ```
 
 ## 🔐 Demo Login

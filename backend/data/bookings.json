@@ -1,5 +1,52 @@
 [
   {
+    "id": "BKG-MUGQQD7H",
+    "pnr": "SKWR32",
+    "userId": "GUEST",
+    "flightId": "FL-115",
+    "flightNumber": "6E-205",
+    "airline": "IndiGo",
+    "airlineLogo": "https://images.unsplash.com/photo-1570710891163-6d3b5c47248b?w=100&auto=format&fit=crop&q=80",
+    "from": "DEL",
+    "fromCity": "New Delhi",
+    "to": "BOM",
+    "toCity": "Mumbai",
+    "departureDate": "2026-10-02",
+    "departureTime": "09:30",
+    "arrivalTime": "11:45",
+    "duration": "2h 15m",
+    "aircraft": "Airbus A321neo",
+    "cabinClass": "economy",
+    "passengers": [
+      {
+        "firstName": "Passenger 1",
+        "lastName": "",
+        "gender": "Male",
+        "age": 28,
+        "passport": "AUTO-399117",
+        "seat": "12A",
+        "meal": "Standard Meal"
+      }
+    ],
+    "contact": {
+      "email": "",
+      "phone": ""
+    },
+    "addons": {
+      "travelInsurance": true,
+      "priorityBoarding": false,
+      "extraBaggage": 0
+    },
+    "totalAmount": 310,
+    "currency": "INR",
+    "paymentMethod": "Credit Card (ending 4242)",
+    "status": "CONFIRMED",
+    "terminal": "2",
+    "gate": "12",
+    "boardingTime": "45 mins before departure",
+    "createdAt": "2026-09-25T09:10:39.197Z"
+  },
+  {
     "id": "BKG-MUFRTH89",
     "pnr": "SKWC93",
     "userId": "USR-ADMIN",

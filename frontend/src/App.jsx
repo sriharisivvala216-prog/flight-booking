@@ -13,6 +13,7 @@ import MyBookings from './components/MyBookings';
 import FlightStatus from './components/FlightStatus';
 import AdminDashboard from './components/AdminDashboard';
 import AuthModal from './components/AuthModal';
+import LandingPage from './components/LandingPage';
 import { AuthProvider } from './context/AuthContext';
 import { CurrencyProvider } from './context/CurrencyContext';
 import { api } from './services/api';
@@ -20,6 +21,7 @@ import { Plane, AlertCircle } from 'lucide-react';
 import './styles/flights.css';
 
 function MainApp() {
+  const [showLanding, setShowLanding] = useState(true);
   const [currentTab, setCurrentTab] = useState('search');
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [authMode, setAuthMode] = useState('login');
@@ -142,6 +144,23 @@ function MainApp() {
     setAuthMode(safeMode);
     setShowAuthModal(true);
   };
+
+  if (showLanding) {
+    return (
+      <LandingPage
+        onEnter={(customParams) => {
+          if (customParams) {
+            setSearchParams((prev) => ({
+              ...prev,
+              ...customParams,
+            }));
+          }
+          setShowLanding(false);
+          setCurrentTab('search');
+        }}
+      />
+    );
+  }
 
   return (
     <div className="app-root">

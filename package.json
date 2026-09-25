@@ -1,18 +1,23 @@
 {
-  "name": "flightbooking",
+  "name": "skywings-flightbooking",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
   "scripts": {
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "client": "vite",
-    "server": "node --watch server/server.js",
-    "start": "node server/server.js",
-    "seed": "node server/utils/seed.js",
-    "build": "vite build",
-    "lint": "eslint .",
-
-    "preview": "vite preview"
+    "dev": "concurrently -n \"BACKEND,FRONTEND\" -c \"cyan,magenta\" \"npm run dev --workspace=backend\" \"npm run dev --workspace=frontend\"",
+    "client": "npm run dev --workspace=frontend",
+    "frontend": "npm run dev --workspace=frontend",
+    "server": "npm run dev --workspace=backend",
+    "backend": "npm run dev --workspace=backend",
+    "start": "npm start --workspace=backend",
+    "seed": "npm run seed --workspace=backend",
+    "build": "npm run build --workspace=frontend",
+    "preview": "npm run preview --workspace=frontend",
+    "lint": "eslint ."
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",
@@ -25,7 +30,8 @@
     "lucide-react": "^1.48.0",
     "mongoose": "^9.10.2",
     "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "react-dom": "^19.2.0",
+    "three": "^0.186.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
