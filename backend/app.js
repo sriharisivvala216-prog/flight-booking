@@ -21,17 +21,31 @@ const app = express();
 connectDB();
 
 // CORS — allow all origins (covers Vercel preview URLs + production)
-app.use(cors({
+const corsOptions = {
   origin: '*',
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept']
-}));
+};
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
 app.use(express.json());
 
 // Request logger for debugging
 app.use((req, _res, next) => {
   console.log(`[API] ${req.method} ${req.originalUrl}`);
   next();
+});
+
+// Root API info endpoint (for Render service health check & browser landing)
+app.get('/', (_req, res) => {
+  res.json({
+    service: 'SkyWings Flight Booking Backend API',
+    status: 'online',
+    health: '/api/health',
+    timestamp: new Date().toISOString(),
+    frontendUrl: process.env.FRONTEND_URL || 'https://flight-booking-na5pkq022-sivvala.vercel.app',
+    database: getDBStatus()
+  });
 });
 
 // API Routes

@@ -117,6 +117,39 @@ flightbooking/
 └── vercel.json             # Vercel deployment configuration
 ```
 
+## 🌐 Deployment Guide
+
+### Deploying the Backend on Render (Recommended)
+
+1. Sign in to [Render.com](https://render.com) and click **New +** > **Web Service**.
+2. Connect your GitHub repository (`flightbooking`).
+3. Fill in the service details:
+   - **Name**: `skywings-backend` (or your choice)
+   - **Root Directory**: `backend`
+   - **Runtime**: `Node`
+   - **Build Command**: `npm install`
+   - **Start Command**: `npm start`
+4. Add the following **Environment Variables** in the Render dashboard:
+   - `NODE_ENV`: `production`
+   - `PORT`: `5000` *(Render dynamically provides this, but defaults to 5000)*
+   - `MONGODB_URI`: `mongodb+srv://<username>:<password>@cluster0.xxx.mongodb.net/skywings_flightbooking`
+   - `JWT_SECRET`: `skywings_super_secure_jwt_secret_2026_fsd`
+   - `FRONTEND_URL`: `https://flight-booking-na5pkq022-sivvala.vercel.app`
+5. Click **Create Web Service**.
+6. Once deployed, copy your Render backend URL (e.g. `https://skywings-backend.onrender.com`).
+
+---
+
+### Connecting the Frontend on Vercel
+
+1. Open your project on [Vercel](https://vercel.com).
+2. Go to **Settings** > **Environment Variables**.
+3. Add a new variable:
+   - **Key**: `VITE_API_URL`
+   - **Value**: `https://<your-render-service>.onrender.com/api`
+4. Go to the **Deployments** tab and click **Redeploy** on your latest deployment.
+5. Your frontend at `https://flight-booking-na5pkq022-sivvala.vercel.app` is now fully connected to the live Render backend!
+
 ## 🔐 Demo Login
 
 Use the **Demo Login** button in the app to log in as a demo passenger or admin without registration.
