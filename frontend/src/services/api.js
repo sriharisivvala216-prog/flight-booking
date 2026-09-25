@@ -5,6 +5,10 @@ const getApiBase = () => {
     if (url.endsWith('/')) url = url.slice(0, -1);
     return url.endsWith('/api') ? url : `${url}/api`;
   }
+  // When running in production (e.g. on Vercel), default to the live Render backend
+  if (import.meta.env.PROD) {
+    return 'https://flight-booking-pkkf.onrender.com/api';
+  }
   return '/api';
 };
 
