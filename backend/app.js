@@ -49,14 +49,14 @@ app.get('/', (_req, res) => {
   });
 });
 
-// API Routes
-app.use('/api/auth', authRoutes);
-app.use('/api/flights', flightRoutes);
-app.use('/api/bookings', bookingRoutes);
-app.use('/api/admin', adminRoutes);
+// API Routes (mounted with and without /api prefix for seamless Vercel & Render compatibility)
+app.use(['/api/auth', '/auth'], authRoutes);
+app.use(['/api/flights', '/flights'], flightRoutes);
+app.use(['/api/bookings', '/bookings'], bookingRoutes);
+app.use(['/api/admin', '/admin'], adminRoutes);
 
 // Health check with DB status
-app.get('/api/health', (_req, res) => {
+const healthCheckHandler = (_req, res) => {
   res.json({
     status: 'online',
     timestamp: new Date().toISOString(),
@@ -64,7 +64,8 @@ app.get('/api/health', (_req, res) => {
     database: getDBStatus(),
     version: '1.0.0'
   });
-});
+};
+app.get(['/api/health', '/health'], healthCheckHandler);
 
 // Production: Serve frontend static build files when dist directory exists (local production mode)
 const frontendDistPath = path.resolve(__dirname, '../frontend/dist');
