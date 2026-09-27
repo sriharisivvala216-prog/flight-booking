@@ -1,5 +1,21 @@
 .auth-modal {
-  padding: 32px;
+  padding: 36px 32px;
+  background: #ffffff;
+  border-radius: 24px;
+  box-shadow: 0 25px 70px -10px rgba(15, 23, 42, 0.25), 0 0 0 1px rgba(245, 158, 11, 0.2);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  position: relative;
+  overflow: hidden;
+}
+
+.auth-modal::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #f59e0b, #0284c7, #2563eb);
 }
 
 .auth-header {
@@ -7,23 +23,70 @@
   margin-bottom: 24px;
 }
 
+.auth-club-emblem {
+  width: 54px;
+  height: 54px;
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 50%, #b45309 100%);
+  color: #ffffff;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 12px auto;
+  box-shadow: 0 8px 24px rgba(245, 158, 11, 0.45);
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
+  animation: emblemFloat 3s ease-in-out infinite alternate;
+}
+
+@keyframes emblemFloat {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-4px); }
+}
+
+.club-emblem-plane {
+  transform: rotate(-45deg);
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.auth-club-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: linear-gradient(135deg, #fef3c7, #fde68a);
+  color: #92400e;
+  border: 1px solid #fcd34d;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.2);
+}
+
 .auth-header h2 {
-  font-size: 1.6rem;
+  font-size: 1.65rem;
+  font-weight: 800;
   margin-bottom: 6px;
   color: var(--navy-950);
+  letter-spacing: -0.01em;
 }
 
 .auth-header p {
   color: var(--slate-500);
-  font-size: 0.9rem;
+  font-size: 0.88rem;
+  max-width: 360px;
+  margin: 0 auto;
+  line-height: 1.5;
 }
 
 .auth-tabs {
   display: flex;
-  background: var(--slate-100);
+  background: #f1f5f9;
   padding: 4px;
-  border-radius: var(--radius-md);
-  margin-bottom: 24px;
+  border-radius: 14px;
+  margin-bottom: 22px;
+  border: 1px solid #e2e8f0;
 }
 
 .auth-tab-btn {
@@ -31,34 +94,35 @@
   padding: 10px;
   border: none;
   background: transparent;
-  border-radius: var(--radius-sm);
-  font-weight: 600;
-  font-size: 0.9rem;
-  color: var(--slate-600);
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 0.88rem;
+  color: #64748b;
   cursor: pointer;
-  transition: all var(--transition-fast);
+  transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
 }
 
 .auth-tab-btn.active {
-  background: white;
-  color: var(--navy-950);
-  box-shadow: var(--shadow-sm);
+  background: #ffffff;
+  color: #0f172a;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .demo-login-box {
-  background: #f0fdf4;
-  border: 1px solid #bbf7d0;
-  border-radius: var(--radius-md);
-  padding: 16px;
+  background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
+  border: 1px solid #a7f3d0;
+  border-radius: 16px;
+  padding: 14px 16px;
   margin-bottom: 20px;
+  box-shadow: 0 2px 10px rgba(16, 185, 129, 0.08);
 }
 
 .demo-login-title {
-  font-size: 0.8rem;
-  font-weight: 700;
-  color: #166534;
+  font-size: 0.76rem;
+  font-weight: 800;
+  color: #065f46;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
   margin-bottom: 10px;
   display: flex;
   align-items: center;
@@ -71,6 +135,27 @@
   gap: 10px;
 }
 
+.demo-btn {
+  background: #ffffff;
+  border: 1px solid #6ee7b7;
+  color: #047857;
+  padding: 9px 12px;
+  border-radius: 10px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+}
+
+.demo-btn:hover {
+  background: #d1fae5;
+  border-color: #34d399;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+}
+
 .demo-btn.admin-demo {
   border-color: #93c5fd;
   color: #0369a1;
@@ -79,38 +164,7 @@
 .demo-btn.admin-demo:hover {
   background: #e0f2fe;
   border-color: #38bdf8;
-}
-
-.auth-club-emblem {
-  width: 48px;
-  height: 48px;
-  background: linear-gradient(135deg, #0284c7, #2563eb);
-  color: #ffffff;
-  border-radius: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 10px auto;
-  box-shadow: 0 6px 18px rgba(2, 132, 199, 0.35);
-}
-
-.club-emblem-plane {
-  transform: rotate(-45deg);
-}
-
-.auth-club-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  background: #fef3c7;
-  color: #b45309;
-  border: 1px solid #fde68a;
-  padding: 3px 10px;
-  border-radius: 20px;
-  font-size: 0.72rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  margin-bottom: 8px;
+  box-shadow: 0 4px 12px rgba(2, 132, 199, 0.2);
 }
 
 .form-row-duo {

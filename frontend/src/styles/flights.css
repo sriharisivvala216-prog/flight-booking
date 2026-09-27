@@ -177,19 +177,36 @@
 
 /* Flight Card */
 .flight-card {
-  background: white;
+  background: #ffffff;
   border-radius: var(--radius-xl);
-  box-shadow: var(--shadow-md);
+  box-shadow: 0 4px 18px rgba(15, 23, 42, 0.05);
   border: 1px solid var(--slate-200);
   margin-bottom: 20px;
-  transition: all var(--transition-normal);
+  transition: all 0.25s cubic-bezier(0.2, 0, 0, 1);
   overflow: hidden;
+  position: relative;
+}
+
+.flight-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(180deg, #0284c7, #2563eb);
+  opacity: 0;
+  transition: opacity 0.25s ease;
 }
 
 .flight-card:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-xl);
-  border-color: var(--primary-200);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(2, 132, 199, 0.14);
+  border-color: #7dd3fc;
+}
+
+.flight-card:hover::before {
+  opacity: 1;
 }
 
 .flight-card-body {
@@ -212,6 +229,7 @@
   border-radius: 12px;
   object-fit: cover;
   border: 1px solid var(--slate-100);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
 .airline-name {
@@ -242,17 +260,18 @@
 }
 
 .route-time {
-  font-size: 1.45rem;
+  font-size: 1.5rem;
   font-weight: 800;
   color: var(--navy-950);
   line-height: 1;
   margin-bottom: 4px;
+  letter-spacing: -0.02em;
 }
 
 .route-airport-code {
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: var(--slate-700);
+  font-size: 0.98rem;
+  font-weight: 800;
+  color: #0f172a;
 }
 
 .route-city {
@@ -269,14 +288,14 @@
 
 .duration-tag {
   font-size: 0.82rem;
-  font-weight: 600;
-  color: var(--slate-500);
+  font-weight: 700;
+  color: #64748b;
   margin-bottom: 6px;
 }
 
 .flight-path-line {
   height: 2px;
-  background: var(--slate-200);
+  background: linear-gradient(90deg, #cbd5e1 0%, #0284c7 50%, #cbd5e1 100%);
   position: relative;
   display: flex;
   align-items: center;
@@ -284,20 +303,33 @@
 }
 
 .flight-path-plane-icon {
-  color: var(--primary-600);
+  color: #0284c7;
   background: white;
-  padding: 0 4px;
+  padding: 0 6px;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(2, 132, 199, 0.3);
+  animation: planeFloat 2.5s ease-in-out infinite alternate;
+}
+
+@keyframes planeFloat {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-2px); }
 }
 
 .stops-tag {
   font-size: 0.76rem;
-  font-weight: 700;
+  font-weight: 800;
   color: var(--accent-emerald);
   margin-top: 6px;
+  display: inline-block;
+  background: #dcfce7;
+  padding: 2px 8px;
+  border-radius: 12px;
 }
 
 .stops-tag.with-stops {
   color: var(--accent-amber);
+  background: #fef3c7;
 }
 
 /* Price & Booking CTA */
@@ -308,10 +340,11 @@
 }
 
 .flight-price-amount {
-  font-size: 1.85rem;
+  font-size: 1.95rem;
   font-weight: 800;
-  color: var(--primary-600);
+  color: #0284c7;
   line-height: 1;
+  letter-spacing: -0.02em;
 }
 
 .price-subtext {
