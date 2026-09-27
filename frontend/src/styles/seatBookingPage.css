@@ -704,27 +704,28 @@
 }
 
 @media (max-width: 480px) {
-  .seat-booking-root { overflow-x: hidden; }
-  .seat-page-header { height: auto; padding: 10px 14px; }
-  .seat-page-flight-banner { padding: 10px 14px; flex-wrap: wrap; gap: 8px; }
-  .seat-page-flight-banner .flight-route-display { font-size: 1rem; gap: 8px; }
-  .seat-booking-stage { padding: 12px 10px 80px; }
-  .seat-map-wrapper { padding: 12px 8px; overflow-x: auto; }
-  .seat-node { width: 28px; height: 28px; font-size: 0.62rem; border-radius: 6px; }
-  .row-label { font-size: 0.68rem; width: 20px; }
-  .seat-legend { flex-wrap: wrap; gap: 8px 16px; padding: 10px 14px; font-size: 0.75rem; }
-  .seat-class-selector { padding: 10px 12px; gap: 6px; }
-  .seat-class-btn { padding: 6px 12px; font-size: 0.78rem; }
-  .seat-confirm-panel { padding: 12px 14px; }
-  .seat-confirm-panel .confirm-btn { min-height: 50px; font-size: 1rem; }
-  .selected-seats-display { flex-wrap: wrap; gap: 6px; }
-  .seat-tag { font-size: 0.78rem; padding: 4px 10px; }
-  .cabin-class-tabs { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .seat-booking-page-root { overflow-x: hidden; }
+  .seat-page-header { height: auto; padding: 10px 14px; flex-direction: column; align-items: flex-start; }
+  .seat-page-flight-banner { padding: 8px 12px; width: 100%; justify-content: space-between; }
+  .route-code { font-size: 1rem; }
+  .seat-booking-stage { padding: 12px 10px 80px; gap: 20px; }
+  .seatmap-fuselage-container { padding: 16px 10px; border-radius: 16px; }
+  .airplane-fuselage-wrapper { padding: 16px 10px; border-radius: 40px 40px 16px 16px; overflow-x: auto; }
+  .seat-node { width: 26px; height: 26px; font-size: 0.62rem; border-radius: 6px; }
+  .row-number-badge { font-size: 0.68rem; width: 18px; }
+  .seatmap-legend-row { flex-wrap: wrap; gap: 8px 12px; padding: 10px 12px; }
+  .legend-item { font-size: 0.68rem; }
+  .seat-pricing-summary-card { padding: 16px; border-radius: 16px; }
+  .confirm-seats-btn { padding: 14px 16px; font-size: 0.9rem; }
+  .hovered-seat-card { padding: 12px; }
+  .hover-seat-code { font-size: 1.1rem; }
 }
 
 @media (max-width: 360px) {
-  .seat-node { width: 24px; height: 24px; font-size: 0.58rem; border-radius: 5px; }
-  .row-seats-line { gap: 4px; }
+  .seat-node { width: 22px; height: 22px; font-size: 0.55rem; border-radius: 5px; }
+  .seats-block-group { gap: 4px; }
+  .row-seats-line { gap: 6px; }
   .seat-page-header { padding: 8px 10px; }
   .seat-booking-stage { padding: 10px 6px 80px; }
+  .airplane-fuselage-wrapper { padding: 12px 6px; }
 }
