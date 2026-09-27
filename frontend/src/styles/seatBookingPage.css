@@ -702,3 +702,29 @@
     gap: 6px;
   }
 }
+
+@media (max-width: 480px) {
+  .seat-booking-root { overflow-x: hidden; }
+  .seat-page-header { height: auto; padding: 10px 14px; }
+  .seat-page-flight-banner { padding: 10px 14px; flex-wrap: wrap; gap: 8px; }
+  .seat-page-flight-banner .flight-route-display { font-size: 1rem; gap: 8px; }
+  .seat-booking-stage { padding: 12px 10px 80px; }
+  .seat-map-wrapper { padding: 12px 8px; overflow-x: auto; }
+  .seat-node { width: 28px; height: 28px; font-size: 0.62rem; border-radius: 6px; }
+  .row-label { font-size: 0.68rem; width: 20px; }
+  .seat-legend { flex-wrap: wrap; gap: 8px 16px; padding: 10px 14px; font-size: 0.75rem; }
+  .seat-class-selector { padding: 10px 12px; gap: 6px; }
+  .seat-class-btn { padding: 6px 12px; font-size: 0.78rem; }
+  .seat-confirm-panel { padding: 12px 14px; }
+  .seat-confirm-panel .confirm-btn { min-height: 50px; font-size: 1rem; }
+  .selected-seats-display { flex-wrap: wrap; gap: 6px; }
+  .seat-tag { font-size: 0.78rem; padding: 4px 10px; }
+  .cabin-class-tabs { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+}
+
+@media (max-width: 360px) {
+  .seat-node { width: 24px; height: 24px; font-size: 0.58rem; border-radius: 5px; }
+  .row-seats-line { gap: 4px; }
+  .seat-page-header { padding: 8px 10px; }
+  .seat-booking-stage { padding: 10px 6px 80px; }
+}

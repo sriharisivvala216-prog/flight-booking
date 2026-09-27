@@ -554,4 +554,72 @@ select.bp-input { cursor: pointer; }
   .bp-form-grid { grid-template-columns: 1fr; }
   .bp-body { padding: 16px 12px 40px; }
   .bp-card { padding: 18px 16px; }
+  .bp-navbar { padding: 0 12px; }
+  .bp-stepper-bar { padding: 0 10px; overflow-x: auto; }
+  .bp-step-label { font-size: 0.65rem; }
+  .bp-step-num { width: 28px; height: 28px; font-size: 0.75rem; }
+}
+
+@media (max-width: 480px) {
+  .bp-root { overflow-x: hidden; }
+  .bp-navbar-brand { font-size: 1rem; }
+  .bp-body { padding: 12px 10px 60px; gap: 16px; }
+  .bp-card { padding: 14px 12px; margin-bottom: 14px; border-radius: 12px; }
+  .bp-card-title { font-size: 0.95rem; }
+  .bp-passenger-block { padding: 14px 12px; }
+  .bp-form-group label { font-size: 0.78rem; }
+  .bp-form-group input,
+  .bp-form-group select { font-size: 0.9rem; padding: 10px 12px; min-height: 44px; }
+  .bp-addon-card { flex-direction: column; align-items: flex-start; gap: 10px; padding: 14px; }
+  .bp-addon-info { gap: 10px; }
+  .bp-addon-icon { width: 36px; height: 36px; }
+  .bp-pay-btn { font-size: 1rem; padding: 14px; min-height: 52px; border-radius: 12px; }
+  .bp-summary-row { font-size: 0.82rem; }
+  .bp-summary-total { font-size: 0.95rem; }
+  .bp-sidebar-panel { padding: 16px; border-radius: 14px; }
+  .bp-stepper-bar { gap: 4px; }
+  .bp-step-divider { min-width: 20px; }
+  .bp-step-label { display: none; }
+  .bp-promo-row { flex-direction: column; gap: 8px; }
+  .bp-promo-row input { width: 100%; }
+  .bp-promo-row button { width: 100%; }
+}
+
+@media (max-width: 360px) {
+  .bp-card { padding: 12px 10px; }
+  .bp-body { padding: 10px 8px 60px; }
+  .bp-pay-btn { font-size: 0.9rem; }
+  .bp-form-group input,
+  .bp-form-group select { font-size: 0.85rem; padding: 9px 10px; }
+}
+
+/* ── Extra Small Mobile Enhancements ── */
+@media (max-width: 350px) {
+  .bp-root {
+    font-size: 14px;
+  }
+  .bp-navbar {
+    padding: 0 8px;
+  }
+  .bp-stepper-bar {
+    padding: 0 6px;
+  }
+  .bp-btn {
+    width: 100%;
+    padding: 12px 0;
+  }
+  .bp-form-grid {
+    gap: 8px;
+  }
+  .bp-input, .bp-input::placeholder, select.bp-input {
+    font-size: 0.85rem;
+    padding: 8px 10px;
+  }
+  .bp-card {
+    padding: 12px 8px;
+  }
+  .bp-sidebar {
+    position: static;
+    top: auto;
+  }
 }
