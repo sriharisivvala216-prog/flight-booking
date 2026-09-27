@@ -1,5 +1,52 @@
 [
   {
+    "id": "BKG-MUJJ7K4M",
+    "pnr": "SKWKHB",
+    "userId": "GUEST",
+    "flightId": "FL-113",
+    "flightNumber": "SQ-321",
+    "airline": "Singapore Airlines",
+    "airlineLogo": "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=100&auto=format&fit=crop&q=80",
+    "from": "LHR",
+    "fromCity": "London",
+    "to": "SIN",
+    "toCity": "Singapore",
+    "departureDate": "2026-10-04",
+    "departureTime": "22:05",
+    "arrivalTime": "18:10",
+    "duration": "13h 05m",
+    "aircraft": "Airbus A380-800",
+    "cabinClass": "economy",
+    "passengers": [
+      {
+        "firstName": "Captain",
+        "lastName": "Skywards",
+        "gender": "Male",
+        "age": 28,
+        "passport": "AUTO-842116",
+        "seat": "12A",
+        "meal": "Standard Meal"
+      }
+    ],
+    "contact": {
+      "email": "admin@skywings.com",
+      "phone": "+1 (800) 555-0199"
+    },
+    "addons": {
+      "travelInsurance": true,
+      "priorityBoarding": false,
+      "extraBaggage": 0
+    },
+    "totalAmount": 1069,
+    "currency": "USD",
+    "paymentMethod": "Credit Card (ending 4242)",
+    "status": "CONFIRMED",
+    "terminal": "2",
+    "gate": "B42",
+    "boardingTime": "45 mins before departure",
+    "createdAt": "2026-09-27T08:03:22.918Z"
+  },
+  {
     "id": "BKG-MUGQQD7H",
     "pnr": "SKWR32",
     "userId": "GUEST",
