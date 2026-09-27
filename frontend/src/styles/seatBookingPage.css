@@ -276,7 +276,7 @@
 .fuselage-cabin-scroll {
   width: 100%;
   max-height: 540px;
-  overflow-y: auto;
+  overflow: auto;
   padding: 0 10px;
 }
 
@@ -323,7 +323,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   justify-content: center;
 }
 
