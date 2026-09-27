@@ -189,8 +189,13 @@
 }
 
 @media (max-width: 768px) {
+  .boarding-modal-card {
+    max-width: 100%;
+    padding: 0 10px;
+  }
   .ticket-body {
     flex-direction: column;
+    padding: 20px;
   }
   .ticket-main-section {
     border-right: none;
@@ -199,7 +204,84 @@
     padding-bottom: 24px;
     margin-bottom: 24px;
   }
+  .ticket-main-section::before,
+  .ticket-main-section::after {
+    display: none;
+  }
   .ticket-stub-section {
     padding-left: 0;
+  }
+  .ticket-route-code {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .ticket-header {
+    padding: 16px 18px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .ticket-airline-brand h3 {
+    font-size: 1.15rem;
+  }
+  .ticket-grid-meta {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  .barcode-strip {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .simulated-barcode {
+    width: 100%;
+    max-width: 260px;
+  }
+  .ticket-action-bar {
+    flex-direction: column-reverse;
+    width: 100%;
+    gap: 10px;
+  }
+  .ticket-action-bar button {
+    width: 100%;
+    min-height: 44px;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .ticket-body {
+    padding: 16px 12px;
+  }
+  .ticket-route-code {
+    font-size: 1.5rem;
+  }
+  .ticket-val {
+    font-size: 0.95rem;
+  }
+  .ticket-label {
+    font-size: 0.68rem;
+  }
+  .qr-code-box {
+    width: 76px;
+    height: 76px;
+  }
+}
+
+@media (max-width: 360px) {
+  .ticket-grid-meta {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .ticket-header {
+    padding: 12px;
+  }
+  .ticket-airline-brand h3 {
+    font-size: 1rem;
+  }
+  .ticket-class-badge {
+    font-size: 0.7rem;
+    padding: 3px 8px;
   }
 }

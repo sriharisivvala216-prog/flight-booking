@@ -409,7 +409,7 @@ const HeroSearch = ({ onSearch, initialParams }) => {
           </div>
 
           {/* Search Inputs Form */}
-          <form onSubmit={handleSearchSubmit} className="search-inputs-grid">
+          <form onSubmit={handleSearchSubmit} className={`search-inputs-grid ${tripType === 'round-trip' ? 'has-round-trip' : ''}`}>
             {/* Origin Airport */}
             <div
               className="search-input-box"

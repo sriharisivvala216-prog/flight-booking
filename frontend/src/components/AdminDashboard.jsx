@@ -87,27 +87,18 @@ const AdminDashboard = () => {
   };
 
   return (
-    <div className="container" style={{ padding: '40px 24px 80px 24px' }}>
+    <div className="container dashboard-page-container">
       {/* Header */}
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          marginBottom: 30,
-          flexWrap: 'wrap',
-          gap: 16
-        }}
-      >
+      <div className="dashboard-header-row">
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
             <span className="badge badge-primary">Operations Control</span>
             <span style={{ fontSize: '0.85rem', color: '#64748b' }}>Live SkyWings Fleet Portal</span>
           </div>
-          <h1 style={{ fontSize: '2.2rem', marginTop: 4 }}>Airline Administration & Analytics</h1>
+          <h1 className="dashboard-page-title">Airline Administration & Analytics</h1>
         </div>
 
-        <div style={{ display: 'flex', gap: 10 }}>
+        <div className="dashboard-header-actions">
           {!isAdmin && (
             <button
               type="button"
@@ -506,7 +497,7 @@ const AdminDashboard = () => {
                 />
               </div>
 
-              <div style={{ gridColumn: 'span 2', display: 'flex', justifyContent: 'flex-end', gap: 12, marginTop: 12 }}>
+              <div className="admin-form-full" style={{ display: 'flex', justifyContent: 'flex-end', gap: 12, marginTop: 12, flexWrap: 'wrap' }}>
                 <button
                   type="button"
                   className="btn-secondary"

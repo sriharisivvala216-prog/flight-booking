@@ -205,3 +205,108 @@
   font-weight: 700;
   font-size: 0.88rem;
 }
+
+/* ==========================================================================
+   RESPONSIVE DESIGN - SEAT MAP MODAL
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  .seat-modal-card {
+    max-width: 100%;
+    max-height: 92vh;
+    border-radius: var(--radius-xl);
+  }
+  .seat-modal-header {
+    padding: 16px 20px;
+  }
+  .seat-modal-body {
+    padding: 18px 14px;
+  }
+  .seat-modal-footer {
+    padding: 14px 20px;
+  }
+}
+
+@media (max-width: 600px) {
+  .aircraft-tube {
+    padding: 24px 12px;
+    border-radius: 60px 60px 28px 28px;
+  }
+  .seat-legend {
+    gap: 10px 14px;
+    padding: 10px 12px;
+  }
+  .legend-item {
+    font-size: 0.76rem;
+  }
+  .seat-modal-footer {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+  }
+  .selected-seats-summary {
+    justify-content: space-between;
+    width: 100%;
+  }
+  .seat-modal-footer button {
+    width: 100%;
+    min-height: 46px;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .aircraft-tube {
+    padding: 20px 8px;
+    border-radius: 40px 40px 20px 20px;
+  }
+  .seat-row {
+    gap: clamp(2px, 1.2vw, 5px);
+    margin-bottom: 6px;
+  }
+  .seat-btn {
+    width: clamp(26px, 7vw, 32px);
+    height: clamp(26px, 7vw, 32px);
+    font-size: clamp(0.62rem, 2vw, 0.72rem);
+    border-radius: 6px;
+  }
+  .aisle-gap {
+    width: clamp(8px, 2.5vw, 16px);
+  }
+  .row-number-label {
+    width: clamp(16px, 4vw, 22px);
+    font-size: clamp(0.62rem, 1.8vw, 0.72rem);
+  }
+  .seat-modal-header {
+    padding: 14px 14px;
+  }
+  .seat-modal-body {
+    padding: 14px 8px;
+  }
+  .seat-chip {
+    padding: 3px 8px;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .seat-btn {
+    width: 25px;
+    height: 25px;
+    font-size: 0.6rem;
+  }
+  .aisle-gap {
+    width: 6px;
+  }
+  .row-number-label {
+    width: 14px;
+    font-size: 0.6rem;
+  }
+  .legend-item {
+    font-size: 0.7rem;
+  }
+  .legend-swatch {
+    width: 16px;
+    height: 16px;
+  }
+}

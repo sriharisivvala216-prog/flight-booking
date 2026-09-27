@@ -22,15 +22,15 @@ const PopularDestinations = ({ onSelectDestination }) => {
   if (destinations.length === 0) return null;
 
   return (
-    <section className="container" style={{ padding: '60px 24px 20px 24px' }}>
-      <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: 28 }}>
+    <section className="container" style={{ padding: 'clamp(32px, 5vw, 60px) clamp(16px, 4vw, 24px) 20px clamp(16px, 4vw, 24px)' }}>
+      <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: 28, flexWrap: 'wrap', gap: 12 }}>
         <div>
           <div className="badge badge-primary" style={{ marginBottom: 8 }}>
             <Sparkles size={12} />
             Trending Deals
           </div>
-          <h2 style={{ fontSize: '2rem' }}>Explore Iconic Global Destinations</h2>
-          <p style={{ color: '#64748b' }}>
+          <h2 style={{ fontSize: 'clamp(1.4rem, 3.5vw, 2rem)' }}>Explore Iconic Global Destinations</h2>
+          <p style={{ color: '#64748b', fontSize: 'clamp(0.85rem, 2vw, 1rem)' }}>
             Handpicked international hotspots with special seasonal airfare reductions.
           </p>
         </div>
@@ -39,8 +39,8 @@ const PopularDestinations = ({ onSelectDestination }) => {
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
-          gap: 24
+          gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 260px), 1fr))',
+          gap: 'clamp(16px, 3vw, 24px)'
         }}
       >
         {destinations.map((dest) => (

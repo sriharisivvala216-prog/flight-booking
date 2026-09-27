@@ -35,9 +35,9 @@ const FlightStatus = () => {
   };
 
   return (
-    <div className="container" style={{ padding: '40px 24px 80px 24px' }}>
+    <div className="container dashboard-page-container">
       <div style={{ marginBottom: 30 }}>
-        <h1 style={{ fontSize: '2.2rem', marginBottom: 8 }}>Live Flight Tracker & Status</h1>
+        <h1 className="dashboard-page-title" style={{ marginBottom: 8 }}>Live Flight Tracker & Status</h1>
         <p style={{ color: '#64748b' }}>
           Real-time aircraft radar positions, departure/arrival schedules, gates, and luggage baggage claim.
         </p>
@@ -47,7 +47,7 @@ const FlightStatus = () => {
       <div
         style={{
           background: 'white',
-          padding: '24px',
+          padding: 'clamp(16px, 3vw, 24px)',
           borderRadius: 'var(--radius-xl)',
           border: '1px solid var(--slate-200)',
           boxShadow: 'var(--shadow-md)',
@@ -55,17 +55,17 @@ const FlightStatus = () => {
         }}
       >
         <form onSubmit={handleSearch} style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-          <div style={{ flex: 1, minWidth: 260, position: 'relative' }}>
+          <div style={{ flex: '1 1 240px', minWidth: 0, position: 'relative' }}>
             <input
               type="text"
               className="form-input"
               placeholder="Enter flight number (e.g. EK-202, QR-704, BA-178, SQ-25)"
               value={query}
               onChange={(e) => setQuery(e.target.value.toUpperCase())}
-              style={{ fontSize: '1.05rem', textTransform: 'uppercase' }}
+              style={{ fontSize: '1rem', textTransform: 'uppercase' }}
             />
           </div>
-          <button type="submit" className="btn-primary" disabled={loading}>
+          <button type="submit" className="btn-primary" disabled={loading} style={{ minWidth: 140 }}>
             <Search size={18} />
             Track Flight
           </button>
@@ -117,7 +117,7 @@ const FlightStatus = () => {
             style={{
               background: 'linear-gradient(135deg, #070d1e 0%, #0d1b2a 100%)',
               color: 'white',
-              padding: '24px 32px',
+              padding: 'clamp(16px, 3.5vw, 24px) clamp(16px, 4vw, 32px)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
@@ -132,31 +132,24 @@ const FlightStatus = () => {
                   {statusData.flight.airline}
                 </span>
               </div>
-              <h2 style={{ fontSize: '1.8rem', color: 'white', marginTop: 4 }}>
+              <h2 style={{ fontSize: 'clamp(1.3rem, 3.5vw, 1.8rem)', color: 'white', marginTop: 4 }}>
                 {statusData.flight.flightNumber} • {statusData.flight.aircraft}
               </h2>
             </div>
 
             <div style={{ textAlign: 'right' }}>
               <div style={{ fontSize: '0.82rem', color: '#94a3b8' }}>STATUS</div>
-              <div style={{ fontSize: '1.35rem', fontWeight: 800, color: '#38bdf8' }}>
+              <div style={{ fontSize: 'clamp(1.1rem, 2.5vw, 1.35rem)', fontWeight: 800, color: '#38bdf8' }}>
                 {statusData.liveStatus.status}
               </div>
             </div>
           </div>
 
           {/* Progress Tracker Bar */}
-          <div style={{ padding: '32px' }}>
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                marginBottom: 16
-              }}
-            >
-              <div>
-                <div style={{ fontSize: '2rem', fontWeight: 800 }}>{statusData.flight.from}</div>
+          <div style={{ padding: 'clamp(16px, 4vw, 32px)' }}>
+            <div className="flight-status-route-row">
+              <div className="flight-status-endpoint">
+                <div style={{ fontSize: 'clamp(1.5rem, 4vw, 2rem)', fontWeight: 800 }}>{statusData.flight.from}</div>
                 <div style={{ fontSize: '0.9rem', color: '#64748b' }}>
                   {statusData.flight.fromCity}
                 </div>
@@ -165,7 +158,7 @@ const FlightStatus = () => {
                 </div>
               </div>
 
-              <div style={{ flex: 1, margin: '0 40px', textAlign: 'center' }}>
+              <div className="flight-status-progress-track">
                 <div style={{ fontSize: '0.85rem', color: '#64748b', marginBottom: 8 }}>
                   Duration: {statusData.flight.duration}
                 </div>
@@ -213,8 +206,8 @@ const FlightStatus = () => {
                 </div>
               </div>
 
-              <div style={{ textAlign: 'right' }}>
-                <div style={{ fontSize: '2rem', fontWeight: 800 }}>{statusData.flight.to}</div>
+              <div className="flight-status-endpoint right">
+                <div style={{ fontSize: 'clamp(1.5rem, 4vw, 2rem)', fontWeight: 800 }}>{statusData.flight.to}</div>
                 <div style={{ fontSize: '0.9rem', color: '#64748b' }}>
                   {statusData.flight.toCity}
                 </div>
@@ -225,18 +218,7 @@ const FlightStatus = () => {
             </div>
 
             {/* Telemetry Metrics */}
-            <div
-              style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(4, 1fr)',
-                gap: 16,
-                marginTop: 32,
-                padding: '20px',
-                background: '#f8fafc',
-                borderRadius: 'var(--radius-lg)',
-                border: '1px solid #e2e8f0'
-              }}
-            >
+            <div className="flight-status-metrics-grid">
               <div>
                 <div className="ticket-label">Cruising Altitude</div>
                 <div style={{ fontWeight: 700, fontSize: '1.1rem' }}>

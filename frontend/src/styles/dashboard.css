@@ -1,3 +1,32 @@
+/* Responsive Page Containers */
+.dashboard-page-container {
+  padding: 40px clamp(12px, 3vw, 24px) 80px clamp(12px, 3vw, 24px);
+  width: 100%;
+}
+
+.dashboard-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.dashboard-page-title {
+  font-size: clamp(1.5rem, 4vw, 2.2rem);
+  font-weight: 800;
+  margin-top: 4px;
+}
+
+.dashboard-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* Stat Cards */
 .dashboard-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -29,6 +58,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 }
 
 .stat-val {
@@ -36,6 +66,7 @@
   font-weight: 800;
   color: var(--navy-950);
   line-height: 1.1;
+  overflow-wrap: break-word;
 }
 
 .stat-title {
@@ -60,15 +91,19 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
 }
 
 .table-responsive {
   width: 100%;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .data-table {
   width: 100%;
+  min-width: 650px;
   border-collapse: collapse;
   text-align: left;
 }
@@ -82,6 +117,7 @@
   letter-spacing: 0.05em;
   color: var(--slate-500);
   border-bottom: 1px solid var(--slate-200);
+  white-space: nowrap;
 }
 
 .data-table td {
@@ -95,17 +131,124 @@
   background: #f8fafc;
 }
 
+/* Add Flight Modal Form */
+.admin-flight-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.admin-form-full {
+  grid-column: span 2;
+}
+
+/* PNR Lookup Section */
+.pnr-lookup-card {
+  background: white;
+  padding: 20px 24px;
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--slate-200);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.pnr-lookup-form {
+  display: flex;
+  gap: 10px;
+  flex: 1;
+  max-width: 440px;
+  flex-wrap: wrap;
+}
+
+/* My Bookings Card */
+.my-booking-card {
+  background: white;
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--slate-200);
+  box-shadow: var(--shadow-md);
+  padding: 24px;
+  display: grid;
+  grid-template-columns: 1.2fr 2fr 1.2fr;
+  gap: 24px;
+  align-items: center;
+  transition: all var(--transition-fast);
+}
+
+.my-booking-card:hover {
+  box-shadow: var(--shadow-lg);
+  border-color: var(--primary-200);
+}
+
+.booking-card-airline {
+  min-width: 0;
+}
+
+.booking-card-route {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-width: 0;
+}
+
+.booking-card-actions {
+  border-left: 1px solid #f1f5f9;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-align: right;
+}
+
 /* ==========================================================================
-   RESPONSIVE DESIGN - DASHBOARD
+   RESPONSIVE DESIGN - DASHBOARD & BOOKINGS
    ========================================================================== */
 
-@media (max-width: 1024px) {
+/* ── Laptop: 1024px–1200px ── */
+@media (max-width: 1200px) {
   .dashboard-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  .my-booking-card {
+    grid-template-columns: 1fr 1.6fr 1fr;
+    gap: 16px;
   }
 }
 
+/* ── Tablet: 768px–1024px ── */
+@media (max-width: 1024px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  .my-booking-card {
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  .booking-card-actions {
+    grid-column: span 2;
+    border-left: none;
+    border-top: 1px solid #f1f5f9;
+    padding-left: 0;
+    padding-top: 16px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    text-align: left;
+  }
+}
+
+/* ── Small Tablet: 600px–768px ── */
 @media (max-width: 768px) {
+  .dashboard-page-container {
+    padding: 24px 16px 60px 16px;
+  }
   .dashboard-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 14px;
@@ -118,17 +261,22 @@
   }
   .table-header-bar {
     padding: 14px 16px;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
   }
   .data-table th,
   .data-table td {
-    padding: 10px 14px;
-    font-size: 0.82rem;
+    padding: 12px 14px;
+    font-size: 0.85rem;
+  }
+  .pnr-lookup-card {
+    padding: 16px;
+  }
+  .pnr-lookup-form {
+    max-width: 100%;
+    width: 100%;
   }
 }
 
+/* ── Mobile: 481px–600px ── */
 @media (max-width: 600px) {
   .dashboard-grid {
     grid-template-columns: 1fr;
@@ -142,17 +290,100 @@
     width: 44px;
     height: 44px;
   }
+  .admin-flight-form {
+    grid-template-columns: 1fr;
+  }
+  .admin-form-full {
+    grid-column: span 1;
+  }
+  .my-booking-card {
+    grid-template-columns: 1fr;
+    padding: 18px 16px;
+    gap: 16px;
+  }
+  .booking-card-actions {
+    grid-column: span 1;
+    flex-direction: column;
+    align-items: stretch;
+    text-align: left;
+  }
+  .booking-card-actions button {
+    width: 100%;
+  }
+  .dashboard-header-actions {
+    width: 100%;
+  }
+  .dashboard-header-actions button {
+    flex: 1;
+  }
+}
+
+/* Flight Status Responsive Helpers */
+.flight-status-route-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  gap: 16px;
+}
+
+.flight-status-endpoint {
+  min-width: 0;
+}
+
+.flight-status-endpoint.right {
+  text-align: right;
+}
+
+.flight-status-progress-track {
+  flex: 1;
+  margin: 0 clamp(10px, 3vw, 40px);
+  text-align: center;
+  min-width: 0;
+}
+
+.flight-status-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-top: 32px;
+  padding: 20px;
+  background: #f8fafc;
+  border-radius: var(--radius-lg);
+  border: 1px solid #e2e8f0;
+}
+
+@media (max-width: 900px) {
+  .flight-status-metrics-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+    padding: 16px;
+  }
+}
+
+@media (max-width: 600px) {
+  .flight-status-route-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+    text-align: center;
+  }
+  .flight-status-endpoint.right {
+    text-align: center;
+  }
+  .flight-status-endpoint {
+    text-align: center;
+  }
+  .flight-status-progress-track {
+    margin: 10px 0;
+  }
 }
 
 @media (max-width: 480px) {
-  .data-table th,
-  .data-table td {
-    padding: 8px 10px;
-    font-size: 0.78rem;
-    white-space: nowrap;
-  }
-  .dashboard-table-card {
-    margin-bottom: 20px;
+  .flight-status-metrics-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 14px;
   }
 }
 

@@ -12,6 +12,8 @@
   padding: 40px 0 80px 0;
   overflow: hidden;
   background-color: #070d1e;
+  /* Ensure no child causes horizontal scroll */
+  max-width: 100vw;
 }
 
 /* Background Image Layer (Cinematic Luxury Jet in Flight) */
@@ -210,6 +212,8 @@
 
 .hero-text-column {
   max-width: 680px;
+  /* Prevent text from breaking layout */
+  min-width: 0;
 }
 
 .hero-badge-tag {
@@ -229,13 +233,16 @@
 }
 
 .hero-title {
-  font-size: 3.4rem;
+  font-size: clamp(1.7rem, 4vw, 3.4rem);
   font-weight: 850;
   color: #ffffff;
   line-height: 1.12;
   margin-bottom: 18px;
   letter-spacing: -0.02em;
   text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+  /* Prevent overflow on small screens */
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .hero-title .gradient-text {
@@ -601,9 +608,16 @@
 /* Search Grid */
 .search-inputs-grid {
   display: grid;
-  grid-template-columns: 2fr 38px 2fr 1.6fr auto;
+  grid-template-columns: minmax(0, 1.8fr) 38px minmax(0, 1.8fr) minmax(0, 1.4fr) auto;
   gap: 12px;
   align-items: center;
+  /* Prevent grid from overflowing */
+  min-width: 0;
+  width: 100%;
+}
+
+.search-inputs-grid.has-round-trip {
+  grid-template-columns: minmax(0, 1.5fr) 38px minmax(0, 1.5fr) minmax(0, 1.2fr) minmax(0, 1.2fr) auto;
 }
 
 .search-input-box {
@@ -614,6 +628,8 @@
   transition: all 0.2s ease;
   position: relative;
   cursor: pointer;
+  /* Allow inputs to shrink properly */
+  min-width: 0;
 }
 
 .search-input-box:focus-within,
@@ -661,9 +677,13 @@
 }
 
 .airport-city-text {
-  font-size: 1.2rem;
+  font-size: clamp(0.9rem, 2vw, 1.2rem);
   font-weight: 800;
   color: #0f172a;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
 }
 
 .input-sub-val {
@@ -739,6 +759,9 @@
   transition: all 0.25s ease;
   box-shadow: 0 12px 28px -6px rgba(2, 132, 199, 0.5);
   letter-spacing: 0.02em;
+  /* Don't let button overflow on small screens */
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .search-submit-btn:hover {
@@ -1182,9 +1205,12 @@
   .hero-title {
     font-size: 3.8rem;
   }
+  .featured-flights-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }
 
-/* ── Laptop: 769px–1200px ── */
+/* ── Laptop: 1200px ── */
 @media (max-width: 1200px) {
   .hero-header-grid {
     grid-template-columns: 1fr;
@@ -1201,47 +1227,127 @@
   }
 }
 
-/* ── Tablet: 769px–992px ── */
-@media (max-width: 992px) {
+/* ==========================================================================
+   RESPONSIVE DESIGN - HERO SECTION
+   ========================================================================== */
+
+/* ── Large screens: 1440px+ ── */
+@media (min-width: 1440px) {
+  .hero-title {
+    font-size: 3.6rem;
+  }
+  .featured-flights-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .hero-features-ribbon {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* ── Desktop & Laptop: 1201px–1439px ── */
+@media (max-width: 1360px) and (min-width: 1025px) {
+  .hero-header-grid {
+    grid-template-columns: 1.15fr 0.9fr;
+    gap: 32px;
+  }
+  .featured-flights-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+}
+
+/* ── Laptop: 1024px–1200px ── */
+@media (max-width: 1200px) {
+  .hero-header-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .hero-live-radar-card {
+    max-width: 600px;
+    margin: 0 auto;
+    width: 100%;
+  }
+  .featured-flights-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .hero-features-ribbon {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .search-inputs-grid {
+    grid-template-columns: minmax(0, 1.8fr) 34px minmax(0, 1.8fr) minmax(0, 1.3fr) auto;
+    gap: 10px;
+  }
+  .search-inputs-grid.has-round-trip {
+    grid-template-columns: minmax(0, 1.4fr) 34px minmax(0, 1.4fr) minmax(0, 1.1fr) minmax(0, 1.1fr) auto;
+  }
+}
+
+/* ── Tablet Landscape: 900px–1024px ── */
+@media (max-width: 1024px) {
   .hero-wrapper {
     padding: 30px 0 60px 0;
     min-height: auto;
   }
-  .search-inputs-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-  }
-  .swap-btn {
-    display: none;
-  }
-  .search-submit-btn {
-    grid-column: span 2;
-    height: 54px;
-  }
   .hero-title {
-    font-size: 2.7rem;
+    font-size: clamp(2rem, 4vw, 2.8rem);
   }
-  .hero-subtitle {
-    font-size: 1rem;
+  .hero-flight-animation-track {
+    height: 180px;
+    opacity: 0.6;
   }
-  .search-top-bar {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
-  }
-  .search-options-group {
-    flex-wrap: wrap;
+  .search-card {
+    padding: 24px 20px;
   }
 }
 
-/* ── Tablet: 768px ── */
+/* ── Tablet Portrait: 768px–900px ── */
+@media (max-width: 900px) {
+  .hero-wrapper {
+    padding: 24px 0 50px 0;
+  }
+  .search-inputs-grid,
+  .search-inputs-grid.has-round-trip {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .swap-btn {
+    grid-column: 1 / -1;
+    justify-self: center;
+    margin: -6px 0;
+  }
+  .search-submit-btn {
+    grid-column: span 2;
+    height: 52px;
+    width: 100%;
+  }
+  .search-top-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+  }
+  .search-options-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+}
+
+/* ── Mobile & Small Tablet: 640px–768px ── */
 @media (max-width: 768px) {
   .hero-wrapper {
-    padding: 20px 0 50px 0;
-    min-height: auto;
+    padding: 20px 0 40px 0;
+  }
+  .hero-header-grid {
+    gap: 24px;
+    margin-bottom: 24px;
   }
   .hero-title {
-    font-size: 2.2rem;
+    font-size: clamp(1.8rem, 4.5vw, 2.4rem);
+    margin-bottom: 14px;
+  }
+  .hero-subtitle {
+    font-size: 0.98rem;
+    margin-bottom: 18px;
   }
   .hero-live-ticker .hidden-mobile {
     display: none;
@@ -1250,16 +1356,28 @@
     font-size: 0.78rem;
     padding: 5px 12px;
     gap: 8px;
+    max-width: 100%;
+    flex-wrap: wrap;
+  }
+  .radar-card-glass {
+    transform: none;
+    padding: 18px;
+  }
+  .radar-card-glass:hover {
+    transform: none;
   }
   .featured-flights-grid {
     grid-template-columns: 1fr;
+    gap: 14px;
   }
   .hero-features-ribbon {
     grid-template-columns: 1fr;
+    gap: 12px;
   }
   .search-card {
     padding: 20px 16px;
-    border-radius: 16px;
+    border-radius: 18px;
+    margin-bottom: 30px;
   }
   .hero-perks-pills {
     gap: 8px;
@@ -1268,112 +1386,193 @@
     font-size: 0.8rem;
     padding: 5px 10px;
   }
-  .radar-card-glass {
-    transform: none;
-  }
-  .radar-card-glass:hover {
-    transform: none;
-  }
-  /* Flight animation path: hide on small screens to avoid overflow */
   .hero-flight-animation-track {
-    opacity: 0.4;
-    height: 180px;
+    height: 140px;
+    opacity: 0.45;
   }
 }
 
-/* ── Mobile: 600px ── */
-@media (max-width: 600px) {
+/* ── Mobile: 481px–640px ── */
+@media (max-width: 640px) {
   .hero-wrapper {
-    padding: 16px 0 40px 0;
+    padding: 16px 0 36px 0;
   }
-  .search-inputs-grid {
+  .search-inputs-grid,
+  .search-inputs-grid.has-round-trip {
     grid-template-columns: 1fr;
-    gap: 8px;
+    gap: 10px;
+  }
+  .swap-btn {
+    grid-column: span 1;
+    justify-self: center;
+    margin: -4px 0;
   }
   .search-submit-btn {
     grid-column: span 1;
     width: 100%;
     height: 52px;
-    font-size: 1rem;
+    font-size: 1.05rem;
   }
-  .hero-title {
-    font-size: 1.9rem;
-    line-height: 1.15;
+  .search-top-bar {
+    gap: 12px;
   }
-  .hero-subtitle {
-    font-size: 0.92rem;
-    line-height: 1.55;
+  .trip-type-selector {
+    width: 100%;
   }
-  .hero-badge-tag {
-    font-size: 0.72rem;
-    padding: 5px 12px;
+  .trip-type-btn {
+    flex: 1;
+    text-align: center;
+    justify-content: center;
   }
-  .quick-routes {
-    flex-wrap: wrap;
+  .search-options-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 8px;
+    width: 100%;
   }
-  .quick-route-chip {
-    font-size: 0.78rem;
-    padding: 5px 10px;
+  .direct-flight-toggle {
+    grid-column: span 2;
+    justify-content: center;
+  }
+  .select-wrapper {
+    width: 100%;
+  }
+  .select-pill {
+    width: 100%;
+    min-height: 44px;
   }
   .hero-live-radar-card {
     display: none;
   }
+}
+
+/* ── Mobile: 376px–480px ── */
+@media (max-width: 480px) {
+  .hero-wrapper {
+    padding: 12px 0 30px 0;
+  }
+  .hero-title {
+    font-size: clamp(1.6rem, 5.5vw, 1.95rem);
+    line-height: 1.18;
+  }
+  .hero-subtitle {
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+  .hero-badge-tag {
+    font-size: 0.72rem;
+    padding: 4px 12px;
+    margin-bottom: 12px;
+  }
   .search-card {
     padding: 16px 12px;
-    border-radius: 14px;
+    border-radius: 16px;
+    margin-bottom: 24px;
   }
-  .trip-type-btn {
-    padding: 6px 12px;
-    font-size: 0.8rem;
-  }
-  .select-pill {
-    font-size: 0.82rem;
-    padding: 7px 28px 7px 10px;
-  }
-  .airport-city-text {
-    font-size: 1rem;
-  }
-}
-
-/* ── Mobile: 480px ── */
-@media (max-width: 480px) {
-  .hero-title {
-    font-size: 1.7rem;
-  }
-  .hero-content-relative {
-    padding-top: 10px;
-  }
-  .featured-card {
-    padding: 16px;
-  }
-  .hero-flight-animation-track {
-    display: none;
-  }
-  .search-top-bar {
-    gap: 8px;
-    padding-bottom: 12px;
-    margin-bottom: 14px;
-  }
-}
-
-/* ── Small Mobile: 375px ── */
-@media (max-width: 375px) {
-  .hero-title {
-    font-size: 1.55rem;
-  }
-  .search-card {
-    padding: 14px 10px;
-  }
-  .input-airport-display {
-    gap: 6px;
+  .search-input-box {
+    padding: 10px 12px;
   }
   .airport-iata-badge {
-    font-size: 0.88rem;
+    font-size: 0.92rem;
     padding: 2px 6px;
   }
   .airport-city-text {
-    font-size: 0.92rem;
+    font-size: 0.98rem;
+  }
+  .input-date-val {
+    font-size: 0.95rem;
+    min-height: 28px;
+  }
+  .search-submit-btn {
+    height: 48px;
+    font-size: 1rem;
+  }
+  .quick-routes {
+    gap: 6px;
+    margin-top: 14px;
+  }
+  .quick-route-chip {
+    font-size: 0.76rem;
+    padding: 4px 10px;
+  }
+  .featured-flight-card {
+    padding: 14px;
+  }
+  .featured-section-title {
+    font-size: 1.25rem;
+  }
+  .hero-flight-animation-track {
+    height: 100px;
+    opacity: 0.35;
   }
 }
 
+/* ── Small Mobile: 320px–375px ── */
+@media (max-width: 375px) {
+  .hero-wrapper {
+    padding: 10px 0 24px 0;
+  }
+  .hero-title {
+    font-size: 1.5rem;
+  }
+  .hero-subtitle {
+    font-size: 0.85rem;
+  }
+  .hero-perks-pills {
+    display: none;
+  }
+  .hero-live-ticker {
+    display: none;
+  }
+  .search-card {
+    padding: 12px 10px;
+  }
+  .search-options-group {
+    grid-template-columns: 1fr;
+  }
+  .direct-flight-toggle {
+    grid-column: span 1;
+  }
+  .airport-iata-badge {
+    font-size: 0.82rem;
+    padding: 2px 5px;
+  }
+  .airport-city-text {
+    font-size: 0.9rem;
+  }
+  .featured-section-title {
+    font-size: 1.15rem;
+  }
+  .route-endpoint .route-code {
+    font-size: 1.3rem;
+  }
+  .price-amount {
+    font-size: 1.2rem;
+  }
+  .featured-book-btn {
+    padding: 8px 14px;
+    font-size: 0.82rem;
+  }
+}
+
+/* ── Ultra-small: 320px ── */
+@media (max-width: 320px) {
+  .hero-title {
+    font-size: 1.35rem;
+  }
+  .hero-badge-tag {
+    display: none;
+  }
+  .search-card {
+    padding: 10px 8px;
+    border-radius: 12px;
+  }
+  .trip-type-btn {
+    padding: 6px 8px;
+    font-size: 0.76rem;
+  }
+  .search-submit-btn {
+    height: 46px;
+    font-size: 0.95rem;
+  }
+}

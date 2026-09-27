@@ -210,6 +210,24 @@
   letter-spacing: 0.1em;
 }
 
+/* Booking Modal Actions Container */
+.booking-modal-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 24px;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.booking-modal-actions.right {
+  justify-content: flex-end;
+}
+
+.booking-modal-actions.success-actions {
+  justify-content: center;
+}
+
 /* ==========================================================================
    RESPONSIVE DESIGN - BOOKING MODAL
    ========================================================================== */
@@ -217,7 +235,8 @@
 @media (max-width: 768px) {
   .booking-modal-card {
     max-width: 100%;
-    max-height: 95vh;
+    max-height: 92vh;
+    border-radius: var(--radius-xl);
   }
   .booking-modal-header {
     padding: 18px 20px;
@@ -247,8 +266,14 @@
   .passenger-form-grid {
     grid-template-columns: 1fr;
   }
+  .passenger-form-grid .form-group[style*="span 2"] {
+    grid-column: span 1 !important;
+  }
   .promo-input-group {
     flex-direction: column;
+  }
+  .promo-input-group button {
+    width: 100%;
   }
   .addon-card {
     flex-direction: column;
@@ -260,6 +285,17 @@
   }
   .pnr-code {
     font-size: 1.6rem;
+  }
+  .booking-modal-actions {
+    flex-direction: column-reverse;
+    align-items: stretch;
+    width: 100%;
+    gap: 10px;
+  }
+  .booking-modal-actions button {
+    width: 100%;
+    min-height: 46px;
+    justify-content: center;
   }
 }
 
@@ -276,12 +312,33 @@
   .checkout-summary-box {
     padding: 14px 12px;
   }
+  .summary-row {
+    font-size: 0.85rem;
+  }
   .pnr-code {
-    font-size: 1.4rem;
+    font-size: 1.35rem;
     letter-spacing: 0.06em;
   }
   .booking-success-view {
-    padding: 30px 14px;
+    padding: 24px 12px;
+  }
+  .checkout-stepper {
+    justify-content: center;
+    gap: 8px;
+  }
+  .checkout-step-item span:last-child {
+    display: none;
+  }
+}
+
+@media (max-width: 360px) {
+  .pnr-code {
+    font-size: 1.2rem;
+  }
+  .step-num-badge {
+    width: 20px;
+    height: 20px;
+    font-size: 0.68rem;
   }
 }
 

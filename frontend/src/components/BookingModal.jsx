@@ -300,7 +300,7 @@ const BookingModal = ({
                 </div>
               </div>
 
-              <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 20 }}>
+              <div className="booking-modal-actions right">
                 <button
                   type="button"
                   className="btn-primary"
@@ -410,7 +410,7 @@ const BookingModal = ({
                 </div>
               </div>
 
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 24 }}>
+              <div className="booking-modal-actions">
                 <button type="button" className="btn-secondary" onClick={() => setStep(1)}>
                   <ArrowLeft size={16} />
                   Back
@@ -562,7 +562,7 @@ const BookingModal = ({
                 </div>
               </div>
 
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 24 }}>
+              <div className="booking-modal-actions">
                 <button type="button" className="btn-secondary" onClick={() => setStep(2)}>
                   <ArrowLeft size={16} />
                   Back
@@ -572,7 +572,6 @@ const BookingModal = ({
                   className="btn-accent"
                   onClick={handlePayAndConfirm}
                   disabled={loading}
-                  style={{ minWidth: 200 }}
                 >
                   {loading ? 'Processing Payment...' : `Pay ${formatPrice(finalTotal)} Now`}
                 </button>
@@ -602,7 +601,7 @@ const BookingModal = ({
                 </div>
               </div>
 
-              <div style={{ display: 'flex', justifyContent: 'center', gap: 14, marginTop: 10 }}>
+              <div className="booking-modal-actions success-actions">
                 <button
                   type="button"
                   className="btn-primary"

@@ -132,54 +132,90 @@
   margin-bottom: 14px;
 }
 
+.auth-modal {
+  max-width: 480px;
+  width: 100%;
+  margin: auto;
+  padding: 32px;
+}
+
 /* ==========================================================================
    RESPONSIVE DESIGN - MODAL & AUTH
    ========================================================================== */
 
-/* Base modal overlay responsive */
+/* Tablet & Mobile: Center forms properly on every screen */
 @media (max-width: 768px) {
   .modal-overlay {
     padding: 16px;
-    align-items: flex-end;
+    align-items: center;
+    justify-content: center;
   }
   .modal-card {
-    max-width: 100%;
-    border-radius: 20px 20px 0 0;
-    max-height: 92vh;
+    max-width: 500px;
+    width: 100%;
+    border-radius: var(--radius-xl);
+    max-height: 90vh;
+    margin: auto;
   }
   .auth-modal {
+    max-width: 460px;
     padding: 24px 20px;
   }
   .auth-header h2 {
     font-size: 1.4rem;
   }
-  .demo-buttons-grid {
-    grid-template-columns: 1fr;
-  }
 }
 
 @media (max-width: 480px) {
   .modal-overlay {
-    padding: 0;
-    align-items: flex-end;
+    padding: 12px;
+    align-items: center;
+    justify-content: center;
   }
   .modal-card {
-    border-radius: 16px 16px 0 0;
-    max-height: 95vh;
+    width: 100%;
+    max-width: 100%;
+    border-radius: var(--radius-lg);
+    max-height: 92vh;
+    margin: auto;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
   .auth-modal {
     padding: 20px 16px;
+    width: 100%;
   }
   .auth-header h2 {
     font-size: 1.25rem;
   }
   .form-input {
-    padding: 10px 12px;
-    font-size: 0.9rem;
+    padding: 12px 14px;
+    font-size: 16px; /* Prevents auto-zoom on iOS mobile */
+    min-height: 44px;
+  }
+  .demo-buttons-grid {
+    grid-template-columns: 1fr;
   }
   .demo-btn {
     padding: 10px 12px;
+    font-size: 0.85rem;
+    min-height: 40px;
+  }
+}
+
+@media (max-width: 360px) {
+  .modal-overlay {
+    padding: 8px;
+  }
+  .auth-modal {
+    padding: 18px 12px;
+  }
+  .auth-header h2 {
+    font-size: 1.18rem;
+  }
+  .auth-tab-btn {
     font-size: 0.82rem;
+    padding: 8px;
   }
 }
 

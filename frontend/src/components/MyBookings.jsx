@@ -71,44 +71,30 @@ const MyBookings = ({ onOpenBoardingPass, onSearchNewFlight }) => {
   };
 
   return (
-    <div className="container" style={{ padding: '40px 24px 80px 24px' }}>
+    <div className="container dashboard-page-container">
       {/* Header */}
       <div style={{ marginBottom: 30 }}>
-        <h1 style={{ fontSize: '2.2rem', marginBottom: 8 }}>Manage Your Trips</h1>
+        <h1 className="dashboard-page-title" style={{ marginBottom: 8 }}>Manage Your Trips</h1>
         <p style={{ color: '#64748b' }}>
           Access your confirmed bookings, download official boarding passes, or manage cancellations.
         </p>
       </div>
 
       {/* PNR Quick Lookup Bar */}
-      <div
-        style={{
-          background: 'white',
-          padding: '20px 24px',
-          borderRadius: 'var(--radius-xl)',
-          border: '1px solid var(--slate-200)',
-          boxShadow: 'var(--shadow-sm)',
-          marginBottom: 32,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          flexWrap: 'wrap',
-          gap: 16
-        }}
-      >
+      <div className="pnr-lookup-card">
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           <Search size={20} color="#2563eb" />
           <span style={{ fontWeight: 700, fontSize: '1rem' }}>Find Booking by Reference (PNR):</span>
         </div>
 
-        <form onSubmit={handlePnrLookup} style={{ display: 'flex', gap: 10, flex: 1, maxWidth: 440 }}>
+        <form onSubmit={handlePnrLookup} className="pnr-lookup-form">
           <input
             type="text"
             placeholder="e.g. SKW789"
             className="form-input"
             value={searchPnr}
             onChange={(e) => setSearchPnr(e.target.value.toUpperCase())}
-            style={{ textTransform: 'uppercase' }}
+            style={{ textTransform: 'uppercase', flex: 1, minWidth: 140 }}
           />
           <button type="submit" className="btn-primary" style={{ padding: '10px 20px' }}>
             Lookup
@@ -165,23 +151,10 @@ const MyBookings = ({ onOpenBoardingPass, onSearchNewFlight }) => {
             const isCancelled = booking.status === 'CANCELLED';
 
             return (
-              <div
-                key={booking.pnr}
-                style={{
-                  background: 'white',
-                  borderRadius: 'var(--radius-xl)',
-                  border: '1px solid var(--slate-200)',
-                  boxShadow: 'var(--shadow-md)',
-                  padding: 24,
-                  display: 'grid',
-                  gridTemplateColumns: '1.2fr 2fr 1fr',
-                  gap: 24,
-                  alignItems: 'center'
-                }}
-              >
+              <div key={booking.pnr} className="my-booking-card">
                 {/* Left: Airline & PNR */}
-                <div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
+                <div className="booking-card-airline">
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8, flexWrap: 'wrap' }}>
                     <span
                       className={`badge ${
                         isCancelled ? 'badge-danger' : 'badge-success'
@@ -206,7 +179,7 @@ const MyBookings = ({ onOpenBoardingPass, onSearchNewFlight }) => {
                 </div>
 
                 {/* Middle: Route & Times */}
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <div className="booking-card-route">
                   <div>
                     <div style={{ fontSize: '1.3rem', fontWeight: 800 }}>
                       {booking.departureTime}
@@ -215,14 +188,14 @@ const MyBookings = ({ onOpenBoardingPass, onSearchNewFlight }) => {
                     <div style={{ fontSize: '0.8rem', color: '#64748b' }}>{booking.fromCity}</div>
                   </div>
 
-                  <div style={{ textAlign: 'center', padding: '0 16px' }}>
+                  <div style={{ textAlign: 'center', padding: '0 12px' }}>
                     <div style={{ fontSize: '0.78rem', color: '#64748b', marginBottom: 4 }}>
                       {booking.departureDate}
                     </div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 6, color: '#2563eb' }}>
-                      <span style={{ height: 1, width: 28, background: '#cbd5e1' }} />
+                      <span style={{ height: 1, width: 20, background: '#cbd5e1' }} />
                       <Plane size={16} />
-                      <span style={{ height: 1, width: 28, background: '#cbd5e1' }} />
+                      <span style={{ height: 1, width: 20, background: '#cbd5e1' }} />
                     </div>
                     <div style={{ fontSize: '0.75rem', color: '#94a3b8', marginTop: 4 }}>
                       {booking.duration}
@@ -239,45 +212,40 @@ const MyBookings = ({ onOpenBoardingPass, onSearchNewFlight }) => {
                 </div>
 
                 {/* Right: Actions */}
-                <div
-                  style={{
-                    borderLeft: '1px solid #f1f5f9',
-                    paddingLeft: 20,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: 10,
-                    textAlign: 'right'
-                  }}
-                >
-                  <div style={{ fontSize: '1.3rem', fontWeight: 800, color: '#2563eb' }}>
-                    {formatPrice(booking.totalAmount)}
-                  </div>
-                  <div style={{ fontSize: '0.78rem', color: '#64748b' }}>
-                    {booking.passengers?.length || 1} Passenger(s) • Seat{' '}
-                    {booking.passengers?.[0]?.seat || '12A'}
+                <div className="booking-card-actions">
+                  <div>
+                    <div style={{ fontSize: '1.3rem', fontWeight: 800, color: '#2563eb' }}>
+                      {formatPrice(booking.totalAmount)}
+                    </div>
+                    <div style={{ fontSize: '0.78rem', color: '#64748b' }}>
+                      {booking.passengers?.length || 1} Passenger(s) • Seat{' '}
+                      {booking.passengers?.[0]?.seat || '12A'}
+                    </div>
                   </div>
 
-                  <button
-                    type="button"
-                    className="btn-primary"
-                    style={{ padding: '8px 14px', fontSize: '0.88rem' }}
-                    onClick={() => onOpenBoardingPass(booking)}
-                  >
-                    <Ticket size={16} />
-                    Boarding Pass
-                  </button>
-
-                  {!isCancelled && (
+                  <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', justifyContent: 'flex-end' }}>
                     <button
                       type="button"
-                      className="btn-secondary"
-                      style={{ padding: '6px 12px', fontSize: '0.82rem', color: '#dc2626' }}
-                      onClick={() => setCancellingBooking(booking)}
+                      className="btn-primary"
+                      style={{ padding: '8px 14px', fontSize: '0.88rem' }}
+                      onClick={() => onOpenBoardingPass(booking)}
                     >
-                      <XCircle size={14} />
-                      Cancel Booking
+                      <Ticket size={16} />
+                      Boarding Pass
                     </button>
-                  )}
+
+                    {!isCancelled && (
+                      <button
+                        type="button"
+                        className="btn-secondary"
+                        style={{ padding: '6px 12px', fontSize: '0.82rem', color: '#dc2626' }}
+                        onClick={() => setCancellingBooking(booking)}
+                      >
+                        <XCircle size={14} />
+                        Cancel Booking
+                      </button>
+                    )}
+                  </div>
                 </div>
               </div>
             );

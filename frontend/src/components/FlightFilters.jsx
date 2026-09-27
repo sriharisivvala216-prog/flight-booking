@@ -1,5 +1,5 @@
-import React from 'react';
-import { SlidersHorizontal, RotateCcw } from 'lucide-react';
+import React, { useState } from 'react';
+import { SlidersHorizontal, RotateCcw, ChevronDown, ChevronUp, Filter } from 'lucide-react';
 import { useCurrency } from '../context/CurrencyContext';
 
 const FlightFilters = ({
@@ -12,6 +12,12 @@ const FlightFilters = ({
   onResetFilters
 }) => {
   const { formatPrice } = useCurrency();
+  const [mobileExpanded, setMobileExpanded] = useState(false);
+
+  const activeFiltersCount = 
+    (stops !== 'all' ? 1 : 0) + 
+    (selectedAirlines.length > 0 ? selectedAirlines.length : 0) + 
+    (maxPrice < 3500 ? 1 : 0);
 
   const airlinesList = [
     'Emirates',
@@ -37,17 +43,36 @@ const FlightFilters = ({
   };
 
   return (
-    <aside className="filters-sidebar">
-      <div className="filters-header">
+    <aside className={`filters-sidebar ${mobileExpanded ? 'mobile-filters-expanded' : 'mobile-filters-collapsed'}`}>
+      <div className="filters-header" onClick={() => setMobileExpanded(!mobileExpanded)}>
         <h3 className="filters-title">
           <SlidersHorizontal size={18} />
-          Filters
+          <span>Filters</span>
+          {activeFiltersCount > 0 && (
+            <span className="filters-active-count-badge">{activeFiltersCount}</span>
+          )}
         </h3>
-        <button type="button" className="reset-filters-btn" onClick={onResetFilters}>
-          <RotateCcw size={12} style={{ display: 'inline', marginRight: 4 }} />
-          Reset All
-        </button>
+
+        <div className="filters-header-actions" onClick={(e) => e.stopPropagation()}>
+          {activeFiltersCount > 0 && (
+            <button type="button" className="reset-filters-btn" onClick={onResetFilters}>
+              <RotateCcw size={12} style={{ display: 'inline', marginRight: 4 }} />
+              Reset All
+            </button>
+          )}
+          <button 
+            type="button" 
+            className="mobile-filters-toggle-btn"
+            onClick={() => setMobileExpanded(!mobileExpanded)}
+            aria-label="Toggle Filter Options"
+            aria-expanded={mobileExpanded}
+          >
+            {mobileExpanded ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+          </button>
+        </div>
       </div>
+
+      <div className="filters-content-body">
 
       {/* Flight Stops */}
       <div className="filter-group">
@@ -125,6 +150,7 @@ const FlightFilters = ({
             </label>
           ))}
         </div>
+      </div>
       </div>
     </aside>
   );

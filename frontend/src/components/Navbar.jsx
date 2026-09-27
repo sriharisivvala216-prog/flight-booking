@@ -37,6 +37,15 @@ const Navbar = ({ currentTab, setCurrentTab, onOpenAuth }) => {
     setMobileMenuOpen(false);
   };
 
+  // Close mobile drawer on Escape key or outside click
+  React.useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') setMobileMenuOpen(false);
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
   return (
     <header className="navbar">
       <div className="container navbar-container">
@@ -59,7 +68,7 @@ const Navbar = ({ currentTab, setCurrentTab, onOpenAuth }) => {
         </div>
 
         {/* Desktop Navigation Links Capsule */}
-        <nav className="nav-links-capsule">
+        <nav className="nav-links-capsule" aria-label="Main Navigation">
           <button
             type="button"
             className={`nav-item-btn ${currentTab === 'search' ? 'active' : ''}`}
@@ -109,7 +118,7 @@ const Navbar = ({ currentTab, setCurrentTab, onOpenAuth }) => {
         {/* Right Actions: Currency Selector & Auth Buttons */}
         <div className="nav-actions">
           {/* Currency Pill Switcher */}
-          <div className="currency-pill-container">
+          <div className="currency-pill-container" title="Select Currency">
             <Globe size={15} className="currency-globe-icon" />
             <select
               className="currency-select"
@@ -155,7 +164,7 @@ const Navbar = ({ currentTab, setCurrentTab, onOpenAuth }) => {
                 aria-label="Sign Out"
               >
                 <LogOut size={14} />
-                <span>Sign Out</span>
+                <span className="nav-btn-text">Sign Out</span>
               </button>
             </div>
           ) : (
@@ -169,9 +178,10 @@ const Navbar = ({ currentTab, setCurrentTab, onOpenAuth }) => {
                   e.stopPropagation();
                   handleAuthClick('login');
                 }}
+                aria-label="Sign In"
               >
                 <LogIn size={15} />
-                <span>Sign In</span>
+                <span className="nav-btn-text">Sign In</span>
               </button>
 
               <button 
@@ -183,10 +193,11 @@ const Navbar = ({ currentTab, setCurrentTab, onOpenAuth }) => {
                   e.stopPropagation();
                   handleAuthClick('register');
                 }}
+                aria-label="Join SkyWings"
               >
                 <span className="join-btn-shine" />
                 <Sparkles size={15} className="join-icon" />
-                <span>Join SkyWings</span>
+                <span className="nav-btn-text">Join SkyWings</span>
               </button>
             </div>
           )}
@@ -197,6 +208,7 @@ const Navbar = ({ currentTab, setCurrentTab, onOpenAuth }) => {
             className="mobile-menu-toggle-btn"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle Navigation Menu"
+            aria-expanded={mobileMenuOpen}
           >
             {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
@@ -204,90 +216,128 @@ const Navbar = ({ currentTab, setCurrentTab, onOpenAuth }) => {
       </div>
 
       {/* Mobile Drawer Menu */}
-      <div className={`mobile-nav-drawer ${mobileMenuOpen ? 'drawer-open' : 'drawer-closed'}`}>
-          <div className="mobile-nav-items">
-            <button
-              type="button"
-              className={`mobile-nav-btn ${currentTab === 'search' ? 'active' : ''}`}
-              onClick={() => handleNavClick('search')}
+      <div 
+        className={`mobile-nav-drawer ${mobileMenuOpen ? 'drawer-open' : 'drawer-closed'}`}
+        aria-hidden={!mobileMenuOpen}
+      >
+        <div className="mobile-nav-items">
+          <button
+            type="button"
+            className={`mobile-nav-btn ${currentTab === 'search' ? 'active' : ''}`}
+            onClick={() => handleNavClick('search')}
+          >
+            <Compass size={18} />
+            <span>Find Flights</span>
+          </button>
+          <button
+            type="button"
+            className={`mobile-nav-btn ${currentTab === 'bookings' ? 'active' : ''}`}
+            onClick={() => handleNavClick('bookings')}
+          >
+            <Calendar size={18} />
+            <span>My Bookings</span>
+          </button>
+          <button
+            type="button"
+            className={`mobile-nav-btn ${currentTab === 'status' ? 'active' : ''}`}
+            onClick={() => handleNavClick('status')}
+          >
+            <Radio size={18} />
+            <span>Flight Radar (Live)</span>
+          </button>
+          <button
+            type="button"
+            className={`mobile-nav-btn ${currentTab === 'admin' ? 'active' : ''}`}
+            onClick={() => handleNavClick('admin')}
+          >
+            <BarChart3 size={18} />
+            <span>Admin Portal</span>
+          </button>
+        </div>
+
+        {/* Mobile Currency Switcher */}
+        <div className="mobile-currency-row">
+          <div className="mobile-currency-label">
+            <Globe size={16} />
+            <span>Display Currency</span>
+          </div>
+          <select
+            className="mobile-currency-select"
+            value={currency}
+            aria-label="Select Currency on Mobile"
+            onChange={(e) => setCurrency(e.target.value)}
+          >
+            {currencies.map((c) => (
+              <option key={c} value={c}>
+                {c} {c === 'USD' ? '($ USD)' : c === 'EUR' ? '(€ EUR)' : c === 'GBP' ? '(£ GBP)' : '(₹ INR)'}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        {/* Mobile Auth Actions */}
+        {!isAuthenticated ? (
+          <div className="mobile-auth-actions">
+            <button 
+              type="button" 
+              id="mobile-signin-btn"
+              className="signin-nav-btn w-full" 
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                handleAuthClick('login');
+              }}
             >
-              <Compass size={18} />
-              <span>Find Flights</span>
+              <LogIn size={16} />
+              <span>Sign In to Account</span>
             </button>
-            <button
-              type="button"
-              className={`mobile-nav-btn ${currentTab === 'bookings' ? 'active' : ''}`}
-              onClick={() => handleNavClick('bookings')}
+            <button 
+              type="button" 
+              id="mobile-join-btn"
+              className="join-nav-btn w-full" 
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                handleAuthClick('register');
+              }}
             >
-              <Calendar size={18} />
-              <span>My Bookings</span>
-            </button>
-            <button
-              type="button"
-              className={`mobile-nav-btn ${currentTab === 'status' ? 'active' : ''}`}
-              onClick={() => handleNavClick('status')}
-            >
-              <Radio size={18} />
-              <span>Flight Radar (Live)</span>
-            </button>
-            <button
-              type="button"
-              className={`mobile-nav-btn ${currentTab === 'admin' ? 'active' : ''}`}
-              onClick={() => handleNavClick('admin')}
-            >
-              <BarChart3 size={18} />
-              <span>Admin Portal</span>
+              <Sparkles size={16} />
+              <span>Join SkyWings Free</span>
             </button>
           </div>
-
-          {!isAuthenticated ? (
-            <div className="mobile-auth-actions">
-              <button 
-                type="button" 
-                id="mobile-signin-btn"
-                className="signin-nav-btn w-full" 
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  handleAuthClick('login');
-                }}
-              >
-                <LogIn size={16} />
-                <span>Sign In</span>
-              </button>
-              <button 
-                type="button" 
-                id="mobile-join-btn"
-                className="join-nav-btn w-full" 
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  handleAuthClick('register');
-                }}
-              >
-                <Sparkles size={16} />
-                <span>Join SkyWings</span>
-              </button>
+        ) : (
+          <div className="mobile-user-section">
+            <div className="mobile-user-card">
+              <div className="user-avatar-ring">
+                <div className="user-avatar">
+                  {user?.name ? user.name.charAt(0).toUpperCase() : 'U'}
+                </div>
+              </div>
+              <div className="mobile-user-details">
+                <span className="mobile-user-name">{user?.name || 'Passenger'}</span>
+                <span className="mobile-user-email">{user?.email}</span>
+                <span className={`user-role-badge ${isAdmin ? 'admin-role' : 'passenger-role'}`}>
+                  {isAdmin ? 'ADMINISTRATOR' : 'VIP FLYER'}
+                </span>
+              </div>
             </div>
-          ) : (
-            <div className="mobile-auth-actions">
-              <button 
-                type="button" 
-                id="mobile-signout-btn"
-                className="logout-nav-btn w-full" 
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  logout();
-                  setMobileMenuOpen(false);
-                }}
-              >
-                <LogOut size={16} />
-                <span>Sign Out</span>
-              </button>
-            </div>
-          )}
-        </div>
+            <button 
+              type="button" 
+              id="mobile-signout-btn"
+              className="logout-nav-btn w-full" 
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                logout();
+                setMobileMenuOpen(false);
+              }}
+            >
+              <LogOut size={16} />
+              <span>Sign Out</span>
+            </button>
+          </div>
+        )}
+      </div>
     </header>
   );
 };
