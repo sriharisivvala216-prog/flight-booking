@@ -37,8 +37,9 @@
   text-decoration: none;
   user-select: none;
   transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  /* Prevent brand from shrinking too much */
+  /* Prevent brand from shrinking too much but allow text truncate */
   flex-shrink: 0;
+  min-width: 0;
   /* Ensure minimum touch target */
   min-height: 44px;
 }

@@ -1410,7 +1410,7 @@
   .search-submit-btn {
     grid-column: span 1;
     width: 100%;
-    height: 52px;
+    min-height: 54px;
     font-size: 1.05rem;
   }
   .search-top-bar {
@@ -1470,7 +1470,8 @@
     margin-bottom: 24px;
   }
   .search-input-box {
-    padding: 10px 12px;
+    padding: 12px 14px;
+    min-height: 48px;
   }
   .airport-iata-badge {
     font-size: 0.92rem;
@@ -1481,7 +1482,7 @@
   }
   .input-date-val {
     font-size: 0.95rem;
-    min-height: 28px;
+    min-height: 32px;
   }
   .search-submit-btn {
     height: 48px;
