@@ -285,3 +285,28 @@
     padding: 3px 8px;
   }
 }
+
+/* -- Print Media Query for Boarding Pass -- */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  .boarding-modal-card, .boarding-modal-card * {
+    visibility: visible;
+  }
+  .boarding-modal-card {
+    position: absolute;
+    left: 0;
+    top: 0;
+    box-shadow: none !important;
+    background: transparent !important;
+  }
+  .ticket-action-bar, .modal-close-btn {
+    display: none !important;
+  }
+  
+  .ticket-wrapper {
+    box-shadow: none !important;
+    border: 2px solid #ccc !important;
+  }
+}

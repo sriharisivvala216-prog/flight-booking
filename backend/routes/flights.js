@@ -1,7 +1,10 @@
 import express from 'express';
+import mongoose from 'mongoose';
+import Flight from '../models/Flight.js';
 import { readData, writeData } from '../utils/db.js';
 
 const router = express.Router();
+
 
 // Get Airports
 router.get('/airports', (req, res) => {
@@ -59,6 +62,70 @@ router.get('/featured', (req, res) => {
       image: 'https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?w=600&auto=format&fit=crop&q=80',
       fromPrice: 620,
       description: 'Iconic Opera House, golden beaches, and coastal walks'
+    },
+    {
+      city: 'New York',
+      code: 'JFK',
+      country: 'United States',
+      image: 'https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?w=600&auto=format&fit=crop&q=80',
+      fromPrice: 420,
+      description: 'The city that never sleeps, Broadway, and Central Park'
+    },
+    {
+      city: 'Rome',
+      code: 'FCO',
+      country: 'Italy',
+      image: 'https://images.unsplash.com/photo-1552832230-c0197dd311b5?w=600&auto=format&fit=crop&q=80',
+      fromPrice: 450,
+      description: 'Ancient ruins, Renaissance art, and incredible pasta'
+    },
+    {
+      city: 'Istanbul',
+      code: 'IST',
+      country: 'Turkey',
+      image: 'https://images.unsplash.com/photo-1527838832700-5059252407fa?w=600&auto=format&fit=crop&q=80',
+      fromPrice: 380,
+      description: 'Where East meets West, Grand Bazaar, and Bosphorus views'
+    },
+    {
+      city: 'Bali',
+      code: 'DPS',
+      country: 'Indonesia',
+      image: 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=600&auto=format&fit=crop&q=80',
+      fromPrice: 580,
+      description: 'Lush rice terraces, spiritual temples, and surf beaches'
+    },
+    {
+      city: 'Cape Town',
+      code: 'CPT',
+      country: 'South Africa',
+      image: 'https://images.unsplash.com/photo-1580060839134-75a5edca2e99?w=600&auto=format&fit=crop&q=80',
+      fromPrice: 710,
+      description: 'Table Mountain, penguin colonies, and world-class vineyards'
+    },
+    {
+      city: 'Rio de Janeiro',
+      code: 'GIG',
+      country: 'Brazil',
+      image: 'https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=600&auto=format&fit=crop&q=80',
+      fromPrice: 680,
+      description: 'Christ the Redeemer, Copacabana beach, and vibrant Carnival'
+    },
+    {
+      city: 'New Delhi',
+      code: 'DEL',
+      country: 'India',
+      image: 'https://images.unsplash.com/photo-1587474260584-136574528ed5?w=600&auto=format&fit=crop&q=80',
+      fromPrice: 480,
+      description: 'Historic monuments, bustling bazaars, and vibrant culture'
+    },
+    {
+      city: 'Mumbai',
+      code: 'BOM',
+      country: 'India',
+      image: 'https://images.unsplash.com/photo-1529253355930-ddbe423a2ac7?w=600&auto=format&fit=crop&q=80',
+      fromPrice: 510,
+      description: 'Gateway of India, Marine Drive, and Bollywood magic'
     }
   ];
   res.json({ featured: destinations, destinations });
@@ -581,23 +648,39 @@ router.get('/:id', (req, res) => {
 });
 
 // Flight Seat Map Generation
-router.get('/:id/seats', (req, res) => {
+router.get('/:id/seats', async (req, res) => {
   const flightId = req.params.id;
-  const flights = readData('flights.json');
-  const flight = flights.find(f => f.id === flightId);
 
-  if (!flight) {
-    return res.status(404).json({ message: 'Flight not found' });
+  // Try MongoDB first, then JSON, then generate demo map for any ID
+  let flight = null;
+
+  if (mongoose.connection.readyState === 1) {
+    try {
+      flight = await Flight.findOne({ id: flightId }).lean();
+    } catch (_e) { /* fall through */ }
   }
 
-  const bookings = readData('bookings.json');
+  if (!flight) {
+    const jsonFlights = readData('flights.json');
+    flight = jsonFlights.find(f => f.id === flightId) || null;
+  }
+
+  // For demo/unknown flight IDs, generate a seat map with placeholder flight info
+  const resolvedFlight = flight || { id: flightId, aircraft: 'Boeing 787-9 Dreamliner' };
+
+  // Get occupied seats from confirmed bookings
   const occupiedSeats = new Set();
-  
-  bookings.filter(b => b.flightId === flightId && b.status !== 'CANCELLED').forEach(b => {
-    b.passengers.forEach(p => {
-      if (p.seat) occupiedSeats.add(p.seat);
-    });
-  });
+  if (mongoose.connection.readyState === 1) {
+    try {
+      const Booking = (await import('../models/Booking.js')).default;
+      const bookings = await Booking.find({ flightId, status: { $ne: 'CANCELLED' } }).lean();
+      bookings.forEach(b => b.passengers?.forEach(p => { if (p.seat) occupiedSeats.add(p.seat); }));
+    } catch (_e) { /* fall through */ }
+  } else {
+    const jsonBookings = readData('bookings.json');
+    jsonBookings.filter(b => b.flightId === flightId && b.status !== 'CANCELLED')
+      .forEach(b => b.passengers?.forEach(p => { if (p.seat) occupiedSeats.add(p.seat); }));
+  }
 
   const defaultOccupied = ['1A', '2B', '3F', '5A', '7C', '8D', '12A', '14C', '15F', '18B', '20D'];
   defaultOccupied.forEach(s => occupiedSeats.add(s));
@@ -610,10 +693,7 @@ router.get('/:id/seats', (req, res) => {
     const seats = letters.map(letter => {
       const code = `${r}${letter}`;
       return {
-        code,
-        row: r,
-        letter,
-        cabin: 'first',
+        code, row: r, letter, cabin: 'first',
         type: letter === 'A' || letter === 'K' ? 'window' : 'aisle',
         isOccupied: occupiedSeats.has(code),
         additionalCost: 200,
@@ -629,10 +709,7 @@ router.get('/:id/seats', (req, res) => {
     const seats = letters.map(letter => {
       const code = `${r}${letter}`;
       return {
-        code,
-        row: r,
-        letter,
-        cabin: 'business',
+        code, row: r, letter, cabin: 'business',
         type: (letter === 'A' || letter === 'K') ? 'window' : (letter === 'B' || letter === 'J') ? 'aisle' : 'center',
         isOccupied: occupiedSeats.has(code),
         additionalCost: 80,
@@ -651,10 +728,7 @@ router.get('/:id/seats', (req, res) => {
       const isWindow = letter === 'A' || letter === 'K';
       const isAisle = letter === 'C' || letter === 'D' || letter === 'F' || letter === 'H';
       return {
-        code,
-        row: r,
-        letter,
-        cabin: 'economy',
+        code, row: r, letter, cabin: 'economy',
         type: isWindow ? 'window' : isAisle ? 'aisle' : 'middle',
         isOccupied: occupiedSeats.has(code),
         additionalCost: isExitRow ? 35 : isWindow ? 15 : 0,
@@ -664,11 +738,7 @@ router.get('/:id/seats', (req, res) => {
     cabinRows.push({ rowNumber: r, cabin: 'economy', isExitRow, seats });
   }
 
-  res.json({
-    flightId,
-    aircraft: flight.aircraft,
-    rows: cabinRows
-  });
+  res.json({ flightId, aircraft: resolvedFlight.aircraft, rows: cabinRows });
 });
 
 export default router;

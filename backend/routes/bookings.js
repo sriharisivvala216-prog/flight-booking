@@ -1,10 +1,15 @@
 import express from 'express';
+import mongoose from 'mongoose';
+import Flight from '../models/Flight.js';
+import Booking from '../models/Booking.js';
 import { readData, writeData } from '../utils/db.js';
 
 const router = express.Router();
 
+// Helper: check if MongoDB is connected
+const isMongoConnected = () => mongoose.connection.readyState === 1;
 
-// Helper to generate a 6-character unique PNR code
+// Helper to generate a unique PNR code
 const generatePNR = () => {
   const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
   let pnr = 'SKW';
@@ -14,8 +19,8 @@ const generatePNR = () => {
   return pnr;
 };
 
-// Create a new booking
-router.post('/', (req, res) => {
+// ─── POST /api/bookings — Create a new booking ───
+router.post('/', async (req, res) => {
   try {
     const {
       userId,
@@ -27,34 +32,56 @@ router.post('/', (req, res) => {
       addons = {},
       totalAmount,
       currency = 'USD',
-      paymentMethod = 'Credit Card'
+      paymentMethod = 'Credit Card',
+      flightMeta = null
     } = req.body;
 
     if (!flightId || !passengers || passengers.length === 0) {
-      return res.status(400).json({ message: 'Flight ID and passengers details are required' });
+      return res.status(400).json({ message: 'Flight ID and passenger details are required' });
     }
 
-    const flights = readData('flights.json');
-    const flight = flights.find(f => f.id === flightId);
+    // STEP 1: Find the flight — MongoDB first, then JSON fallback, then flightMeta
+    let flight = null;
+
+    if (isMongoConnected()) {
+      flight = await Flight.findOne({ id: flightId }).lean();
+    }
 
     if (!flight) {
-      return res.status(404).json({ message: 'Selected flight not found' });
+      const jsonFlights = readData('flights.json');
+      flight = jsonFlights.find(f => f.id === flightId) || null;
     }
 
-    const bookings = readData('bookings.json');
+    if (!flight) {
+      // Final fallback: use flightMeta supplied by the frontend (for demo flights)
+      if (flightMeta && flightMeta.flightNumber) {
+        flight = { id: flightId, ...flightMeta };
+      } else {
+        return res.status(404).json({
+          message: 'Flight not found. Please search and select a flight before booking.'
+        });
+      }
+    }
+
+    // STEP 2: Generate unique PNR
     let pnr = generatePNR();
-    while (bookings.some(b => b.pnr === pnr)) {
-      pnr = generatePNR();
+    if (isMongoConnected()) {
+      while (await Booking.exists({ pnr })) pnr = generatePNR();
+    } else {
+      const existing = readData('bookings.json');
+      while (existing.some(b => b.pnr === pnr)) pnr = generatePNR();
     }
 
-    const newBooking = {
-      id: `BKG-${Date.now().toString(36).toUpperCase()}`,
+    // STEP 3: Build booking object
+    const bookingId = `BKG-${Date.now().toString(36).toUpperCase()}`;
+    const newBookingData = {
+      id: bookingId,
       pnr,
       userId: userId || 'GUEST',
       flightId: flight.id,
       flightNumber: flight.flightNumber,
       airline: flight.airline,
-      airlineLogo: flight.airlineLogo,
+      airlineLogo: flight.airlineLogo || '',
       from: flight.from,
       fromCity: flight.fromCity,
       to: flight.to,
@@ -62,8 +89,8 @@ router.post('/', (req, res) => {
       departureDate: departureDate || new Date().toISOString().split('T')[0],
       departureTime: flight.departureTime,
       arrivalTime: flight.arrivalTime,
-      duration: flight.duration,
-      aircraft: flight.aircraft,
+      duration: flight.duration || '',
+      aircraft: flight.aircraft || '',
       cabinClass,
       passengers: passengers.map((p, idx) => ({
         firstName: p.firstName || `Passenger ${idx + 1}`,
@@ -80,7 +107,7 @@ router.post('/', (req, res) => {
         priorityBoarding: !!addons.priorityBoarding,
         extraBaggage: addons.extraBaggage || 0
       },
-      totalAmount: totalAmount || (flight.pricing?.[cabinClass] || flight.basePrice) * passengers.length,
+      totalAmount: totalAmount || (flight.pricing?.[cabinClass] || flight.basePrice || 500) * passengers.length,
       currency,
       paymentMethod,
       status: 'CONFIRMED',
@@ -90,37 +117,59 @@ router.post('/', (req, res) => {
       createdAt: new Date().toISOString()
     };
 
-    bookings.unshift(newBooking);
-    writeData('bookings.json', bookings);
+    // STEP 4: Save booking
+    if (isMongoConnected()) {
+      const saved = await Booking.create(newBookingData);
 
-    // Update available seats on the flight
-    if (flight.availableSeats >= passengers.length) {
-      flight.availableSeats -= passengers.length;
-      writeData('flights.json', flights);
+      // Decrement seat count in MongoDB
+      await Flight.updateOne(
+        { id: flightId, availableSeats: { $gte: passengers.length } },
+        { $inc: { availableSeats: -passengers.length } }
+      );
+
+      return res.status(201).json({
+        message: 'Booking confirmed successfully!',
+        booking: saved.toObject()
+      });
+    } else {
+      const bookings = readData('bookings.json');
+      bookings.unshift(newBookingData);
+      writeData('bookings.json', bookings);
+
+      const jsonFlights = readData('flights.json');
+      const fIdx = jsonFlights.findIndex(f => f.id === flightId);
+      if (fIdx !== -1 && jsonFlights[fIdx].availableSeats >= passengers.length) {
+        jsonFlights[fIdx].availableSeats -= passengers.length;
+        writeData('flights.json', jsonFlights);
+      }
+
+      return res.status(201).json({
+        message: 'Booking confirmed successfully!',
+        booking: newBookingData
+      });
     }
-
-    res.status(201).json({
-      message: 'Booking confirmed successfully!',
-      booking: newBooking
-    });
   } catch (error) {
     console.error('Create booking error:', error);
     res.status(500).json({ message: 'Internal server error while processing booking' });
   }
 });
 
-// Get user bookings
-router.get('/', (req, res) => {
+// ─── GET /api/bookings — Get user bookings ───
+router.get('/', async (req, res) => {
   try {
     const { userId, email } = req.query;
-    let bookings = readData('bookings.json');
 
-    if (userId) {
-      bookings = bookings.filter(b => b.userId === userId);
-    } else if (email) {
-      bookings = bookings.filter(b => b.contact && b.contact.email.toLowerCase() === email.toLowerCase());
+    if (isMongoConnected()) {
+      const query = {};
+      if (userId) query.userId = userId;
+      else if (email) query['contact.email'] = { $regex: new RegExp(`^${email}$`, 'i') };
+      const bookings = await Booking.find(query).sort({ createdAt: -1 }).lean();
+      return res.json({ bookings });
     }
 
+    let bookings = readData('bookings.json');
+    if (userId) bookings = bookings.filter(b => b.userId === userId);
+    else if (email) bookings = bookings.filter(b => b.contact?.email?.toLowerCase() === email.toLowerCase());
     res.json({ bookings });
   } catch (error) {
     console.error('Get bookings error:', error);
@@ -128,80 +177,95 @@ router.get('/', (req, res) => {
   }
 });
 
-// Get booking by PNR or ID (Public / Boarding pass lookup)
-router.get('/:pnrOrId', (req, res) => {
-  const query = req.params.pnrOrId.toUpperCase();
-  const bookings = readData('bookings.json');
-  const booking = bookings.find(b => b.pnr.toUpperCase() === query || b.id.toUpperCase() === query);
-
-  if (!booking) {
-    return res.status(404).json({ message: 'Booking not found with reference ' + query });
-  }
-
-  res.json({ booking });
-});
-
-// Cancel a booking
-router.put('/:pnrOrId/cancel', (req, res) => {
+// ─── GET /api/bookings/:pnrOrId — Lookup by PNR or ID ───
+router.get('/:pnrOrId', async (req, res) => {
   try {
     const query = req.params.pnrOrId.toUpperCase();
+
+    if (isMongoConnected()) {
+      const booking = await Booking.findOne({ $or: [{ pnr: query }, { id: query }] }).lean();
+      if (!booking) return res.status(404).json({ message: 'Booking not found with reference ' + query });
+      return res.json({ booking });
+    }
+
     const bookings = readData('bookings.json');
-    const bookingIndex = bookings.findIndex(b => b.pnr.toUpperCase() === query || b.id.toUpperCase() === query);
+    const booking = bookings.find(b => b.pnr?.toUpperCase() === query || b.id?.toUpperCase() === query);
+    if (!booking) return res.status(404).json({ message: 'Booking not found with reference ' + query });
+    res.json({ booking });
+  } catch (error) {
+    console.error('Get booking error:', error);
+    res.status(500).json({ message: 'Error retrieving booking' });
+  }
+});
 
-    if (bookingIndex === -1) {
-      return res.status(404).json({ message: 'Booking not found' });
+// ─── PUT /api/bookings/:pnrOrId/cancel ───
+router.put('/:pnrOrId/cancel', async (req, res) => {
+  try {
+    const query = req.params.pnrOrId.toUpperCase();
+
+    if (isMongoConnected()) {
+      const booking = await Booking.findOne({ $or: [{ pnr: query }, { id: query }] });
+      if (!booking) return res.status(404).json({ message: 'Booking not found' });
+      if (booking.status === 'CANCELLED') return res.status(400).json({ message: 'Booking is already cancelled' });
+
+      const refundAmount = Math.round(booking.totalAmount * 0.9);
+      booking.status = 'CANCELLED';
+      booking.cancelledAt = new Date().toISOString();
+      booking.refundAmount = refundAmount;
+      await booking.save();
+
+      return res.json({ message: 'Booking cancelled. Refund initiated.', refundAmount, booking: booking.toObject() });
     }
 
-    if (bookings[bookingIndex].status === 'CANCELLED') {
-      return res.status(400).json({ message: 'Booking is already cancelled' });
-    }
+    const bookings = readData('bookings.json');
+    const idx = bookings.findIndex(b => b.pnr?.toUpperCase() === query || b.id?.toUpperCase() === query);
+    if (idx === -1) return res.status(404).json({ message: 'Booking not found' });
+    if (bookings[idx].status === 'CANCELLED') return res.status(400).json({ message: 'Booking is already cancelled' });
 
-    // Refund policy: 90% refund
-    const refundAmount = Math.round(bookings[bookingIndex].totalAmount * 0.9);
-    bookings[bookingIndex].status = 'CANCELLED';
-    bookings[bookingIndex].cancelledAt = new Date().toISOString();
-    bookings[bookingIndex].refundAmount = refundAmount;
-
+    const refundAmount = Math.round(bookings[idx].totalAmount * 0.9);
+    bookings[idx].status = 'CANCELLED';
+    bookings[idx].cancelledAt = new Date().toISOString();
+    bookings[idx].refundAmount = refundAmount;
     writeData('bookings.json', bookings);
-
-    res.json({
-      message: 'Booking cancelled successfully. Refund initiated.',
-      refundAmount,
-      booking: bookings[bookingIndex]
-    });
+    res.json({ message: 'Booking cancelled. Refund initiated.', refundAmount, booking: bookings[idx] });
   } catch (error) {
     console.error('Cancel booking error:', error);
     res.status(500).json({ message: 'Error cancelling booking' });
   }
 });
 
-// Online Web Check-In & Boarding Pass Issuance
-router.put('/:pnrOrId/checkin', (req, res) => {
+// ─── PUT /api/bookings/:pnrOrId/checkin ───
+router.put('/:pnrOrId/checkin', async (req, res) => {
   try {
     const query = req.params.pnrOrId.toUpperCase();
+
+    if (isMongoConnected()) {
+      const booking = await Booking.findOne({ $or: [{ pnr: query }, { id: query }] });
+      if (!booking) return res.status(404).json({ message: 'Booking not found with reference ' + query });
+      if (booking.status === 'CANCELLED') return res.status(400).json({ message: 'Cannot check in for a cancelled booking' });
+
+      booking.webCheckin = {
+        checkedIn: true,
+        checkinTime: new Date(),
+        digitalBoardingPassUrl: `https://skywings.app/boarding/${booking.pnr}`
+      };
+      booking.status = 'CHECKED_IN';
+      await booking.save();
+
+      return res.json({ message: 'Web check-in confirmed! Your boarding pass has been issued.', booking: booking.toObject() });
+    }
+
     const bookings = readData('bookings.json');
-    const bookingIndex = bookings.findIndex(b => b.pnr.toUpperCase() === query || b.id.toUpperCase() === query);
+    const idx = bookings.findIndex(b => b.pnr?.toUpperCase() === query || b.id?.toUpperCase() === query);
+    if (idx === -1) return res.status(404).json({ message: 'Booking not found' });
+    if (bookings[idx].status === 'CANCELLED') return res.status(400).json({ message: 'Cannot check in for a cancelled booking' });
 
-    if (bookingIndex === -1) {
-      return res.status(404).json({ message: 'Booking not found with reference ' + query });
-    }
-
-    if (bookings[bookingIndex].status === 'CANCELLED') {
-      return res.status(400).json({ message: 'Cannot check in for a cancelled flight booking' });
-    }
-
-    // Mark as checked in
-    bookings[bookingIndex].checkedIn = true;
-    bookings[bookingIndex].checkInTime = new Date().toISOString();
-    bookings[bookingIndex].digitalPassIssued = true;
-    bookings[bookingIndex].securityClearanceCode = `SEC-${Math.floor(1000 + Math.random() * 9000)}`;
-
+    bookings[idx].checkedIn = true;
+    bookings[idx].checkInTime = new Date().toISOString();
+    bookings[idx].digitalPassIssued = true;
+    bookings[idx].securityClearanceCode = `SEC-${Math.floor(1000 + Math.random() * 9000)}`;
     writeData('bookings.json', bookings);
-
-    res.json({
-      message: 'Web check-in confirmed! Your digital boarding pass has been issued.',
-      booking: bookings[bookingIndex]
-    });
+    res.json({ message: 'Web check-in confirmed! Your boarding pass has been issued.', booking: bookings[idx] });
   } catch (error) {
     console.error('Check-in error:', error);
     res.status(500).json({ message: 'Error processing web check-in' });

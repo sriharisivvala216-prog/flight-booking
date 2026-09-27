@@ -20,18 +20,29 @@ import { useAuth } from '../context/AuthContext';
 import { useCurrency } from '../context/CurrencyContext';
 import '../styles/navbar.css';
 
-const Navbar = ({ currentTab, setCurrentTab, onOpenAuth }) => {
+const Navbar = ({ currentTab, setCurrentTab, onOpenAuth, onNavigate }) => {
   const { user, isAuthenticated, isAdmin, logout } = useAuth();
   const { currency, setCurrency, currencies } = useCurrency();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const handleNavClick = (tab) => {
-    setCurrentTab(tab);
+    if (onNavigate) {
+      if (tab === 'search') onNavigate('/flights');
+      else if (tab === 'bookings') onNavigate('/my-bookings');
+      else if (tab === 'status') onNavigate('/status');
+      else if (tab === 'admin') onNavigate('/admin');
+      else onNavigate('/flights');
+    }
+    if (typeof setCurrentTab === 'function') {
+      setCurrentTab(tab);
+    }
     setMobileMenuOpen(false);
   };
 
   const handleAuthClick = (mode = 'login') => {
-    if (typeof onOpenAuth === 'function') {
+    if (onNavigate) {
+      onNavigate(mode === 'register' ? '/register' : '/sign-in');
+    } else if (typeof onOpenAuth === 'function') {
       onOpenAuth(mode);
     }
     setMobileMenuOpen(false);

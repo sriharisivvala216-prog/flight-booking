@@ -25,7 +25,7 @@
     "baggage": "2 checked bags (23kg each) + 7kg cabin",
     "mealsIncluded": true,
     "wifiAvailable": true,
-    "status": "Boarding",
+    "status": "Departed",
     "gate": "B22",
     "terminal": "4"
   },
@@ -51,7 +51,7 @@
       "business": 2600,
       "first": 4900
     },
-    "availableSeats": 27,
+    "availableSeats": 26,
     "baggage": "2 checked bags (23kg) + 7kg cabin",
     "mealsIncluded": true,
     "wifiAvailable": true,
@@ -688,5 +688,115 @@
     "status": "On Time",
     "gate": "15",
     "terminal": "3"
+  },
+  {
+    "id": "FL-230",
+    "flightNumber": "AZ-608",
+    "airline": "Alitalia",
+    "aircraft": "Airbus A350",
+    "from": "JFK",
+    "fromCity": "New York",
+    "to": "FCO",
+    "toCity": "Rome",
+    "departureTime": "16:30",
+    "arrivalTime": "06:45",
+    "duration": "8h 15m",
+    "basePrice": 450,
+    "pricing": {
+      "economy": 450,
+      "premium_economy": 850,
+      "business": 2200,
+      "first": 3400
+    },
+    "terminal": "4",
+    "gate": "B12"
+  },
+  {
+    "id": "FL-231",
+    "flightNumber": "TK-12",
+    "airline": "Turkish Airlines",
+    "aircraft": "Boeing 777",
+    "from": "LHR",
+    "fromCity": "London",
+    "to": "IST",
+    "toCity": "Istanbul",
+    "departureTime": "10:00",
+    "arrivalTime": "15:50",
+    "duration": "3h 50m",
+    "basePrice": 380,
+    "pricing": {
+      "economy": 380,
+      "premium_economy": 550,
+      "business": 1200,
+      "first": 2100
+    },
+    "terminal": "2",
+    "gate": "A4"
+  },
+  {
+    "id": "FL-232",
+    "flightNumber": "GA-715",
+    "airline": "Garuda Indonesia",
+    "aircraft": "Airbus A330",
+    "from": "SYD",
+    "fromCity": "Sydney",
+    "to": "DPS",
+    "toCity": "Bali",
+    "departureTime": "10:00",
+    "arrivalTime": "14:30",
+    "duration": "6h 30m",
+    "basePrice": 580,
+    "pricing": {
+      "economy": 580,
+      "premium_economy": 800,
+      "business": 1600,
+      "first": 2800
+    },
+    "terminal": "1",
+    "gate": "C8"
+  },
+  {
+    "id": "FL-233",
+    "flightNumber": "SA-233",
+    "airline": "South African Airways",
+    "aircraft": "Airbus A340",
+    "from": "LHR",
+    "fromCity": "London",
+    "to": "CPT",
+    "toCity": "Cape Town",
+    "departureTime": "21:00",
+    "arrivalTime": "09:30",
+    "duration": "11h 30m",
+    "basePrice": 710,
+    "pricing": {
+      "economy": 710,
+      "premium_economy": 1100,
+      "business": 2400,
+      "first": 4200
+    },
+    "terminal": "3",
+    "gate": "E10"
+  },
+  {
+    "id": "FL-234",
+    "flightNumber": "LA-8114",
+    "airline": "LATAM",
+    "aircraft": "Boeing 787",
+    "from": "MIA",
+    "fromCity": "Miami",
+    "to": "GIG",
+    "toCity": "Rio de Janeiro",
+    "departureTime": "20:15",
+    "arrivalTime": "05:40",
+    "duration": "8h 25m",
+    "basePrice": 680,
+    "pricing": {
+      "economy": 680,
+      "premium_economy": 950,
+      "business": 2100,
+      "first": 3600
+    },
+    "terminal": "South",
+    "gate": "J7"
   }
 ]

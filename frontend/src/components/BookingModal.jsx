@@ -49,6 +49,25 @@ const BookingModal = ({
     }))
   );
 
+  React.useEffect(() => {
+    if (isOpen) {
+      setStep(1);
+      setConfirmedBooking(null);
+      setLoading(false);
+      setPassengers(
+        Array.from({ length: passengersCount }, (_, idx) => ({
+          firstName: idx === 0 && user?.name ? user.name.split(' ')[0] : '',
+          lastName: idx === 0 && user?.name ? user.name.split(' ')[1] || '' : '',
+          age: 28,
+          gender: 'Male',
+          passport: '',
+          meal: 'Standard Meal',
+          seat: selectedSeats[idx]?.code || `12${String.fromCharCode(65 + idx)}`
+        }))
+      );
+    }
+  }, [isOpen, selectedSeats, passengersCount, user]);
+
   // Contact details
   const [contact, setContact] = useState({
     email: user?.email || '',
@@ -117,25 +136,43 @@ const BookingModal = ({
         addons,
         totalAmount: finalTotal,
         currency,
-        paymentMethod: 'Credit Card (ending 4242)'
+        paymentMethod: 'Credit Card (ending 4242)',
+        // Include flight metadata as fallback for demo/default flights not in DB
+        flightMeta: {
+          flightNumber: flight.flightNumber,
+          airline: flight.airline,
+          airlineLogo: flight.airlineLogo,
+          from: flight.from,
+          fromCity: flight.fromCity,
+          to: flight.to,
+          toCity: flight.toCity,
+          departureTime: flight.departureTime,
+          arrivalTime: flight.arrivalTime,
+          duration: flight.duration,
+          aircraft: flight.aircraft,
+          basePrice: flight.basePrice,
+          terminal: flight.terminal,
+          gate: flight.gate
+        }
       };
 
       const result = await api.createBooking(bookingPayload);
-      setConfirmedBooking(result.booking);
-      setStep(4);
 
-      // Trigger Celebration Confetti!
+      // Fire confetti celebration immediately
       try {
-        confetti({
-          particleCount: 100,
-          spread: 70,
-          origin: { y: 0.6 }
-        });
+        confetti({ particleCount: 140, spread: 80, origin: { y: 0.55 } });
+        setTimeout(() => confetti({ particleCount: 60, spread: 120, origin: { y: 0.4 } }), 400);
       } catch (_e) {
-        // Confetti fallback
+        // Confetti fallback — ignore
       }
 
+      // Save confirmed booking so the new tab can read it from localStorage
+      localStorage.setItem('skywings_confirmed_booking', JSON.stringify(result.booking));
 
+      // Open the Flight Reservation page in a brand-new browser tab
+      window.open('/reservation', '_blank');
+
+      // Close the booking modal on this tab
       if (onBookingSuccess) {
         onBookingSuccess(result.booking);
       }

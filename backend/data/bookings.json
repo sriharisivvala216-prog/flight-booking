@@ -1,5 +1,52 @@
 [
   {
+    "id": "BKG-MUJJRO8A",
+    "pnr": "SKWRPX",
+    "userId": "GUEST",
+    "flightId": "FL-102",
+    "flightNumber": "QR-704",
+    "airline": "Qatar Airways",
+    "airlineLogo": "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=100&auto=format&fit=crop&q=80",
+    "from": "JFK",
+    "fromCity": "New York",
+    "to": "DXB",
+    "toCity": "Dubai",
+    "departureDate": "2026-09-27",
+    "departureTime": "09:30",
+    "arrivalTime": "09:15",
+    "duration": "15h 45m",
+    "aircraft": "Boeing 777-300ER",
+    "cabinClass": "economy",
+    "passengers": [
+      {
+        "firstName": "Passenger 1",
+        "lastName": "",
+        "gender": "Male",
+        "age": 28,
+        "passport": "AUTO-422439",
+        "seat": "12A",
+        "meal": "Standard Meal"
+      }
+    ],
+    "contact": {
+      "email": "",
+      "phone": ""
+    },
+    "addons": {
+      "travelInsurance": true,
+      "priorityBoarding": false,
+      "extraBaggage": 0
+    },
+    "totalAmount": 835,
+    "currency": "USD",
+    "paymentMethod": "Credit Card (ending 4242)",
+    "status": "CONFIRMED",
+    "terminal": "8",
+    "gate": "A14",
+    "boardingTime": "45 mins before departure",
+    "createdAt": "2026-09-27T08:19:01.354Z"
+  },
+  {
     "id": "BKG-MUJJ7K4M",
     "pnr": "SKWKHB",
     "userId": "GUEST",

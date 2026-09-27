@@ -1870,3 +1870,1789 @@
   }
 }
 
+/* ================================================================
+   FUTURISTIC 3D STAGE & FUTURE OF BOOKING (🧳 🛫) ENHANCEMENTS
+   ================================================================ */
+
+/* ── 3D Stage Wrapper ── */
+.flight-3d-stage-wrapper {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 1;
+  background: radial-gradient(circle at 60% 30%, #0d1e3d 0%, #050b18 70%);
+}
+
+.flight-3d-canvas-mount {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  cursor: grab;
+}
+
+.flight-3d-canvas-mount:active {
+  cursor: grabbing;
+}
+
+.flight-3d-vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at 50% 50%, transparent 40%, rgba(5, 11, 24, 0.45) 80%, #050b18 100%),
+              linear-gradient(180deg, rgba(5, 11, 24, 0.6) 0%, transparent 20%, transparent 80%, #050b18 100%);
+  z-index: 2;
+}
+
+/* ── Stage Controls Overlay (Top) ── */
+.stage-controls-overlay {
+  position: absolute;
+  top: 88px;
+  left: 4vw;
+  right: 4vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  z-index: 10;
+  pointer-events: auto;
+}
+
+.stage-mode-pill {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(13, 22, 44, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(56, 189, 248, 0.28);
+  border-radius: 30px;
+  padding: 4px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45), 0 0 15px rgba(0, 242, 254, 0.15);
+}
+
+.stage-mode-pill .mode-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.stage-mode-pill .mode-btn.active {
+  background: linear-gradient(135deg, #0284c7, #00f2fe);
+  color: #030712;
+  font-weight: 700;
+  box-shadow: 0 0 16px rgba(0, 242, 254, 0.45);
+}
+
+.stage-settings-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.camera-presets-pill,
+.theme-env-pill {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(13, 22, 44, 0.85);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 24px;
+  padding: 3px;
+}
+
+.camera-presets-pill .preset-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  font-size: 0.76rem;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.camera-presets-pill .preset-btn.active {
+  background: rgba(56, 189, 248, 0.2);
+  color: #00e5ff;
+  border: 1px solid rgba(56, 189, 248, 0.4);
+}
+
+.theme-env-pill .env-btn {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  padding: 6px 10px;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.theme-env-pill .env-btn.active {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fbbf24;
+}
+
+.audio-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(13, 22, 44, 0.85);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 20px;
+  color: #94a3b8;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 7px 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.audio-toggle-btn.active {
+  background: rgba(0, 242, 254, 0.18);
+  border-color: rgba(0, 242, 254, 0.5);
+  color: #00f2fe;
+}
+
+/* ── Avionics Telemetry HUD (Top-Right) ── */
+.avionics-telemetry-hud {
+  position: absolute;
+  top: 145px;
+  right: 4vw;
+  width: 280px;
+  background: rgba(5, 11, 24, 0.78);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(0, 242, 254, 0.25);
+  border-radius: 14px;
+  padding: 14px 16px;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.55), 0 0 20px rgba(0, 242, 254, 0.1);
+  z-index: 10;
+  pointer-events: none;
+}
+
+.telemetry-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #00e5ff;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 8px;
+  margin-bottom: 10px;
+}
+
+.telemetry-radar-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #00e5ff;
+  box-shadow: 0 0 8px #00e5ff;
+  animation: radarPulse 1.5s infinite;
+}
+
+.telemetry-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.telemetry-cell {
+  display: flex;
+  flex-direction: column;
+}
+
+.cell-label {
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  color: #64748b;
+  font-weight: 600;
+}
+
+.cell-val {
+  font-family: 'Space Grotesk', monospace;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #f8fafc;
+  margin-top: 2px;
+}
+
+.cell-val.mach-val {
+  color: #38bdf8;
+  text-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
+}
+
+.cell-val.luggage-val {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #34d399;
+  font-size: 0.72rem;
+}
+
+.telemetry-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 8px;
+  font-size: 0.68rem;
+}
+
+.telemetry-status-tag {
+  color: #fbbf24;
+  font-weight: 700;
+}
+
+.telemetry-link-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: #94a3b8;
+}
+
+/* ── Bottom-Left Throttle / Mach Control ── */
+.stage-throttle-card {
+  position: absolute;
+  bottom: 30px;
+  left: 4vw;
+  width: 290px;
+  background: rgba(13, 22, 44, 0.82);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(56, 189, 248, 0.22);
+  border-radius: 12px;
+  padding: 12px 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+  z-index: 10;
+  pointer-events: auto;
+}
+
+.throttle-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.throttle-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #38bdf8;
+}
+
+.throttle-val {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #f8fafc;
+}
+
+.throttle-slider-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.speed-step-tag {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #64748b;
+}
+
+.speed-step-tag.hyper {
+  color: #a855f7;
+}
+
+.throttle-range-slider {
+  flex: 1;
+  -webkit-appearance: none;
+  height: 6px;
+  border-radius: 3px;
+  background: linear-gradient(to right, #0284c7, #00f2fe, #a855f7);
+  outline: none;
+  cursor: pointer;
+}
+
+.throttle-range-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 2px solid #00f2fe;
+  box-shadow: 0 0 10px #00f2fe;
+  cursor: pointer;
+}
+
+.stage-interactive-hint {
+  position: absolute;
+  bottom: 30px;
+  right: 4vw;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(5, 11, 24, 0.72);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-size: 0.72rem;
+  color: #94a3b8;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.stage-interactive-hint .compass-icon.spin {
+  color: #00f2fe;
+  animation: rotateCompass 8s linear infinite;
+}
+
+@keyframes rotateCompass {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* ── Floating Holographic Pass Header Button ── */
+.lp-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.lp-signin-header-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: #f8fafc;
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.lp-signin-header-btn:hover {
+  background: rgba(0, 242, 254, 0.18);
+  border-color: #00f2fe;
+  color: #00f2fe;
+  transform: translateY(-1px);
+}
+
+.lp-holo-pass-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(0, 242, 254, 0.12);
+  border: 1px solid rgba(0, 242, 254, 0.35);
+  color: #00f2fe;
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.lp-holo-pass-btn:hover {
+  background: rgba(0, 242, 254, 0.22);
+  box-shadow: 0 0 15px rgba(0, 242, 254, 0.3);
+  transform: translateY(-1px);
+}
+
+/* ── HERO OVERLAY FLOATING BOOKING DOCK ── */
+.lp-hero-overlay-content {
+  position: relative;
+  z-index: 20;
+  max-width: 1200px;
+  width: 92vw;
+  margin: 0 auto;
+  padding: 80px 0 40px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.hero-booking-dock-glass {
+  width: 100%;
+  max-width: 1120px;
+  margin-top: 24px;
+  background: rgba(8, 16, 36, 0.82);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  border: 1px solid rgba(0, 242, 254, 0.32);
+  border-radius: 20px;
+  padding: 20px 24px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.65), 0 0 35px rgba(0, 242, 254, 0.15);
+}
+
+.dock-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.trip-type-pill-group {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 3px;
+}
+
+.trip-type-pill-group .trip-pill {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 7px 14px;
+  border-radius: 9px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.trip-type-pill-group .trip-pill.active {
+  background: rgba(0, 242, 254, 0.15);
+  color: #00f2fe;
+  border: 1px solid rgba(0, 242, 254, 0.3);
+}
+
+.canvas-mode-quick-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.canvas-mode-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #cbd5e1;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.canvas-mode-btn.active {
+  background: linear-gradient(135deg, rgba(2, 132, 199, 0.35), rgba(0, 242, 254, 0.35));
+  border-color: rgba(0, 242, 254, 0.6);
+  color: #ffffff;
+}
+
+/* Glassmorphic Form Fields inside Dock */
+.hero-quick-search-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.search-field-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: rgba(13, 25, 52, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 8px 12px;
+  text-align: left;
+  transition: border-color 0.2s ease;
+}
+
+.search-field-col:hover,
+.search-field-col:focus-within {
+  border-color: rgba(0, 242, 254, 0.5);
+  box-shadow: 0 0 12px rgba(0, 242, 254, 0.15);
+}
+
+.field-label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  color: #38bdf8;
+  margin-bottom: 2px;
+}
+
+.dock-select,
+.dock-input {
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  font-size: 0.88rem;
+  font-weight: 600;
+  outline: none;
+  cursor: pointer;
+  width: 100%;
+}
+
+.dock-select option {
+  background: #0d1e3d;
+  color: #ffffff;
+}
+
+.field-hint {
+  font-size: 0.62rem;
+  color: #64748b;
+  margin-top: 2px;
+}
+
+.search-swap-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #38bdf8;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 0.25s ease;
+}
+
+.search-swap-btn:hover {
+  background: rgba(0, 242, 254, 0.2);
+  border-color: #00f2fe;
+  transform: rotate(180deg);
+}
+
+.hero-search-submit-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #0284c7 0%, #00f2fe 100%);
+  color: #030712;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 800;
+  border: none;
+  border-radius: 12px;
+  padding: 18px 24px;
+  cursor: pointer;
+  flex-shrink: 0;
+  box-shadow: 0 4px 20px rgba(0, 242, 254, 0.4);
+  transition: all 0.25s ease;
+}
+
+.hero-search-submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(0, 242, 254, 0.65);
+}
+
+.dock-bottom-meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 14px;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.dock-holo-pass-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(168, 85, 247, 0.15);
+  border: 1px solid rgba(168, 85, 247, 0.4);
+  color: #c084fc;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.dock-holo-pass-pill:hover {
+  background: rgba(168, 85, 247, 0.25);
+  box-shadow: 0 0 16px rgba(168, 85, 247, 0.35);
+  transform: translateY(-1px);
+}
+
+.chip-flag {
+  font-size: 0.9rem;
+}
+
+/* ── SMART LUGGAGE SECTION (🧳 🛫) ── */
+.luggage-showcase-grid {
+  display: grid;
+  grid-template-columns: 1.25fr 1fr;
+  gap: 32px;
+  margin-top: 48px;
+  align-items: stretch;
+}
+
+.luggage-card-interactive {
+  background: rgba(13, 22, 44, 0.75);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.luggage-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 14px;
+  margin-bottom: 20px;
+}
+
+.luggage-status-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #38bdf8;
+}
+
+.status-blip {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #34d399;
+  box-shadow: 0 0 10px #34d399;
+  animation: radarPulse 1.8s infinite;
+}
+
+.luggage-tag-id {
+  font-family: 'Space Grotesk', monospace;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #f59e0b;
+}
+
+.luggage-visual-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 0 20px 0;
+}
+
+.luggage-3d-graphic {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.luggage-hero-icon {
+  color: #00f2fe;
+  filter: drop-shadow(0 0 18px rgba(0, 242, 254, 0.5));
+}
+
+.rfid-ping-ring {
+  position: absolute;
+  border: 1px solid rgba(0, 242, 254, 0.4);
+  border-radius: 50%;
+  animation: rfidExpand 3s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+}
+
+.rfid-ping-ring.r1 {
+  width: 120px;
+  height: 120px;
+}
+
+.rfid-ping-ring.r2 {
+  width: 150px;
+  height: 150px;
+  animation-delay: 1.5s;
+}
+
+@keyframes rfidExpand {
+  0% { transform: scale(0.6); opacity: 0.8; }
+  100% { transform: scale(1.4); opacity: 0; }
+}
+
+.luggage-telemetry-pill {
+  position: absolute;
+  bottom: -15px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(5, 11, 24, 0.85);
+  border: 1px solid rgba(0, 242, 254, 0.3);
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 0.65rem;
+  font-family: 'Space Grotesk', monospace;
+  color: #e2e8f0;
+  white-space: nowrap;
+}
+
+/* Luggage Scale Readout */
+.luggage-scale-widget {
+  width: 100%;
+  background: rgba(5, 11, 24, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 16px 20px;
+  margin-top: 14px;
+}
+
+.scale-readout {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.scale-title {
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  color: #94a3b8;
+}
+
+.scale-number {
+  font-family: 'Space Grotesk', monospace;
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #38bdf8;
+}
+
+.scale-number .unit {
+  font-size: 0.85rem;
+  color: #94a3b8;
+}
+
+.scale-number.overweight {
+  color: #ef4444;
+  text-shadow: 0 0 10px rgba(239, 68, 68, 0.4);
+}
+
+.luggage-weight-slider {
+  width: 100%;
+  -webkit-appearance: none;
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.1);
+  outline: none;
+  cursor: pointer;
+  margin: 10px 0;
+}
+
+.luggage-weight-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #00e5ff;
+  box-shadow: 0 0 12px #00e5ff;
+  cursor: pointer;
+}
+
+.scale-allowance-bar {
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.allowance-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #10b981 0%, #38bdf8 70%, #ef4444 100%);
+  transition: width 0.15s ease;
+}
+
+.scale-meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.72rem;
+  color: #94a3b8;
+}
+
+.tag-ok {
+  color: #34d399;
+  font-weight: 700;
+}
+
+.tag-warn {
+  color: #ef4444;
+  font-weight: 700;
+}
+
+.luggage-specs-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 14px;
+}
+
+.luggage-spec-box {
+  display: flex;
+  flex-direction: column;
+}
+
+.luggage-spec-box .spec-label {
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+  color: #64748b;
+  font-weight: 600;
+}
+
+.luggage-spec-box .spec-val {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #f8fafc;
+  margin-top: 3px;
+}
+
+.luggage-features-col {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  justify-content: space-between;
+}
+
+.luggage-feat-card {
+  display: flex;
+  gap: 16px;
+  background: rgba(13, 22, 44, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 18px 20px;
+  transition: all 0.25s ease;
+}
+
+.luggage-feat-card:hover {
+  border-color: rgba(56, 189, 248, 0.35);
+  transform: translateX(4px);
+  background: rgba(13, 22, 44, 0.85);
+}
+
+.feat-icon-box {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: rgba(2, 132, 199, 0.15);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.feat-content h4 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 6px;
+}
+
+.feat-content p {
+  font-size: 0.84rem;
+  line-height: 1.5;
+  color: #94a3b8;
+  margin: 0;
+}
+
+.luggage-portal-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: linear-gradient(135deg, #0284c7, #2563eb);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  padding: 16px 24px;
+  font-size: 0.92rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(2, 132, 199, 0.35);
+  transition: all 0.25s ease;
+}
+
+.luggage-portal-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(2, 132, 199, 0.55);
+}
+
+/* ── 3D HOLOGRAPHIC BOARDING PASS MODAL ── */
+.holo-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(3, 7, 18, 0.88);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.holo-ticket-container {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+  background: linear-gradient(145deg, rgba(15, 25, 55, 0.92), rgba(6, 11, 26, 0.96));
+  border: 1px solid rgba(0, 242, 254, 0.45);
+  border-radius: 24px;
+  padding: 28px;
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.8), 0 0 50px rgba(0, 242, 254, 0.2);
+  transform-style: preserve-3d;
+  will-change: transform;
+  overflow: hidden;
+}
+
+.holo-shimmer-layer {
+  position: absolute;
+  inset: -100%;
+  background: linear-gradient(
+    115deg,
+    transparent 0%,
+    transparent 40%,
+    rgba(0, 242, 254, 0.15) 45%,
+    rgba(168, 85, 247, 0.2) 50%,
+    rgba(0, 242, 254, 0.15) 55%,
+    transparent 60%,
+    transparent 100%
+  );
+  pointer-events: none;
+  animation: holoSheen 6s infinite;
+}
+
+@keyframes holoSheen {
+  0% { transform: translateY(-50%) rotate(25deg); }
+  100% { transform: translateY(50%) rotate(25deg); }
+}
+
+.holo-close-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #cbd5e1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.2s ease;
+}
+
+.holo-close-btn:hover {
+  background: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+}
+
+.ticket-header-band {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.18);
+  padding-bottom: 14px;
+  margin-bottom: 20px;
+}
+
+.ticket-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #ffffff;
+}
+
+.ticket-class-tag {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: #fbbf24;
+  background: rgba(251, 191, 36, 0.15);
+  border: 1px solid rgba(251, 191, 36, 0.35);
+  border-radius: 6px;
+  padding: 4px 10px;
+}
+
+.ticket-route-block {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 22px;
+}
+
+.ticket-airport-node {
+  display: flex;
+  flex-direction: column;
+}
+
+.ticket-airport-node .code {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: #ffffff;
+  line-height: 1;
+}
+
+.ticket-airport-node .city {
+  font-size: 0.8rem;
+  color: #94a3b8;
+  margin-top: 4px;
+}
+
+.ticket-airport-node.right {
+  text-align: right;
+}
+
+.ticket-flight-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+  padding: 0 16px;
+}
+
+.dashed-path {
+  position: relative;
+  width: 100%;
+  height: 2px;
+  background: repeating-linear-gradient(90deg, #00f2fe, #00f2fe 4px, transparent 4px, transparent 8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 6px 0;
+}
+
+.path-plane {
+  color: #00f2fe;
+  background: #0d1e3d;
+  padding: 0 4px;
+}
+
+.flight-number {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #64748b;
+}
+
+.speed-badge {
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: #00f2fe;
+}
+
+.ticket-details-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 14px;
+  padding: 14px 16px;
+  margin-bottom: 20px;
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.detail-item .label {
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+  color: #64748b;
+  font-weight: 700;
+}
+
+.detail-item .value {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-top: 3px;
+}
+
+.detail-item .value.seat-val {
+  color: #38bdf8;
+}
+
+.ticket-barcode-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  border-top: 1px dashed rgba(255, 255, 255, 0.18);
+  padding-top: 16px;
+  margin-bottom: 20px;
+}
+
+.simulated-barcode {
+  flex: 1;
+  height: 48px;
+  background: repeating-linear-gradient(
+    90deg,
+    #ffffff 0px,
+    #ffffff 2px,
+    transparent 2px,
+    transparent 4px,
+    #ffffff 4px,
+    #ffffff 7px,
+    transparent 7px,
+    transparent 9px,
+    #ffffff 9px,
+    #ffffff 10px,
+    transparent 10px,
+    transparent 14px,
+    #ffffff 14px,
+    #ffffff 18px
+  );
+  opacity: 0.85;
+}
+
+.ticket-qr-block {
+  background: #ffffff;
+  padding: 6px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ticket-qr {
+  color: #030712;
+}
+
+.ticket-cta-row {
+  display: flex;
+  justify-content: center;
+}
+
+.ticket-book-now-btn {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #0284c7, #00f2fe);
+  color: #030712;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 800;
+  border: none;
+  border-radius: 12px;
+  padding: 14px 20px;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(0, 242, 254, 0.35);
+  transition: all 0.2s ease;
+}
+
+.ticket-book-now-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(0, 242, 254, 0.55);
+}
+
+/* ── Base Display Helpers for Responsive Buttons ── */
+.mode-btn-short {
+  display: none;
+}
+.mode-btn-full {
+  display: inline;
+}
+
+.cta-short {
+  display: none;
+}
+.cta-full {
+  display: inline;
+}
+
+/* ================================================================
+   COMPREHENSIVE MULTI-SCREEN RESPONSIVENESS (1440px -> 320px)
+   ================================================================ */
+
+/* ── 1. Extra Large Desktops & Ultrawide (min-width: 1440px) ── */
+@media (min-width: 1440px) {
+  .lp-hero-overlay-content {
+    max-width: 1280px;
+    padding-top: 100px;
+  }
+
+  .hero-booking-dock-glass {
+    max-width: 1200px;
+    padding: 24px 32px;
+  }
+
+  .avionics-telemetry-hud {
+    right: 5vw;
+    width: 300px;
+  }
+
+  .stage-throttle-card {
+    left: 5vw;
+    width: 310px;
+  }
+}
+
+/* ── 2. Standard Laptops & Tablets Landscape (max-width: 1200px) ── */
+@media (max-width: 1200px) {
+  .lp-floating-header {
+    padding: 0 3vw;
+  }
+
+  .lp-header-nav {
+    gap: 16px;
+  }
+
+  .nav-link-btn {
+    padding: 5px 8px;
+    font-size: 0.82rem;
+  }
+
+  .avionics-telemetry-hud {
+    top: 96px;
+    right: 3vw;
+    width: 250px;
+    padding: 10px 14px;
+  }
+
+  .telemetry-cell .cell-val {
+    font-size: 0.8rem;
+  }
+
+  .hero-quick-search-card {
+    gap: 8px;
+  }
+
+  .search-field-col {
+    padding: 6px 10px;
+  }
+
+  .dock-select,
+  .dock-input {
+    font-size: 0.82rem;
+  }
+
+  .hero-search-submit-btn {
+    padding: 14px 18px;
+    font-size: 0.88rem;
+  }
+}
+
+/* ── 3. Tablets & Small Laptops (max-width: 1024px) ── */
+@media (max-width: 1024px) {
+  .lp-header-nav {
+    display: none; /* Hide navigation links on tablet/mobile to preserve space */
+  }
+
+  .avionics-telemetry-hud {
+    /* Compact Telemetry Strip at top right */
+    width: auto;
+    padding: 8px 12px;
+    top: 84px;
+    right: 3vw;
+  }
+
+  .telemetry-grid {
+    display: flex;
+    gap: 12px;
+  }
+
+  .telemetry-cell:nth-child(n+3) {
+    display: none; /* Show only Mach and Altitude on tablets */
+  }
+
+  .stage-throttle-card {
+    width: 240px;
+    padding: 10px 14px;
+    bottom: 20px;
+    left: 3vw;
+  }
+
+  .luggage-showcase-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .radar-showcase-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
+
+/* ── 4. Large Tablets & Small Tablets (max-width: 900px) ── */
+@media (max-width: 900px) {
+  .hero-booking-dock-glass {
+    padding: 18px 16px;
+  }
+
+  .hero-quick-search-card {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .search-swap-btn {
+    align-self: center;
+    transform: rotate(90deg);
+    margin: -4px 0;
+  }
+
+  .search-swap-btn:hover {
+    transform: rotate(270deg);
+  }
+
+  .hero-search-submit-btn {
+    width: 100%;
+    padding: 15px 20px;
+  }
+
+  .dock-bottom-meta-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .dock-holo-pass-pill {
+    width: 100%;
+    justify-content: center;
+    padding: 9px 16px;
+  }
+}
+
+/* ── 5. Mobile Landscape & Tablets Portrait (max-width: 768px) ── */
+@media (max-width: 768px) {
+  .lp-floating-header {
+    height: 64px;
+    padding: 0 4vw;
+  }
+
+  .brand-logo-glow {
+    width: 32px;
+    height: 32px;
+  }
+
+  .brand-title {
+    font-size: 1.05rem;
+  }
+
+  .brand-subtitle {
+    font-size: 0.58rem;
+  }
+
+  /* 3D Stage Overlay Controls on Mobile */
+  .stage-controls-overlay {
+    top: 72px;
+    left: 3vw;
+    right: 3vw;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .stage-mode-pill {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .stage-mode-pill .mode-btn {
+    flex: 1;
+    justify-content: center;
+    padding: 7px 10px;
+    font-size: 0.76rem;
+  }
+
+  .mode-btn-full {
+    display: none;
+  }
+  .mode-btn-short {
+    display: inline;
+  }
+
+  .stage-settings-group {
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .camera-presets-pill .preset-btn {
+    padding: 5px 8px;
+    font-size: 0.72rem;
+  }
+
+  .preset-text {
+    display: none; /* Icons only for camera presets on mobile */
+  }
+
+  .avionics-telemetry-hud {
+    display: none; /* Hide avionics telemetry card on mobile for pristine view */
+  }
+
+  .stage-throttle-card {
+    display: none; /* Hide throttle slider on mobile */
+  }
+
+  .stage-interactive-hint {
+    display: none;
+  }
+
+  .lp-hero-3d-stage {
+    min-height: auto;
+    padding-top: 130px;
+    padding-bottom: 40px;
+  }
+
+  .lp-hero-overlay-content {
+    padding-top: 10px;
+  }
+
+  .hero-main-heading {
+    font-size: clamp(2rem, 7vw, 2.7rem);
+    line-height: 1.15;
+  }
+
+  .hero-description {
+    font-size: 0.88rem;
+    padding: 0 10px;
+  }
+
+  .dock-top-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .trip-type-pill-group {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .trip-type-pill-group .trip-pill {
+    flex: 1;
+    text-align: center;
+    padding: 6px 8px;
+    font-size: 0.74rem;
+  }
+
+  .canvas-mode-quick-switch {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .canvas-mode-btn {
+    flex: 1;
+    justify-content: center;
+    padding: 6px 8px;
+    font-size: 0.74rem;
+  }
+
+  .fleet-cards-grid,
+  .cabin-classes-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .stats-inner-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .stat-pill-item {
+    padding: 12px;
+  }
+
+  .stat-value {
+    font-size: 1.5rem;
+  }
+
+  .stat-label {
+    font-size: 0.72rem;
+  }
+
+  .luggage-specs-row {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .luggage-specs-row .luggage-spec-box:last-child {
+    grid-column: span 2;
+  }
+}
+
+/* ── 6. Mobile Portrait Screens (max-width: 540px) ── */
+@media (max-width: 540px) {
+  .brand-subtitle {
+    display: none; /* Hide subtitle to keep brand clean on mobile */
+  }
+
+  .cta-full {
+    display: none;
+  }
+  .cta-short {
+    display: inline;
+  }
+
+  .lp-header-cta {
+    padding: 8px 12px;
+    font-size: 0.78rem;
+  }
+
+  .lp-holo-pass-btn {
+    padding: 7px 10px;
+  }
+
+  .holo-btn-text {
+    display: none; /* Show ticket icon only */
+  }
+
+  .hero-text-badge {
+    font-size: 0.62rem;
+    padding: 5px 12px;
+    text-align: center;
+  }
+
+  .hero-main-heading {
+    font-size: 1.85rem;
+  }
+
+  .hero-booking-dock-glass {
+    padding: 14px 12px;
+    border-radius: 16px;
+  }
+
+  .search-field-col {
+    padding: 8px 10px;
+  }
+
+  .hero-route-chips {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .route-chip-btn {
+    flex: 1 1 calc(50% - 6px);
+    justify-content: space-between;
+    padding: 6px 8px;
+    font-size: 0.72rem;
+  }
+
+  /* Holographic Boarding Pass Modal on Mobile */
+  .holo-modal-backdrop {
+    padding: 12px;
+  }
+
+  .holo-ticket-container {
+    padding: 20px 16px;
+    border-radius: 18px;
+    max-height: 92vh;
+    overflow-y: auto;
+  }
+
+  .ticket-airport-node .code {
+    font-size: 1.7rem;
+  }
+
+  .ticket-details-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    padding: 10px 12px;
+  }
+
+  .ticket-barcode-section {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .ticket-qr-block {
+    align-self: center;
+  }
+
+  /* Luggage Scale Widget on Mobile */
+  .luggage-scale-widget {
+    padding: 12px 14px;
+  }
+
+  .scale-number {
+    font-size: 1.25rem;
+  }
+
+  .luggage-feat-card {
+    padding: 14px;
+  }
+
+  .feat-icon-box {
+    width: 38px;
+    height: 38px;
+  }
+
+  .feat-content h4 {
+    font-size: 0.92rem;
+  }
+
+  .feat-content p {
+    font-size: 0.78rem;
+  }
+
+  .launch-inner-card {
+    padding: 24px 16px;
+  }
+
+  .launch-btn-row {
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+  }
+
+  .launch-primary-btn,
+  .launch-secondary-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ── 7. Compact & Smallest Mobile Screens (max-width: 375px) ── */
+@media (max-width: 375px) {
+  .lp-floating-header {
+    padding: 0 10px;
+  }
+
+  .brand-logo-glow {
+    width: 28px;
+    height: 28px;
+  }
+
+  .brand-plane-icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  .brand-title {
+    font-size: 0.95rem;
+  }
+
+  .hero-main-heading {
+    font-size: 1.6rem;
+  }
+
+  .trip-type-pill-group .trip-pill {
+    padding: 5px 4px;
+    font-size: 0.68rem;
+  }
+
+  .canvas-mode-btn {
+    padding: 5px 6px;
+    font-size: 0.68rem;
+  }
+
+  .route-chip-btn {
+    flex: 1 1 100%;
+  }
+
+  .luggage-specs-row {
+    grid-template-columns: 1fr;
+  }
+
+  .luggage-specs-row .luggage-spec-box:last-child {
+    grid-column: span 1;
+  }
+
+  .stats-inner-container {
+    grid-template-columns: 1fr;
+  }
+
+  .stat-value {
+    font-size: 1.35rem;
+  }
+}
+
+/* ── 8. Ultra-Compact Foldable / Narrow Screens (max-width: 320px) ── */
+@media (max-width: 320px) {
+  .hero-main-heading {
+    font-size: 1.45rem;
+  }
+
+  .hero-text-badge {
+    display: none;
+  }
+
+  .hero-booking-dock-glass {
+    padding: 10px 8px;
+  }
+
+  .search-field-col {
+    padding: 6px 8px;
+  }
+
+  .dock-select,
+  .dock-input {
+    font-size: 0.78rem;
+  }
+
+  .ticket-airport-node .code {
+    font-size: 1.4rem;
+  }
+
+  .ticket-details-grid {
+    grid-template-columns: 1fr;
+  }
+}
+

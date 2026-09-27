@@ -14,6 +14,11 @@ import FlightStatus from './components/FlightStatus';
 import AdminDashboard from './components/AdminDashboard';
 import AuthModal from './components/AuthModal';
 import LandingPage from './components/LandingPage';
+import SignInPage from './components/SignInPage';
+import FlightReservationPage from './components/FlightReservationPage';
+import SeatBookingPage from './components/SeatBookingPage';
+import BookingPage from './components/BookingPage';
+import TicketPage from './components/TicketPage';
 import { AuthProvider } from './context/AuthContext';
 import { CurrencyProvider } from './context/CurrencyContext';
 import { api } from './services/api';
@@ -21,10 +26,42 @@ import { Plane, AlertCircle } from 'lucide-react';
 import './styles/flights.css';
 import './App.css';
 
+// Mirrors the fallback in SeatBookingPage so BookingModal always has a valid flight
+const DEFAULT_FLIGHT = {
+  id: 'flight_default_787',
+  flightNumber: 'AL-202',
+  airline: 'AeroLux Global',
+  aircraft: 'Boeing 787-9 Dreamliner',
+  from: 'JFK',
+  fromCity: 'New York',
+  to: 'DXB',
+  toCity: 'Dubai',
+  departureTime: '18:45',
+  arrivalTime: '11:30',
+  duration: '12h 45m',
+  basePrice: 510,
+  cabinClass: 'economy'
+};
 
 function MainApp() {
-  const [showLanding, setShowLanding] = useState(true);
-  const [currentTab, setCurrentTab] = useState('search');
+  // Browser History & Route State (/sign-in, /seat-booking, /flights, /my-bookings, /status, /admin, /)
+  const [currentPath, setCurrentPath] = useState(() => {
+    return window.location.pathname || '/';
+  });
+
+  const [showLanding, setShowLanding] = useState(() => {
+    const p = window.location.pathname;
+    return p === '/' || p === '/home' || p === '';
+  });
+
+  const [currentTab, setCurrentTab] = useState(() => {
+    const p = window.location.pathname;
+    if (p === '/my-bookings') return 'bookings';
+    if (p === '/status' || p === '/radar') return 'status';
+    if (p === '/admin') return 'admin';
+    return 'search';
+  });
+
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [authMode, setAuthMode] = useState('login');
 
@@ -57,6 +94,49 @@ function MainApp() {
   // Boarding Pass Modal State
   const [activeBoardingPass, setActiveBoardingPass] = useState(null);
 
+  // Confirmed booking – set after successful payment, triggers /reservation route
+  const [confirmedReservation, setConfirmedReservation] = useState(null);
+
+  // History API Navigation function
+  const navigate = useCallback((path, state = {}) => {
+    try {
+      window.history.pushState(state, '', path);
+    } catch (e) {
+      console.warn('History pushState error:', e);
+    }
+    setCurrentPath(path);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // Sync tabs if applicable
+    if (path === '/my-bookings') setCurrentTab('bookings');
+    else if (path === '/status' || path === '/radar') setCurrentTab('status');
+    else if (path === '/admin') setCurrentTab('admin');
+    else if (path === '/flights' || path === '/search') {
+      setCurrentTab('search');
+      setShowLanding(false);
+    }
+  }, []);
+
+  // Listen to browser Back / Forward buttons (popstate)
+  useEffect(() => {
+    const handlePopState = () => {
+      const p = window.location.pathname || '/';
+      setCurrentPath(p);
+      if (p === '/my-bookings') setCurrentTab('bookings');
+      else if (p === '/status' || p === '/radar') setCurrentTab('status');
+      else if (p === '/admin') setCurrentTab('admin');
+      else if (p === '/flights' || p === '/search') {
+        setCurrentTab('search');
+        setShowLanding(false);
+      } else if (p === '/' || p === '/home') {
+        setShowLanding(true);
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
   // Fetch flights when search or filters change
   const fetchFlights = useCallback(async () => {
     setLoadingFlights(true);
@@ -87,11 +167,10 @@ function MainApp() {
   }, [searchParams, stops, maxPrice, sortOption, selectedAirlines]);
 
   useEffect(() => {
-    if (currentTab === 'search') {
+    if (currentTab === 'search' && !showLanding) {
       fetchFlights();
     }
-  }, [fetchFlights, currentTab]);
-
+  }, [fetchFlights, currentTab, showLanding]);
 
   const handleSearchSubmit = (newParams) => {
     setSearchParams(newParams);
@@ -101,21 +180,28 @@ function MainApp() {
     }
   };
 
+  // Navigates to dedicated /seat-booking route
   const handleSelectFlight = (flight) => {
     setActiveFlightForBooking(flight);
-    setShowSeatModal(true);
+    navigate('/seat-booking');
   };
 
-  const handleConfirmSeats = (seats, extraCost) => {
+  const handleConfirmSeats = (seats, extraCost, flightFromSeatPage) => {
     setSelectedSeats(seats);
     setSeatExtrasCost(extraCost);
-    setShowSeatModal(false);
+    // If SeatBookingPage passes its activeFlight back, store it so BookingModal gets the right flight
+    if (flightFromSeatPage && !activeFlightForBooking) {
+      setActiveFlightForBooking(flightFromSeatPage);
+    }
     setShowBookingModal(true);
   };
 
   const handleBookingSuccess = (newBooking) => {
-    // Optionally pre-open boarding pass
-    setActiveBoardingPass(newBooking);
+    // The reservation page opens in a new tab via window.open in BookingModal.
+    // Here we just close the modal and store the booking in case it's needed.
+    setConfirmedReservation(newBooking);
+    setActiveBoardingPass(null);
+    setShowBookingModal(false);
   };
 
   const handleViewBoardingPass = (booking) => {
@@ -142,14 +228,94 @@ function MainApp() {
   };
 
   const handleOpenAuth = (mode = 'login') => {
-    const safeMode = typeof mode === 'string' && mode === 'register' ? 'register' : 'login';
-    setAuthMode(safeMode);
-    setShowAuthModal(true);
+    navigate(mode === 'register' ? '/register' : '/sign-in');
   };
 
-  if (showLanding) {
+  // ── ROUTE 1: DEDICATED FULL-PAGE SIGN-IN & REGISTER (/sign-in, /register) ──
+  if (currentPath === '/sign-in' || currentPath === '/login') {
+    return (
+      <SignInPage 
+        initialMode="login" 
+        onNavigate={navigate}
+        onAuthSuccess={() => navigate('/flights')}
+      />
+    );
+  }
+
+  if (currentPath === '/register' || currentPath === '/join') {
+    return (
+      <SignInPage 
+        initialMode="register" 
+        onNavigate={navigate}
+        onAuthSuccess={() => navigate('/flights')}
+      />
+    );
+  }
+
+  // ── ROUTE 2: DEDICATED FULL-PAGE SEAT BOOKING (/seat-booking) ──
+  if (currentPath === '/seat-booking') {
+    // Resolve the active flight — priority: user-selected > first search result > DEFAULT_FLIGHT
+    const seatPageFlight = activeFlightForBooking || (flights.length > 0 ? flights[0] : null) || DEFAULT_FLIGHT;
+    return (
+      <SeatBookingPage
+        flight={seatPageFlight}
+        cabinClass={searchParams.cabinClass}
+        passengersCount={searchParams.passengers}
+        onConfirmSeats={handleConfirmSeats}
+        onNavigate={navigate}
+      />
+    );
+  }
+
+  // ── ROUTE 2a: FULL-PAGE BOOKING CHECKOUT (/booking) ──
+  if (currentPath === '/booking') {
+    return <BookingPage />;
+  }
+
+  // ── ROUTE 2b: FLIGHT RESERVATION CONFIRMATION PAGE (/reservation) ──
+  // Works both when navigated to in-app AND when opened fresh in a new tab
+  // (new tab has no React state, so we fall back to localStorage).
+  if (currentPath === '/reservation') {
+    const booking =
+      confirmedReservation ||
+      (() => {
+        try {
+          const raw = localStorage.getItem('skywings_confirmed_booking');
+          return raw ? JSON.parse(raw) : null;
+        } catch {
+          return null;
+        }
+      })();
+
+    if (booking) {
+      return (
+        <>
+          <FlightReservationPage
+            booking={booking}
+            onViewBoardingPass={(b) => setActiveBoardingPass(b)}
+            onGoHome={() => navigate('/flights')}
+            onMyBookings={() => navigate('/my-bookings')}
+          />
+          <BoardingPassModal
+            isOpen={!!activeBoardingPass}
+            booking={activeBoardingPass}
+            onClose={() => setActiveBoardingPass(null)}
+          />
+        </>
+      );
+    }
+  }
+
+  // ── ROUTE 2c: FULL PAGE TICKET (/ticket) ──
+  if (currentPath === '/ticket') {
+    return <TicketPage />;
+  }
+
+  // ── ROUTE 3: 3D LANDING PAGE (/) ──
+  if (showLanding && (currentPath === '/' || currentPath === '/home')) {
     return (
       <LandingPage
+        onNavigate={navigate}
         onEnter={(customParams) => {
           if (customParams) {
             setSearchParams((prev) => ({
@@ -158,19 +324,27 @@ function MainApp() {
             }));
           }
           setShowLanding(false);
-          setCurrentTab('search');
+          navigate('/flights');
         }}
       />
     );
   }
 
+  // ── ROUTE 4: MAIN APPLICATION DECK (/flights, /my-bookings, /status, /admin) ──
   return (
     <div className="app-root">
       {/* Navbar */}
       <Navbar
         currentTab={currentTab}
-        setCurrentTab={setCurrentTab}
+        setCurrentTab={(tab) => {
+          setCurrentTab(tab);
+          if (tab === 'search') navigate('/flights');
+          else if (tab === 'bookings') navigate('/my-bookings');
+          else if (tab === 'status') navigate('/status');
+          else if (tab === 'admin') navigate('/admin');
+        }}
         onOpenAuth={handleOpenAuth}
+        onNavigate={navigate}
       />
 
       {/* Main Views */}
@@ -283,7 +457,7 @@ function MainApp() {
         {currentTab === 'bookings' && (
           <MyBookings
             onOpenBoardingPass={handleViewBoardingPass}
-            onSearchNewFlight={() => setCurrentTab('search')}
+            onSearchNewFlight={() => navigate('/flights')}
           />
         )}
 
@@ -295,7 +469,12 @@ function MainApp() {
       </main>
 
       {/* Footer */}
-      <Footer onSelectTab={(tab) => setCurrentTab(tab)} />
+      <Footer onSelectTab={(tab) => {
+        if (tab === 'search') navigate('/flights');
+        else if (tab === 'bookings') navigate('/my-bookings');
+        else if (tab === 'status') navigate('/status');
+        else if (tab === 'admin') navigate('/admin');
+      }} />
 
       {/* Modals */}
       <AuthModal
