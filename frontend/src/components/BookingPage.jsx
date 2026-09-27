@@ -162,10 +162,9 @@ const BookingPage = () => {
       // Clean up checkout session
       localStorage.removeItem('skywings_checkout_session');
 
-      // Navigate to the Ticket page within this same tab
+      // Navigate to the Ticket page — use href so Vercel's SPA rewrite serves index.html cleanly
       setTimeout(() => {
-        window.history.pushState({}, '', '/ticket');
-        window.dispatchEvent(new PopStateEvent('popstate'));
+        window.location.href = '/ticket';
       }, 1000); // Small delay to enjoy the confetti
       
     } catch (err) {
